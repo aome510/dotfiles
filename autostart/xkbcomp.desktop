@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=xkbcomp
+Exec=xkbcomp /home/aome510/.xkbcomp $DISPLAY
+Comment[en_US]=Change CapsLock to Esc and Shift+CapsLock to Capslock 
