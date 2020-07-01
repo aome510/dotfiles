@@ -30,6 +30,9 @@ hook global InsertCompletionHide .* %{
 
 # Color scheme
 colorscheme gruvbox
+# for transparency
+face global Default default,default
+face global BufferPadding blue,default
 
 # System clipboard interactions
 hook global NormalKey y|d|c %{ nop %sh{
@@ -72,8 +75,6 @@ map global goto p -docstring 'Go to the current cursor''s grep position' '<esc>:
 
 # edit kakrc
 map global user e ':edit ~/.config/kak/kakrc<ret>' -docstring 'edit kakrc'
-# source kakrc
-map global user R ':source ~/.config/kak/kakrc<ret>' -docstring 'source kakrc'
 
 # kak-lsp
 eval %sh{kak-lsp --kakoune -s $kak_session}
@@ -104,14 +105,12 @@ plug "andreyorst/fzf.kak" config %{
     map -docstring 'fzf mode' global normal '<c-p>' ': fzf-mode<ret>'
 }
 
-# surround and auto-pairs
-plug "alexherbo2/surround.kak" config %{
-    map global user s ': surround<ret>' -docstring 'Enter surround mode'
-    map global user S ': surround _ _ * *<ret>' -docstring 'Enter surround mode with extra surrounding pairs'
-
-    # Optional
-    set-option global surround_begin auto-pairs-disable
-    set-option global surround_end auto-pairs-enable
+# surround
+plug "h-youhei/kakoune-surround" config %{
+    declare-user-mode surround
+    map global surround s ':surround<ret>' -docstring 'surround'
+    map global surround c ':change-surround<ret>' -docstring 'change'
+    map global surround d ':delete-surround<ret>' -docstring 'delete'
+    map global surround t ':select-surrounding-tag<ret>' -docstring 'select tag'
+    map global user s ':enter-user-mode surround<ret>' -docstring 'enter surround mode'
 }
-
-plug "alexherbo2/auto-pairs.kak"
