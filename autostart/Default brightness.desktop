@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec=light -S 32
+X-GNOME-Autostart-enabled=true
+NoDisplay=false
+Hidden=false
+Name[en_US]=Default brightness
+Comment[en_US]=Change the default brightness to 32% on startup
+X-GNOME-Autostart-Delay=0

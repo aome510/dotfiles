@@ -1,9 +1,21 @@
-# kak plugin
-source "%val{config}/plugins/plug.kak/rc/plug.kak"
+###############################
+# Theme and layout
+###############################
 
 # relative line numbers
 add-highlighter global/ number-lines -relative -hlcursor
 add-highlighter global/ wrap
+
+# Color scheme
+colorscheme gruvbox
+# for transparency
+face global Default         default,default
+face global BufferPadding   default,default
+face global StatusLine      default,default
+
+###############################
+# Indenting and autocomplete
+###############################
 
 #Use Tab for both indenting and completion
 hook global InsertChar \t %{ try %{
@@ -28,24 +40,14 @@ hook global InsertCompletionHide .* %{
     unmap window insert <s-tab> <c-p>
 }
 
-# Color scheme
-colorscheme gruvbox
-# for transparency
-face global Default default,default
-face global BufferPadding blue,default
-
-# System clipboard interactions
-hook global NormalKey y|d|c %{ nop %sh{
-  printf %s "$kak_main_reg_dquote" | xsel --input --clipboard
-}}
-map global user P '!xsel --output --clipboard<ret>' -docstring 'paste before the beginning of a selection using clipboard'
-map global user p '<a-!>xsel --output --clipboard<ret>' -docstring 'paste after the end of a selection using clipboard'
-map global user r '<a-d>!xsel --output --clipboard<ret>' -docstring 'replace a selection with yanked text using clipboard'
-
 # Tab sizes
 hook global InsertChar \t %{ exec -draft -itersel h@ }
 set global tabstop 4
 set global indentwidth 4
+
+###############################
+# Languages support
+###############################
 
 # Add scheme support for racket
 hook global BufCreate .+\.(rkt) %{
@@ -57,11 +59,23 @@ hook global BufCreate .+\.(conf) %{
     set-option buffer filetype sh
 }
 
-# change indent width for c and scheme files to 2
-hook global WinSetOption filetype=(scheme|c|cpp) %{
+# change indent width to 2 for a subset of languages
+hook global WinSetOption filetype=(scheme|c|cpp|python|yaml) %{
     set global tabstop 2
     set global indentwidth 2
 }
+
+###############################
+# Keys mapping
+###############################
+
+# System clipboard interactions
+hook global NormalKey y|d|c %{ nop %sh{
+  printf %s "$kak_main_reg_dquote" | xsel --input --clipboard
+}}
+map global user P '!xsel --output --clipboard<ret>' -docstring 'paste before the beginning of a selection using clipboard'
+map global user p '<a-!>xsel --output --clipboard<ret>' -docstring 'paste after the end of a selection using clipboard'
+map global user r '<a-d>!xsel --output --clipboard<ret>' -docstring 'replace a selection with yanked text using clipboard'
 
 # save file
 map global normal '<c-s>' :write<ret> -docstring 'save file'
@@ -76,6 +90,15 @@ map global goto p -docstring 'Go to the current cursor''s grep position' '<esc>:
 # edit kakrc
 map global user e ':edit ~/.config/kak/kakrc<ret>' -docstring 'edit kakrc'
 
+map global normal -docstring 'Select all occurrences of the current selection set' '<a-%>' '*%s<ret>'
+
+###############################
+# Kakoune plugins
+###############################
+
+# plug.kak
+source "%val{config}/plugins/plug.kak/rc/plug.kak"
+
 # kak-lsp
 eval %sh{kak-lsp --kakoune -s $kak_session}
 hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp) %{
@@ -87,10 +110,12 @@ hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp) %
     set global lsp_hover_anchor true
     # Format the document if possible
     hook window BufWritePre .* %{ lsp-formatting }
+}
+
+hook global WinSetOption filetype=(python) %{
     # for python language server
     set-option global lsp_server_configuration pyls.configurationSources=["flake8"]
 }
-
 # powerline
 plug "andreyorst/powerline.kak" defer powerline %{
     set-option global powerline_format 'git bufname filetype mode_info line_column position'
