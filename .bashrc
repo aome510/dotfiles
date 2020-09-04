@@ -1,8 +1,8 @@
-#
-# ~/.bashrc
-#
+# #
+# # ~/.bashrc
+# #
 
-export GOPRIVATE=github.com/curvegrid/*
+# export GOPRIVATE=github.com/curvegrid/*
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
