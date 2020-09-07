@@ -1,5 +1,16 @@
 set -U fish_greeting
-fish_vi_key_bindings
+
+function fish_title
+  true
+end
+
+# use vim key bindings for normal terminal,
+# use fish default key bindings for fish in emacs.
+if not test -n "$INSIDE_EMACS"
+    fish_vi_key_bindings
+else
+    fish_default_key_bindings
+end
 
 # conda init for fish
 source ~/.config/fish/conda.fish

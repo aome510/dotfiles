@@ -7,8 +7,10 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-if [[ $DISPLAY ]]; then
+# run tmux in normal shell (fish included),
+# run fish in emacs shell.
+if [[ $DISPLAY ]] && ! [[ $INSIDE_EMACS ]]; then
     [[ -z "$TMUX" ]] && exec tmux
+else
+    exec fish
 fi
-
-exec fish

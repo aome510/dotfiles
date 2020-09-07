@@ -32,11 +32,15 @@ This function should only modify configuration layer settings."
 
    dotspacemacs-configuration-layers
    '(sql
+     pdf
+     (latex :variables
+            latex-enable-folding t
+            TeX-view-program-selection '((output-pdf "PDF Tools")))
      (
       go :variables
-        go-backend 'lsp
-        go-format-before-save t
-        go-tab-width 4)
+         go-backend 'lsp
+         go-format-before-save t
+         go-tab-width 4)
      yaml
      (
       python :variables
@@ -444,7 +448,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I@%S"
+   dotspacemacs-frame-title-format "%I@%a"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -513,18 +517,37 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  "evil mode user's key bindings"
   (evil-define-operator evil-delete-without-yanking (beg end type register yank-handler)
     (interactive "<R><x><y>")
     (evil-delete beg end type ?_ yank-handler))
-
-  (setq evil-ex-search-highlight-all nil)
-  (setq dotspacemacs-distinguish-gui-tab t)
   (define-key evil-normal-state-map (kbd "M-d") 'evil-delete-without-yanking)
   (define-key evil-normal-state-map (kbd "U") 'redo)
   (define-key evil-normal-state-map (kbd "g h") 'evil-first-non-blank)
   (define-key evil-normal-state-map (kbd "g l") 'evil-end-of-line)
+
+  "layout settings"
   (spacemacs/toggle-transparency)
-  (spacemacs/toggle-maximize-frame)
+
+  "latex-pdf settings"
+  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+  (with-eval-after-load 'tex
+    (require 'pdf-sync))
+  (setq pdf-sync-backward-display-action t)
+  (setq pdf-sync-forward-display-action t)
+
+  "disable smartparens for certain brackets"
+  (eval-after-load 'smartparens
+    '(progn
+       (sp-pair "\\(" nil :actions :rem)
+       (sp-pair "\\[" nil :actions :rem)))
+
+  "for fish shell"
+  (add-hook 'term-mode-hook 'spacemacs/toggle-truncate-lines-on)
+
+  "other settings"
+  (setq evil-ex-search-highlight-all nil)
+  (setq dotspacemacs-distinguish-gui-tab t)
   (global-git-commit-mode t))
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -540,7 +563,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(sqlup-mode sql-indent godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc flycheck-golangci-lint company-go go-mode xterm-color vterm terminal-here shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-brain multi-term htmlize helm-org-rifle helm-org gnuplot evil-org eshell-z eshell-prompt-extras esh-help yaml-mode conda yasnippet-snippets treemacs-magit smeargle mmm-mode markdown-toc magit-svn magit-section magit-gitflow magit-popup lsp-ui helm-lsp helm-gitignore helm-git-grep helm-company helm-c-yasnippet gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ fringe-helper git-gutter+ gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip evil-magit magit git-commit with-editor transient browse-at-remote auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode posframe lsp-treemacs bui lsp-mode markdown-mode dash-functional cython-mode counsel-gtags counsel swiper ivy company-anaconda company blacken anaconda-mode pythonic ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil treemacs ht pfuture toc-org symon symbol-overlay string-inflection spaceline-all-the-icons all-the-icons memoize spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode password-generator paradox spinner overseer org-superstar open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck flycheck-elsa flx-ido flx fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens evil-args evil-anzu anzu eval-sexp-fu emr iedit clang-format projectile paredit list-utils pkg-info epl elisp-slime-nav editorconfig dumb-jump dash s devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el org-plus-contrib hydra lv hybrid-mode font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async)))
+   '(pdf-tools tablist sqlup-mode sql-indent godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc flycheck-golangci-lint company-go go-mode xterm-color vterm terminal-here shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-brain multi-term htmlize helm-org-rifle helm-org gnuplot evil-org eshell-z eshell-prompt-extras esh-help yaml-mode conda yasnippet-snippets treemacs-magit smeargle mmm-mode markdown-toc magit-svn magit-section magit-gitflow magit-popup lsp-ui helm-lsp helm-gitignore helm-git-grep helm-company helm-c-yasnippet gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ fringe-helper git-gutter+ gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip evil-magit magit git-commit with-editor transient browse-at-remote auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode posframe lsp-treemacs bui lsp-mode markdown-mode dash-functional cython-mode counsel-gtags counsel swiper ivy company-anaconda company blacken anaconda-mode pythonic ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil treemacs ht pfuture toc-org symon symbol-overlay string-inflection spaceline-all-the-icons all-the-icons memoize spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode password-generator paradox spinner overseer org-superstar open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck flycheck-elsa flx-ido flx fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens evil-args evil-anzu anzu eval-sexp-fu emr iedit clang-format projectile paredit list-utils pkg-info epl elisp-slime-nav editorconfig dumb-jump dash s devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el org-plus-contrib hydra lv hybrid-mode font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
