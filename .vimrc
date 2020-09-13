@@ -140,7 +140,7 @@ if $COLORTERM == 'gnome-terminal'
 endif
 
 try
-    colorscheme desert
+    colorscheme elflord
 catch
 endtry
 
@@ -191,6 +191,8 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+map U :redo<CR>
+
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -227,11 +229,14 @@ map <leader>l :bnext<cr>
 map <leader>h :bprevious<cr>
 
 " Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>t<leader> :tabnext 
+nnoremap th  :tabfirst<CR>
+nnoremap tk  :tabnext<CR>
+nnoremap tj  :tabprev<CR>
+nnoremap tl  :tablast<CR>
+nnoremap tt  :tabedit<Space>
+nnoremap tn  :tabnew<CR>
+nnoremap tm  :tabm<Space>
+nnoremap td  :tabclose<CR>
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
