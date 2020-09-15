@@ -61,6 +61,7 @@ This function should only modify configuration layer settings."
                       company-backends '(
                                          (company-capf company-dabbrev-code company-keywords)
                                          company-capf)
+                      auto-completion-enable-snippets-in-popup t
                       auto-completion-idle-delay 0.0
                       auto-completion-minimum-prefix-length 1
                       company-dabbrev-char-regexp "[A-z:-]")
