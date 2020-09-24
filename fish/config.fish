@@ -21,3 +21,8 @@ alias skak="sudo -e kak"
 function disk_usage
     command du -d1 -h $argv | sort -rh
 end
+
+function swap
+    set tmpfile (mktemp)
+    command mv $argv[1] $tmpfile && mv $argv[2] $argv[1] && mv $tmpfile $argv[2]
+end
