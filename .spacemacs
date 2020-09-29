@@ -53,8 +53,6 @@ This function should only modify configuration layer settings."
      yaml
      (
       python :variables
-             company-backends '((company-dabbrev-code company-keywords)
-                                company-capf)
              python-indent 2
              python-backend 'lsp
              python-lsp-server 'pyls
@@ -100,7 +98,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(gruvbox-theme)
+   dotspacemacs-additional-packages '(gruvbox-theme company-fuzzy)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -556,7 +554,10 @@ before packages are loaded."
 
   "company settings"
   (with-eval-after-load 'company
-    (setq company-dabbrev-char-regexp "[A-z:-]"))
+    (progn
+      (setq company-dabbrev-char-regexp "[A-z:-]")
+      (setq company-fuzzy-prefix-ontop t)
+      (global-company-fuzzy-mode 1)))
 
   "yas snippet settings"
   (with-eval-after-load 'yasnippet
@@ -564,6 +565,7 @@ before packages are loaded."
       (define-key yas-keymap [(tab)] 'yas-next-field)
       (define-key yas-keymap (kbd "TAB") 'yas-next-field)
       (define-key yas-keymap (kbd "<C-tab>") 'yas-expand)))
+  (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
 
   "vue settings"
   (setq-default
@@ -581,13 +583,14 @@ before packages are loaded."
   (spacemacs/enable-transparency)
 
   "latex-pdf settings"
+
   (setq TeX-auto-private "~/.emacs.d/private/auctex/auto")
 
   ;; pdf-view in another window
-  ;; (with-eval-after-load 'latex (require 'pdf-sync))
-  ;; (with-eval-after-load 'pdf-sync (require 'pdf-tools))
-  ;; (setq pdf-sync-backward-display-action t)
-  ;; (setq pdf-sync-forward-display-action t)
+  (with-eval-after-load 'latex (require 'pdf-sync))
+  (with-eval-after-load 'pdf-sync (require 'pdf-tools))
+  (setq pdf-sync-backward-display-action t)
+  (setq pdf-sync-forward-display-action t)
 
   (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
         TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
