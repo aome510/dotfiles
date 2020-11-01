@@ -552,6 +552,9 @@ before packages are loaded."
   (add-hook 'prog-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   (setq evil-ex-search-highlight-all nil)
 
+  "user custom keybindings"
+  (spacemacs/set-leader-keys "<return>" 'evil-mc-undo-all-cursors)
+
   "python settings"
   (setq-default lsp-pyls-configuration-sources ["flake8"])
   (add-hook 'python-mode-hook (lambda () (progn (company-mode)
