@@ -31,7 +31,8 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layer-path '()
 
    dotspacemacs-configuration-layers
-   '(sql
+   '(agda
+     sql
      pdf
      racket
      javascript
