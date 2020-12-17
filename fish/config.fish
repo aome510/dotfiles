@@ -19,7 +19,7 @@ source ~/.config/fish/conda.fish
 alias kfzf="kak (fzf)"
 alias skak="sudo -e kak"
 function disk_usage
-    command du -d1 -h $argv | sort -rh
+    command sudo du -d1 -h $argv | sort -h
 end
 
 function swap
