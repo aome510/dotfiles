@@ -37,31 +37,27 @@ This function should only modify configuration layer settings."
      javascript
      (vue :variables
           node-add-modules-path t)
-     (
-      c-c++ :variables
+     (c-c++ :variables
             c-c++-backend 'lsp-ccls
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-format-on-save t)
      (latex :variables
             TeX-save-query nil
             latex-enable-folding t)
-     (
-      go :variables
+     (go :variables
          go-backend 'lsp
          go-format-before-save t
          go-tab-width 4)
      yaml
-     (
-      python :variables
+     (python :variables
              python-indent 2
              python-backend 'lsp
              python-lsp-server 'pyls
              python-formatter 'yapf
              python-format-on-save t
              python-sort-imports-on-save t)
-
-     (
-      conda :variables conda-anaconda-home "/home/aome510/miniconda3/")
+     (conda :variables
+            conda-anaconda-home "/home/aome510/miniconda3/")
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -287,7 +283,7 @@ It should only modify the values of Spacemacs settings."
    ;; and TAB or `C-m' and `RET'.
    ;; In the terminal, these pairs are generally indistinguishable, so this only
    ;; works in the GUI. (default nil)
-   dotspacemacs-distinguish-gui-tab nil
+   dotspacemacs-distinguish-gui-tab t
 
    ;; Name of the default layout (default "Default")
    dotspacemacs-default-layout-name "Default"
@@ -436,7 +432,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, start an Emacs server if one is not already running.
    ;; (default nil)
-   dotspacemacs-enable-server nil
+   dotspacemacs-enable-server t
 
    ;; Set the emacs server socket location.
    ;; If nil, uses whatever the Emacs default is, otherwise a directory path
@@ -447,7 +443,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, advise quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server nil
+   dotspacemacs-persistent-server t
 
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `rg', `ag', `pt', `ack' and `grep'.
@@ -525,7 +521,6 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  "python settings"
   )
 
 (defun dotspacemacs/user-load ()
@@ -541,7 +536,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  "evil-mode keybinding settings"
+  "evil-mode settings"
   (setq evil-cross-lines t)
 
   (evil-define-operator evil-delete-without-yanking (beg end type register yank-handler)
@@ -559,7 +554,7 @@ before packages are loaded."
   (add-hook 'prog-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   (setq evil-ex-search-highlight-all nil)
 
-  "user custom keybindings"
+  "user's custom keybindings"
   (spacemacs/set-leader-keys "<return>" 'evil-mc-undo-all-cursors)
 
   "python settings"
@@ -631,7 +626,6 @@ before packages are loaded."
   (add-hook 'term-mode-hook 'spacemacs/toggle-truncate-lines-on)
 
   "other settings"
-  (setq dotspacemacs-distinguish-gui-tab t)
   (global-git-commit-mode t))
 
 ;; Do not write anything past this comment. This is where Emacs will
