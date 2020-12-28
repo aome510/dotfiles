@@ -1,0 +1,57 @@
+general {
+        output_format = "i3bar"
+        colors = true
+        interval = 5
+}
+
+order += "disk /"
+order += "wireless wlp1s0"
+order += "ethernet enp4s0"
+order += "cpu_temperature 0"
+order += "cpu_usage"
+order += "memory"
+order += "tztime local"
+order += "battery 0"
+ 
+disk / {
+    format = "DISK: %percentage_used (%total)"
+}
+
+wireless wlp1s0 {
+        format_up = "W:%quality %bitrate"
+        format_down = "W: down"
+}
+
+ethernet enp4s0 {
+        format_up = "E: %speed"
+        format_down = "E: down"
+}
+
+tztime local {
+        format = "TIME: %y-%m-%d %H:%M %Z"
+}
+
+cpu_temperature 0 {
+        format = "TEMP: %degrees °C"
+        path = "/sys/class/hwmon/hwmon0/temp1_input"
+}
+
+cpu_usage {
+        format = "CPU: %usage"
+}
+
+memory {
+        format = "MEM: %percentage_used (%total)"
+}
+
+battery 0 {
+        format = "%status %percentage %remaining"
+        format_down = "No battery"
+        status_chr = "⚡"
+        status_bat = "🔋"
+        status_unk = "?"
+        status_full = "☻"
+        path = "/sys/class/power_supply/BAT%d/uevent"
+        low_threshold = 30
+}
+

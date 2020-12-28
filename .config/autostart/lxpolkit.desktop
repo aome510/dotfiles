@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=lxpolkit
+Icon=lxpolkit
+Exec=lxpolkit
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true
+Comment[en_US]=lxpolkit Application

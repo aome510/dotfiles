@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=picom
+Icon=picom
+Exec=picom
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true
+Comment[en_US]=Composition Application

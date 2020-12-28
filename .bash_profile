@@ -1,1 +1,3 @@
-/home/aome510/.bash_profile
+#
+# ~/.bash_profile
+#

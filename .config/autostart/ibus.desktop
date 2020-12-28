@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=ibus
+Icon=ibus
+Exec=ibus-daemon -drx
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true
+Comment[en_US]=Keyboard Input Application

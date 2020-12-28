@@ -30,14 +30,11 @@ dot_config_ignore_list = [
 ]
 
 for f in os.listdir(home):
-  if os.path.isfile(f):
+  if os.path.isfile('{}/{}'.format(home, f)):
     if f in home_config_files:
-      os.system('ln -sf ~/{} {}'.format(f, f))
+      os.system('cp ~/{} .'.format(f))
 
 os.system('mkdir -p .config')
 for f in os.listdir('{}/.config'.format(home)):
   if f not in dot_config_ignore_list:
-    if os.path.isfile(f):
-      os.system('ln -sf ~/.config/{} .config/{}'.format(f, f))
-    else:
-      os.system('ln -sdf ~/.config/{} .config'.format(f))
+    os.system('cp -r ~/.config/{} .config'.format(f))

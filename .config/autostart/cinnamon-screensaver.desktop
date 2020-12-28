@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=cinnamon-screensaver
+Icon=cinnamon-screensaver
+Exec=cinnamon-screensaver
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true
+Comment[en_US]=Cinnamon Screensaver Application

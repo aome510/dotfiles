@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=feh
+Icon=feh
+Exec=sh -c "feh --bg-fill --randomize /home/aome510/Downloads/Pictures/*"
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true
+Comment[en_US]=Background Settings

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=volctl
+Exec=volctl
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true
+Comment[en-US]=Enable Volct Application on Startup
