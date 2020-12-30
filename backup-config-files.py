@@ -3,14 +3,9 @@ from pathlib import Path
 
 home = str(Path.home())
 
-home_config_files = [
-    ".bash_profile",
-    ".bashrc",
-    ".spacemacs",
-    ".tmux.conf",
-    ".vimrc",
-    ".xbindkeysrc",
-    ".xkbcomp",
+home_white_list = [
+    ".bash_profile", ".bashrc", ".spacemacs", ".tmux.conf", ".vimrc",
+    ".xbindkeysrc", ".xkbcomp", ".tmux", ".ssh", ".pki", ".gnupu"
 ]
 
 dot_config_ignore_list = [
@@ -29,12 +24,13 @@ dot_config_ignore_list = [
     "yarn",
 ]
 
+cwd = os.path.dirname(__file__)
+
 for f in os.listdir(home):
-  if os.path.isfile('{}/{}'.format(home, f)):
-    if f in home_config_files:
-      os.system('cp ~/{} .'.format(f))
+  if f in home_white_list:
+    os.system('cp -r ~/{} {}'.format(f, cwd))
 
 os.system('mkdir -p .config')
 for f in os.listdir('{}/.config'.format(home)):
   if f not in dot_config_ignore_list:
-    os.system('cp -r ~/.config/{} .config'.format(f))
+    os.system('cp -r ~/.config/{} {}/.config'.format(f, cwd))
