@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=mpris-proxy
+Exec=mpris-proxy
+Comment[en_US]=Run mpris-proxy in the background to enable bluetooth audio control
+

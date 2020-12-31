@@ -1,0 +1,5 @@
+[url "ssh://git@github.com/curvegrid/"]
+	insteadOf = https://github.com/curvegrid/
+[user]
+	name = Thang Pham
+	email = phamducthang1234@gmail.com

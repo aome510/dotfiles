@@ -7,3 +7,9 @@
 [submodule ".tmux/plugins/tpm"]
 	path = .tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule ".tmux/plugins/tmux-themepack"]
+	path = .tmux/plugins/tmux-themepack
+	url = https://github.com/jimeh/tmux-themepack
+[submodule "/home/aome510/Backup/my-config-files/.tmux/plugins/tmp"]
+	path = /home/aome510/Backup/my-config-files/.tmux/plugins/tmp
+	url = https://github.com/tmux-plugins/tpm
