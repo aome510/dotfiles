@@ -1,7 +1,7 @@
 #!/bin/sh
 
-./backup-config-files.py
 cd /home/aome510/Backup/my-config-files/
+./backup-config-files.py
 git add .
-git commit -m -allow-"backup configs $(date +"%D %T")"
-# git push
+git commit --allow-empty -m "backup configs $(date +"%D %T")"
+git push
