@@ -1,0 +1,10 @@
+[Unit]
+Description=Backup Config everyday
+
+[Timer]
+OnCalendar=minutely
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
