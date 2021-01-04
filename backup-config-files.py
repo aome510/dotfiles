@@ -27,6 +27,7 @@ dot_config_white_list = [
     "mimeapps.list",
     "picom.conf",
     "yapf",
+    "systemd",
 ]
 
 cwd = os.path.dirname(__file__)
