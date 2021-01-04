@@ -1,7 +1,7 @@
 [Unit]
 Description=Backup Config Files
-# Wants=network-online.target
-# After=network-online.target
+Requires=ssh-agent.service
+After=ssh-agent.service
 
 [Service]
 ExecStart=/home/aome510/Backup/my-config-files/backup-config-git.sh
