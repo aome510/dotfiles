@@ -2,8 +2,8 @@
 Description=Backup config files weekly
 
 [Timer]
-OnCalendar=weekly
-# OnBootSec=10s
+OnActiveSec=1min
+OnCalendar=minutely
 Persistent=true
 
 [Install]
