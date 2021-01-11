@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=feh
 Icon=feh
-Exec=sh -c "feh --bg-fill --randomize /home/aome510/Downloads/Pictures/*"
+Exec=sh -c "feh --bg-fill --randomize /home/aome510/Downloads/Pictures/Backgrounds/*"
 Terminal=false
 Type=Application
 X-GNOME-Autostart-enabled=true

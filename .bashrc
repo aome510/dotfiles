@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 # run tmux in normal shell (fish included),
-run fish in emacs shell.
+# run fish in emacs shell.
 if [[ $DISPLAY ]] && ! [[ $INSIDE_EMACS ]]; then
     [[ -z "$TMUX" ]] && (
     UNATTACHED_SESSION=$(tmux ls 2>/dev/null | grep "(attached)$" -v | tail -n 1)

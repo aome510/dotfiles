@@ -7,7 +7,7 @@ general {
 order += "disk /"
 order += "wireless wlp1s0"
 order += "ethernet enp4s0"
-order += "cpu_temperature 0"
+# order += "cpu_temperature 0"
 order += "cpu_usage"
 order += "memory"
 order += "tztime local"

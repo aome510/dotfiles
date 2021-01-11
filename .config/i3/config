@@ -197,10 +197,13 @@ bindsym Print exec flameshot gui
 bindsym Control+Mod1+l exec cinnamon-screensaver-command -l -m "You are the Apple Of My Eyes 🍎"
 # bindsym Control+Mod1+l exec betterlockscreen -l dim
 
+# set default workspace layout to tabbed
+workspace_layout tabbed
+
 # start/assign some applications on specific workspaces
-for_window [class="Chromium"] move container to workspace $ws1
+for_window [class="firefoxdeveloperedition"] move container to workspace $ws1
 for_window [class="discord"] move container to workspace $ws2
 for_window [class="Spotify"] move container to workspace $ws2
 for_window [class="Emacs"] move container to workspace $ws3
-exec chromium
+exec firefox-developer-edition
 exec discord-canary
