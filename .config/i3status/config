@@ -6,11 +6,11 @@ general {
 
 order += "disk /"
 order += "wireless wlp1s0"
-order += "ethernet enp4s0"
-# order += "cpu_temperature 0"
+# order += "ethernet enp4s0"
 order += "cpu_usage"
 order += "memory"
 order += "tztime local"
+order += "tztime waterloo"
 order += "battery 0"
  
 disk / {
@@ -28,7 +28,12 @@ ethernet enp4s0 {
 }
 
 tztime local {
-        format = "TIME: %y-%m-%d %H:%M %Z"
+        format = "%y-%m-%d %H:%M %Z"
+}
+
+tztime waterloo {
+        format = "%y-%m-%d %H:%M %Z"
+        timezone = "America/Toronto"
 }
 
 cpu_temperature 0 {
