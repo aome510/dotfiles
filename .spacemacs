@@ -6,6 +6,7 @@
   "Layer configuration:
 This function should only modify configuration layer settings."
   (setq-default
+
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
    ;; or `spacemacs'. (default 'spacemacs)
@@ -569,6 +570,7 @@ before packages are loaded."
     (progn
       (setq company-dabbrev-char-regexp "[A-z:-]")
       (setq company-fuzzy-prefix-ontop t)))
+  (setq company-fuzzy-sorting-backend 'flx)
 
   "yas snippet settings"
   (with-eval-after-load 'yasnippet
@@ -627,6 +629,8 @@ before packages are loaded."
   (add-hook 'term-mode-hook 'spacemacs/toggle-truncate-lines-on)
 
   "other settings"
+  ;; disable auto-backup file (.#"file")
+  (setq create-lockfiles nil)
   (global-git-commit-mode t))
 
 ;; Do not write anything past this comment. This is where Emacs will
