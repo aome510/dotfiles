@@ -44,6 +44,7 @@ This function should only modify configuration layer settings."
             c-c++-enable-clang-format-on-save t)
      (latex :variables
             TeX-save-query nil
+            latex-build-engine 'xetex
             latex-enable-folding t)
      (go :variables
          go-backend 'lsp
@@ -70,7 +71,7 @@ This function should only modify configuration layer settings."
                       auto-completion-enable-help-tooltip t
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-idle-delay 0.0
-                      auto-completion-minimum-prefix-length 1)
+                      auto-completion-minimum-prefix-length 2)
      ;; better-defaults
      emacs-lisp
      git
@@ -607,9 +608,9 @@ before packages are loaded."
   (setq TeX-auto-private "~/.emacs.d/private/auctex/auto")
 
   ;; fuzzy matching in latex mode
-  (add-hook 'TeX-update-style-hook (lambda () (progn (unless (company-fuzzy-mode) (company-fuzzy-mode 1))
-                                                     (setq company-backends
-                                                           '((company-fuzzy-all-other-backends company-yasnippet company-auctex-macros))))))
+  ;; (add-hook 'TeX-update-style-hook (lambda () (progn (unless (company-fuzzy-mode) (company-fuzzy-mode 1))
+  ;;                                                    (setq company-backends
+  ;;                                                          '((company-fuzzy-all-other-backends :with company-yasnippet company-auctex-macros))))))
 
   ;; pdf-view in another window
   (with-eval-after-load 'latex (require 'pdf-sync))
