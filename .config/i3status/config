@@ -5,7 +5,7 @@ general {
 }
 
 order += "disk /"
-order += "wireless wlp1s0"
+order += "wireless wlan0"
 # order += "ethernet enp4s0"
 order += "cpu_usage"
 order += "memory"
@@ -17,7 +17,7 @@ disk / {
     format = "DISK: %percentage_used (%total)"
 }
 
-wireless wlp1s0 {
+wireless wlan0 {
         format_up = "W:%quality %bitrate"
         format_down = "W: down"
 }
