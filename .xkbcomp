@@ -1313,7 +1313,7 @@ xkb_symbols "pc+us+inet(evdev)" {
     key <AB08> {         [           comma,            less ] };
     key <AB09> {         [          period,         greater ] };
     key <AB10> {         [           slash,        question ] };
-    key <RTSH> {         [         Shift_R ] };
+    key <RTSH> {         [         backslash] };
     key <KPMU> {
         type= "CTRL+ALT",
         symbols[Group1]= [     KP_Multiply,     KP_Multiply,     KP_Multiply,     KP_Multiply,   XF86ClearGrab ]
@@ -1548,7 +1548,7 @@ xkb_symbols "pc+us+inet(evdev)" {
     // map caplocks to control
     modifier_map Control { <CAPS> };
     modifier_map Shift { <LFSH> };
-    modifier_map Shift { <RTSH> };
+    // modifier_map Shift { <RTSH> };
     modifier_map Mod1 { <LALT> };
     // modifier_map Lock { <CAPS> };
     modifier_map Mod2 { <NMLK> };

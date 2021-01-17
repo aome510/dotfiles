@@ -1,9 +1,9 @@
 [Unit]
-Description=Backup config files weekly
+Description=Backup config files daily
 
 [Timer]
 OnActiveSec=5min
-OnCalendar=weekly
+OnCalendar=daily
 Persistent=true
 
 [Install]
