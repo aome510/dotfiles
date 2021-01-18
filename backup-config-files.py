@@ -13,7 +13,6 @@ home_white_list = [
 dot_config_white_list = [
     "autorandr",
     "autostart",
-    "dconf",
     "fish",
     "flake8",
     "flameshot",
