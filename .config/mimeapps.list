@@ -1,6 +1,7 @@
 [Added Associations]
 image/jpeg=google-chrome.desktop;feh.desktop;
 application/pdf=org.gnome.Evince.desktop;
+text/html=google-chrome.desktop;
 
 [Default Applications]
 x-scheme-handler/postman=Postman.desktop
