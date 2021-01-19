@@ -45,6 +45,7 @@ This function should only modify configuration layer settings."
                  javascript-backend 'lsp
                  javascript-fmt-tool 'prettier)
      (vue :variables
+          vue-backend 'lsp
           node-add-modules-path t)
      (c-c++ :variables
             c-c++-backend 'lsp-ccls
