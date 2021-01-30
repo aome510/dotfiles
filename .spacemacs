@@ -56,7 +56,8 @@ This function should only modify configuration layer settings."
             latex-backend 'company-auctex
             latex-build-engine 'xetex
             latex-refresh-preview t
-            latex-enable-folding t)
+            ;; latex-enable-folding t
+            )
      (go :variables
          go-backend 'lsp
          go-format-before-save t
