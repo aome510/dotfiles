@@ -53,7 +53,7 @@ This function should only modify configuration layer settings."
             c-c++-enable-clang-format-on-save t)
      (latex :variables
             TeX-save-query nil
-            latex-backend 'company-auctex
+            latex-backend 'lsp
             latex-build-engine 'xetex
             latex-refresh-preview t
             ;; latex-enable-folding t
