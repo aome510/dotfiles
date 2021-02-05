@@ -1,5 +1,5 @@
 [Added Associations]
-image/jpeg=google-chrome.desktop;feh.desktop;
+image/jpeg=feh.desktop;google-chrome.desktop;
 application/pdf=org.gnome.Evince.desktop;
 text/html=google-chrome.desktop;
 
