@@ -7,7 +7,7 @@ home = str(Path.home())
 
 home_white_list = [
     ".bash_profile", ".bashrc", ".spacemacs", ".tmux.conf", ".vimrc",
-    ".xbindkeysrc", ".xkbcomp", ".tmux", ".ssh", ".pki", ".gnupu", ".gitconfig"
+    ".xbindkeysrc", ".xkbcomp", ".tmux", ".gitconfig"
 ]
 
 dot_config_white_list = [
@@ -23,7 +23,6 @@ dot_config_white_list = [
     "kak-lsp",
     "kitty",
     "light",
-    "mimeapps.list",
     "picom.conf",
     "yapf",
     "systemd",
@@ -42,7 +41,7 @@ if os.path.exists('{}/.config/kitty/kitty-themes'.format(cwd)):
       .format(cwd))
 if os.path.exists('{}/.tmux/plugins/tpm'.format(cwd)):
   os.system(
-      'git submodule add https://github.com/tmux-plugins/tpm {}/.tmux/plugins/tmp 2>/dev/null'
+      'git submodule add https://github.com/tmux-plugins/tpm {}/.tmux/plugins/tpm 2>/dev/null'
       .format(cwd))
 if os.path.exists('{}/.tmux/plugins/tmux-themepack'.format(cwd)):
   os.system(
