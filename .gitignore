@@ -1,6 +1,0 @@
-.ssh/*
-.pki
-!config
-*.pub
-!known_hosts
-
