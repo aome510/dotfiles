@@ -205,5 +205,3 @@ for_window [class="firefoxdeveloperedition"] move container to workspace $ws1
 for_window [class="discord"] move container to workspace $ws2
 for_window [class="Spotify"] move container to workspace $ws2
 for_window [class="Emacs"] move container to workspace $ws3
-exec firefox-developer-edition
-exec discord

@@ -2,6 +2,7 @@
 
 import os
 from pathlib import Path
+from datetime import date
 
 home = str(Path.home())
 
@@ -56,3 +57,6 @@ os.system('mkdir -p .config')
 for f in os.listdir('{}/.config'.format(home)):
   if f in dot_config_white_list:
     os.system('cp -r ~/.config/{} {}/.config'.format(f, cwd))
+
+# commit new changes using git
+os.system(f'git add . && git commit -m {date.today().strftime("%Y-%m-%d")}')
