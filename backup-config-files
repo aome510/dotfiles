@@ -32,31 +32,33 @@ dot_config_white_list = [
 cwd = os.path.dirname(__file__)
 
 # add git modules first
-if os.path.exists('{}/.config/kak/plugins/plug.kak'.format(cwd)):
+if os.path.exists('{cwd}/.config/kak/plugins/plug.kak'):
   os.system(
-      'git submodule add https://github.com/robertmeta/plug.kak.git {}/.config/kak/plugins/plug.kak 2>/dev/null'
-      .format(cwd))
-if os.path.exists('{}/.config/kitty/kitty-themes'.format(cwd)):
+      f'git submodule add https://github.com/robertmeta/plug.kak.git {cwd}/.config/kak/plugins/plug.kak 2>/dev/null'
+  )
+if os.path.exists('{cwd}/.config/kitty/kitty-themes'):
   os.system(
-      'git submodule add https://github.com/dexpota/kitty-themes {}/.config/kitty/kitty-themes 2>/dev/null'
-      .format(cwd))
-if os.path.exists('{}/.tmux/plugins/tpm'.format(cwd)):
+      f'git submodule add https://github.com/dexpota/kitty-themes {cwd}/.config/kitty/kitty-themes 2>/dev/null'
+  )
+if os.path.exists('{cwd}/.tmux/plugins/tpm'):
   os.system(
-      'git submodule add https://github.com/tmux-plugins/tpm {}/.tmux/plugins/tpm 2>/dev/null'
-      .format(cwd))
-if os.path.exists('{}/.tmux/plugins/tmux-themepack'.format(cwd)):
+      f'git submodule add https://github.com/tmux-plugins/tpm {cwd}/.tmux/plugins/tpm 2>/dev/null'
+  )
+if os.path.exists('{cwd}/.tmux/plugins/tmux-themepack'):
   os.system(
-      'git submodule add https://github.com/jimeh/tmux-themepack {}/.tmux/plugins/tmux-themepack 2>/dev/null'
-      .format(cwd))
+      f'git submodule add https://github.com/jimeh/tmux-themepack {cwd}/.tmux/plugins/tmux-themepack 2>/dev/null'
+  )
 
 for f in os.listdir(home):
   if f in home_white_list:
-    os.system('cp -r ~/{} {}'.format(f, cwd))
+    os.system(f'cp -r ~/{f} {cwd}')
 
 os.system('mkdir -p .config')
 for f in os.listdir('{}/.config'.format(home)):
   if f in dot_config_white_list:
-    os.system('cp -r ~/.config/{} {}/.config'.format(f, cwd))
+    os.system(f'cp -r ~/.config/{f} {cwd}/.config')
 
 # commit new changes using git
-os.system(f'git add . && git commit -m {date.today().strftime("%Y-%m-%d")}')
+os.system(
+    f'git add . && git commit -m "backup configs {date.today().strftime("%Y-%m-%d")}"'
+)
