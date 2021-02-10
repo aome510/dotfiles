@@ -5,6 +5,3 @@ After=ssh-agent.service
 
 [Service]
 ExecStart=/home/aome510/Backup/my-config-files/backup-config-git.sh
-
-[Install]
-WantedBy=default.target
