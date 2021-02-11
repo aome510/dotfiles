@@ -62,3 +62,5 @@ for f in os.listdir('{}/.config'.format(home)):
 os.system(
     f'git add . && git commit -m "backup configs {date.today().strftime("%Y-%m-%d")}"'
 )
+# push new changes
+os.system('git push')

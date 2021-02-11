@@ -4,4 +4,4 @@ Requires=ssh-agent.service
 After=ssh-agent.service
 
 [Service]
-ExecStart=/home/aome510/Backup/my-config-files/backup-config-git.sh
+ExecStart=/home/aome510/Backup/my-config-files/backup-config-files

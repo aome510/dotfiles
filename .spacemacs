@@ -90,7 +90,6 @@ This function should only modify configuration layer settings."
      helm
      (lsp :variables
           lsp-ui-doc-position 'at-point)
-     (markdown :variables markdown-live-preview-engine 'vmd)
      multiple-cursors
      org
      (shell :variables

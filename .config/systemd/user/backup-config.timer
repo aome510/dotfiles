@@ -2,8 +2,8 @@
 Description=Backup config files daily
 
 [Timer]
-OnActiveSec=5min
-OnCalendar=daily
+# OnCalendar=daily
+OnBootSec=120
 Persistent=true
 
 [Install]
