@@ -58,9 +58,8 @@ for f in os.listdir('{}/.config'.format(home)):
   if f in dot_config_white_list:
     os.system(f'cp -r ~/.config/{f} {cwd}/.config')
 
-# commit new changes using git
-os.system(
-    f'git add . && git commit -m "backup configs {date.today().strftime("%Y-%m-%d")}"'
-)
-# push new changes
-os.system('git push')
+# commit/push new changes using git
+os.system(f'cd {cwd} && \
+    git add . && \
+    git commit -m "backup configs {date.today().strftime("%Y-%m-%d")} && \
+    git push"')
