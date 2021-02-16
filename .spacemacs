@@ -32,8 +32,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layer-path '()
 
    dotspacemacs-configuration-layers
-   '(
-     rust
+   '(rust
      typescript
      sql
      pdf
@@ -91,6 +90,8 @@ This function should only modify configuration layer settings."
      git
      helm
      (lsp :variables
+          lsp-rust-analyzer-cargo-load-out-dirs-from-check t
+          lsp-rust-analyzer-proc-macro-enable t
           lsp-rust-server 'rust-analyzer
           lsp-ui-doc-position 'at-point)
      multiple-cursors
