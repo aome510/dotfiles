@@ -93,7 +93,9 @@ This function should only modify configuration layer settings."
           lsp-rust-analyzer-cargo-load-out-dirs-from-check t
           lsp-rust-analyzer-proc-macro-enable t
           lsp-rust-server 'rust-analyzer
-          lsp-ui-doc-position 'at-point)
+          lsp-ui-doc-alignment 'window
+          lsp-ui-doc-use-webkit t
+          lsp-ui-doc-position 'top)
      multiple-cursors
      org
      (shell :variables
