@@ -32,7 +32,9 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layer-path '()
 
    dotspacemacs-configuration-layers
-   '(rust
+   '(
+     (rust :variables
+           rust-format-on-save t)
      typescript
      sql
      pdf
