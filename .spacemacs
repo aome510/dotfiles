@@ -38,6 +38,7 @@ This function should only modify configuration layer settings."
      pdf
      racket
      prettier
+     dap
      (javascript :variables
                  js2-basic-offset 2
                  js-indent-level 2
@@ -90,6 +91,7 @@ This function should only modify configuration layer settings."
      git
      helm
      (lsp :variables
+          lsp-ui-sideline-diagnostic-max-lines 3
           lsp-rust-analyzer-cargo-load-out-dirs-from-check t
           lsp-rust-analyzer-proc-macro-enable t
           lsp-rust-server 'rust-analyzer
