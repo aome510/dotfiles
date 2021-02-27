@@ -1,13 +1,13 @@
 amd-ucode 20210208.b79d239-1
 aspell 0.60.8-2
-aspell-en 2019.10.06-1
+aspell-en 2020.12.07-1
 autoconf 2.71-1
 automake 1.16.3-1
 base 2-2
 binutils 2.36.1-2
 bison 3.7.3-1
-bluez 5.55-3
-bluez-utils 5.55-3
+bluez 5.56-1
+bluez-utils 5.56-1
 btrfs-progs 5.10.1-1
 caribou 0.4.21+66+g14f5428-3
 ccls 0.20201219-3
@@ -34,7 +34,7 @@ fakeroot 1.25.3-2
 feh 3.6.3-1
 file 5.39-1
 findutils 4.8.0-1
-firefox-developer-edition 86.0b9-1
+firefox-developer-edition 87.0b3-1
 fish 3.1.2-2
 flameshot 0.8.5-1
 flex 2.6.4-3
@@ -47,7 +47,7 @@ gdb 10.1-4
 gedit 3.38.1-1
 gettext 0.21-1
 git 2.30.1-1
-go-ethereum 1.9.25-1
+go-ethereum 1.9.25-2
 google-chrome 88.0.4324.182-1
 gparted 1.2.0-2
 grep 3.6-1
@@ -69,7 +69,7 @@ libtool 2.4.6+42+gb88cebd5-14
 light 1.2.2-1
 lightdm 1:1.30.0-4
 lightdm-gtk-greeter 1:2.0.8-1
-linux 5.10.16.arch1-1
+linux 5.11.1.arch1-1
 linux-firmware 20210208.b79d239-1
 lldb 11.1.0-1
 lldb-mi-git r69.807a5e7-1
@@ -80,7 +80,7 @@ make 4.3-3
 man-db 2.9.4-1
 nautilus 3.38.2-1
 net-tools 2.10-1
-nodejs 15.9.0-1
+nodejs 15.10.0-1
 notification-daemon 3.20.0-4
 noto-fonts 20201226-1
 noto-fonts-cjk 20201206-1
@@ -103,7 +103,7 @@ redshift 1.12-4
 ripgrep 12.1.1-1
 rofi 1.6.1-1
 rofi-dmenu 1-1
-rust-analyzer 20210215-1
+rust-analyzer 20210222-1
 rustup 1.23.1-1
 sbsigntools 0.9.4-1
 sed 4.8-1
