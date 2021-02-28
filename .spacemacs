@@ -59,8 +59,9 @@ This function should only modify configuration layer settings."
             TeX-save-query nil
             latex-backend 'lsp
             latex-build-engine 'xetex
+            latex-enable-auto-fill nil
             latex-refresh-preview t
-            ;; latex-enable-folding t
+            latex-enable-folding t
             )
      (go :variables
          go-backend 'lsp
@@ -628,6 +629,9 @@ before packages are loaded."
 
   "latex-pdf settings"
   (setq TeX-auto-private "~/.emacs.d/private/auctex/auto")
+
+  ;; disable auto-fill
+  (add-hook 'LaTeX-mode-hook 'spacemacs/toggle-auto-fill-mode-off)
 
   ;; fuzzy matching in latex mode
   ;; (add-hook 'TeX-update-style-hook (lambda () (progn (unless (company-fuzzy-mode) (company-fuzzy-mode 1))
