@@ -26,3 +26,6 @@ function swap
     set tmpfile (mktemp)
     command mv $argv[1] $tmpfile && mv $argv[2] $argv[1] && mv $tmpfile $argv[2]
 end
+
+# allow fzf.fish to search for hidden files
+set fzf_fd_opts --hidden --exclude=.git --no-ignore
