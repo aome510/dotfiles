@@ -3,7 +3,6 @@ Description=Backup config files daily
 
 [Timer]
 OnCalendar=daily
-OnBootSec=120
 OnUnitActiveSec=1d
 Persistent=true
 

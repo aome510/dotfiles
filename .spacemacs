@@ -87,8 +87,11 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      (auto-completion :variables
                       auto-completion-enable-sort-by-usage t
-                      auto-completion-tab-key-behavior nil
+                      auto-completion-tab-key-behavior 'complete
+                      auto-completion-return-key-behavior nil
                       auto-completion-enable-help-tooltip t
+                      auto-completion-complete-with-key-sequence "jk"
+                      auto-completion-complete-with-key-sequence-delay 1.0
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-idle-delay 0.0
                       auto-completion-minimum-prefix-length 1)
@@ -636,10 +639,8 @@ before packages are loaded."
   ;; disable auto-fill
   (add-hook 'LaTeX-mode-hook 'spacemacs/toggle-auto-fill-mode-off)
 
-  ;; fuzzy matching in latex mode
-  ;; (add-hook 'TeX-update-style-hook (lambda () (progn (unless (company-fuzzy-mode) (company-fuzzy-mode 1))
-  ;;                                                    (setq company-backends
-  ;;                                                          '((company-fuzzy-all-other-backends :with company-yasnippet company-auctex-macros))))))
+  (add-hook 'TeX-update-style-hook (lambda () (setq company-backends
+                                              '((company-capf :with company-yasnippet company-dabbrev)))))
 
   ;; pdf-view in another window
   (with-eval-after-load 'latex (require 'pdf-sync))
