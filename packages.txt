@@ -4,7 +4,7 @@ aspell-en 2020.12.07-1
 autoconf 2.71-1
 automake 1.16.3-1
 base 2-2
-bat 0.18.0-1
+bat 0.18.0-2
 binutils 2.36.1-2
 bison 3.7.3-1
 bluez 5.56-1
@@ -16,6 +16,7 @@ cdrtools 3.02a09-4
 cheese 3.38.0-1
 cinnamon-screensaver 4.8.1-1
 code 1.53.2-1
+color-picker 1.1.5-1
 dcron 4.5-8
 deepin-screen-recorder 5.8.1-1
 deluge 2.0.4.dev38+g23a48dd01-3
@@ -23,7 +24,7 @@ deluge-gtk 2.0.4.dev38+g23a48dd01-3
 dex 0.9.0-1
 digestif 0.3-3
 discord 0.0.13-1
-docker 1:20.10.4-1
+docker 1:20.10.5-1
 dracut 052-1
 dracut-hook-uefi 0.4.2-1
 dzen2 0.9.5.14.488ab66-2
@@ -36,7 +37,7 @@ fd 8.2.1-1
 feh 3.6.3-1
 file 5.39-1
 findutils 4.8.0-1
-firefox-developer-edition 87.0b4-1
+firefox-developer-edition 87.0b5-1
 fish 3.1.2-2
 flameshot 0.9.0-1
 flex 2.6.4-3
@@ -68,7 +69,7 @@ keybase-bin 5.6.1_20210125164223+f3b21527b9-1
 kitty 0.19.3-2
 libldac 2.0.2.3-1
 libtool 2.4.6+42+gb88cebd5-14
-light 1.2.2-1
+light 1.2.2-2
 lightdm 1:1.30.0-4
 lightdm-gtk-greeter 1:2.0.8-1
 linux 5.11.2.arch1-1
@@ -82,7 +83,7 @@ make 4.3-3
 man-db 2.9.4-1
 nautilus 3.38.2-1
 net-tools 2.10-1
-nodejs 15.10.0-1
+nodejs 15.11.0-1
 notification-daemon 3.20.0-4
 noto-fonts 20201226-1
 noto-fonts-cjk 20201206-1
@@ -151,4 +152,4 @@ xsel 1.2.0.20190821-1
 yarn 1.22.10-1
 yay 10.1.2-2
 zip 3.0-9
-zoom 5.5.2-1
+zoom 5.5.4-1
