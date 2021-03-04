@@ -41,7 +41,9 @@ This function should only modify configuration layer settings."
      racket
      prettier
      dap
-     (markdown :variables markdown-live-preview-engine 'vmd)
+     (markdown :variables
+               markdown-command "markdown_py"
+               markdown-live-preview-engine 'vmd)
      (javascript :variables
                  js2-basic-offset 2
                  js-indent-level 2

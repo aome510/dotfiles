@@ -16,7 +16,6 @@ cdrtools 3.02a09-4
 cheese 3.38.0-1
 cinnamon-screensaver 4.8.1-1
 code 1.53.2-1
-color-picker 1.1.5-1
 dcron 4.5-8
 deepin-screen-recorder 5.8.1-1
 deluge 2.0.4.dev38+g23a48dd01-3
@@ -51,7 +50,7 @@ gedit 3.38.1-1
 gettext 0.21-1
 git 2.30.1-1
 go-ethereum 1.9.25-2
-google-chrome 88.0.4324.182-1
+google-chrome 89.0.4389.72-1
 gparted 1.2.0-2
 grep 3.6-1
 groff 1.22.4-4
@@ -142,6 +141,7 @@ wimlib 1.13.3-1
 windscribe-cli 1.4_51-1
 wscat 4.0.1-2
 xbindkeys 1.8.7-2
+xcolor 0.4.0-1
 xfce4-notifyd 0.6.2-2
 xorg-server 1.20.10-3
 xorg-xev 1.2.4-1
