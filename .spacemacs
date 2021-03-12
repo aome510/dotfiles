@@ -122,7 +122,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(gruvbox-theme company-fuzzy auto-package-update)
+   dotspacemacs-additional-packages '(gruvbox-theme company-fuzzy)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -561,14 +561,8 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  """additional packages"""
-  "auto-package-update"
-  (use-package auto-package-update
-    :config
-    (setq auto-package-update-delete-old-versions t)
-    (setq auto-package-update-hide-results t)
-    (auto-package-update-maybe))
-
+  "enable helm-mode by default"
+  (helm-mode)
   "evil-mode settings"
   (setq evil-cross-lines t)
 

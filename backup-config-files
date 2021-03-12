@@ -61,8 +61,11 @@ for f in os.listdir('{}/.config'.format(home)):
 # list all explicitly installed packages into packages.txt
 os.system(f'pacman -Qe > {cwd}/packages.txt')
 
-# commit/push new changes using git
-os.system(f'cd {cwd} && \
-    git add . && \
-    git commit -m "backup configs {date.today().strftime("%Y-%m-%d")}"')
-os.system(f'cd {cwd} && git push')
+weekday = date.today().weekday()
+# only backup using git on Tue, Thu, Sat
+if weekday % 2 == 1:
+  # commit/push new changes using git
+  os.system(f'cd {cwd} && \
+      git add . && \
+      git commit -m "backup configs {date.today().strftime("%Y-%m-%d")}"')
+  os.system(f'cd {cwd} && git push')

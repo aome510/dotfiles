@@ -1,10 +1,8 @@
 [Unit]
-Description=Backup config files daily
+Description=Backup config files 5 mins after boot
 
 [Timer]
-OnCalendar=daily
-OnUnitActiveSec=1d
-Persistent=true
+OnBootSec=5min
 
 [Install]
 WantedBy=timers.target
