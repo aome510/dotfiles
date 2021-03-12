@@ -63,7 +63,6 @@ This function should only modify configuration layer settings."
             latex-backend 'lsp
             latex-build-engine 'xetex
             latex-enable-auto-fill nil
-            latex-refresh-preview t
             latex-enable-folding t
             )
      (go :variables
