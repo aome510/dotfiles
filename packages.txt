@@ -15,7 +15,7 @@ ccls 0.20201219-3
 cdrtools 3.02a09-4
 cheese 3.38.0-1
 cinnamon-screensaver 4.8.1-1
-code 1.53.2-1
+code 1.54.2-1
 dcron 4.5-8
 deepin-screen-recorder 5.8.1-1
 deluge 2.0.4.dev38+g23a48dd01-3
@@ -36,7 +36,7 @@ fd 8.2.1-1
 feh 3.6.3-1
 file 5.39-1
 findutils 4.8.0-1
-firefox-developer-edition 87.0b8-1
+firefox-developer-edition 87.0b9-1
 fish 3.1.2-2
 flameshot 0.9.0-1
 flex 2.6.4-3
@@ -50,7 +50,7 @@ gedit 3.38.1-1
 gettext 0.21-1
 git 2.30.2-1
 go-ethereum 1.10.1-1
-google-chrome 89.0.4389.82-1
+google-chrome 89.0.4389.90-1
 gparted 1.2.0-2
 grep 3.6-1
 groff 1.22.4-4
@@ -72,7 +72,7 @@ libtool 2.4.6+42+gb88cebd5-14
 light 1.2.2-2
 lightdm 1:1.30.0-4
 lightdm-gtk-greeter 1:2.0.8-1
-linux 5.11.4.arch1-1
+linux 5.11.6.arch1-1
 linux-firmware 20210208.b79d239-1
 lldb 11.1.0-1
 lldb-mi-git r69.807a5e7-1
