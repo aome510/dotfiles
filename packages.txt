@@ -59,6 +59,7 @@ htop-vim-git 1:3.0.5.91.g0d67263-1
 i3-gaps 4.19.1-1
 i3status 2.13-3
 ibus 1.5.24-1
+ibus-hangul 1.5.4-2
 ibus-unikey 0.6.1-6
 iwd 1.12-1
 kak-lsp 9.0.0-1
