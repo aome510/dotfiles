@@ -457,7 +457,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, start an Emacs server if one is not already running.
    ;; (default nil)
-   dotspacemacs-enable-server t
+   dotspacemacs-enable-server nil
 
    ;; Set the emacs server socket location.
    ;; If nil, uses whatever the Emacs default is, otherwise a directory path
@@ -633,7 +633,7 @@ before packages are loaded."
   (spacemacs/enable-transparency)
 
   "latex-pdf settings"
-  (setq TeX-auto-private "~/.emacs.d/private/auctex/auto")
+  ;; (setq TeX-auto-private "~/.emacs.d/private/auctex/auto")
 
   ;; disable auto-fill
   (add-hook 'LaTeX-mode-hook 'spacemacs/toggle-auto-fill-mode-off)
