@@ -8,7 +8,7 @@ home = str(Path.home())
 
 home_white_list = [
     ".bash_profile", ".bashrc", ".spacemacs", ".tmux.conf", ".vimrc",
-    ".xbindkeysrc", ".xkbcomp", ".tmux", ".gitconfig"
+    ".xbindkeysrc", ".xkbcomp", ".tmux", ".gitconfig", ".doom.d",
 ]
 
 dot_config_white_list = [
