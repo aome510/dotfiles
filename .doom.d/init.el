@@ -39,13 +39,13 @@
        ;;minimap             ; show a map of the code on the side
        modeline              ; snazzy, Atom-inspired modeline, plus API
        ;;nav-flash           ; blink cursor line after big motions
-       ;                     ; neotree ; a project drawer, like NERDTree for vim
+                                        ;                     ; neotree ; a project drawer, like NERDTree for vim
        ophints               ; highlight the region an operation acts on
        (popup +defaults)     ; tame sudden yet inevitable temporary windows
        ;;tabs                ; a tab bar for Emacs
        treemacs              ; a project drawer, like neotree but cooler
        unicode               ; extended unicode support for various languages
-       vc-gutter             ; vcs diff in the fringe
+       ;;vc-gutter             ; vcs diff in the fringe
        vi-tilde-fringe       ; fringe tildes to mark beyond EOB
        ;;window-select       ; visually switch windows
        workspaces            ; tab emulation, persistence & separate workspaces
@@ -94,7 +94,7 @@
        ;;gist                ; interacting with github gists
        lookup                ; navigate your code and its documentation
        (lsp +peek)
-       magit                 ; a git porcelain for Emacs
+       ;;magit                 ; a git porcelain for Emacs
        ;;make                ; run make tasks from Emacs
        ;;pass                ; password manager for nerds
        pdf                   ; pdf enhancements
@@ -184,3 +184,5 @@
        :config
        ;;literate
        (default +bindings +smartparens))
+
+(setq evil-respect-visual-line-mode nil)

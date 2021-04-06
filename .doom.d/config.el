@@ -58,12 +58,21 @@
 
 ;; Package configurations
 
+;;; doom-theme
+(use-package doom-themes
+  :config
+  (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+  (doom-themes-treemacs-config))
+
 ;;; company
 (use-package! company
   :when (featurep! :completion company)
   :config
-  (setq company-idle-delay 0))
+  (setq company-idle-delay 0.1
+        company-minimum-prefix-length 3))
 
+(setq-default history-length 1000) ; remembering history from precedent
+(setq-default prescient-history-length 1000)
 
 ;;; flx
 (use-package! flx
@@ -91,56 +100,132 @@
 (use-package! latex
   :when (featurep! :lang latex +lsp)
   :config
+  ;; variable settings
+  (setq TeX-electric-sub-and-superscript nil)
+  ;; preview latex using pdf tools
   (setq +latex-viewers '(pdf-tools evince)
-        TeX-source-correlate-start-server  t)
-  (add-hook! ('TeX-mode-hook) #'lsp!))
+        TeX-view-program-selection '((output-pdf "PDF Tools"))
+        TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+        TeX-source-correlate-start-server t)
+  (add-hook 'TeX-after-compilation-finished-functions
+            #'TeX-revert-document-buffer)
+  ;; no deferred lsp
+  (add-hook 'TeX-mode-hook #'lsp)
+  (add-hook 'TeX-update-style-hook (lambda () (setq company-backends
+                                                    '((:separate company-capf company-yasnippet company-dabbrev))))))
+
+;;; pdf-tools
+(use-package! pdf-tools
+  :when (featurep! :tools pdf)
+  :config
+  (setq-default pdf-view-display-size 'fit-width))
 
 ;;; format
 (use-package! format
   :when (featurep! :editor format)
   :config
+  ;;; format on save everywhere
   (setq +format-on-save-enabled-modes '(not)))
+
+;;; evil packages
+;; (use-package! evil
+;;   :when (featurep! :editor evil +everywhere)
+;;   :config
+;;   (setq evil-ex-search-highlight-all nil))
 
 ;; User's defined key bindings
 (map!
- ;; motions
- :mvn "g h" #'evil-beginning-of-line
- :mvn "g i" #'evil-first-non-blank
- :mvn "g l" #'evil-end-of-line
+ "M-="    #'text-scale-increase
+ "M--"    #'text-scale-decrease
 
- :n "U" #'evil-redo
- )
+ "M-<return>" #'toggle-frame-fullscreen
+
+ (:when (featurep! :editor evil +everywhere)
+  (:after evil
+   ;; Kakoune-like key bindings
+   :mvn "g h" #'evil-beginning-of-line
+   :mvn "g i" #'evil-first-non-blank
+   :mvn "g l" #'evil-end-of-line
+
+   :mvn "M-n" #'evil-ex-search-previous
+
+   :n "U" #'evil-redo)))
 
 (map!
  ;; user's defined keybindings with leader keys
  :leader
  (:prefix-map ("a" . "custom keybindings")
-  :desc  "Align left"    "l" #'evil-lion-left
-  :desc  "Align right"   "r" #'evil-lion-right)
- :prefix "c"
- :map tex-mode-map
- :desc  "LaTeX Run all" "r" #'TeX-command-run-all
- :desc  "LaTeX View"    "v" #'TeX-view
- :desc  "LaTeX Build"   "b" #'TeX-command-master
- )
+  :desc "Align Left"    "l" #'evil-lion-left
+  :desc "Align Right"   "r" #'evil-lion-right
+  :desc "Expand Region" "v" #'er/expand-region)
+
+ (:when (featurep! :lang latex)
+  (:after latex
+   (:prefix "c"
+    :map tex-mode-map
+    :desc  "LaTeX View"    "v" #'TeX-view
+    :desc  "LaTeX Build"   "b" #'TeX-command-master
+    :desc  "LaTeX Run all" "SPC" #'TeX-command-run-all)))
+
+
+ (:when (featurep! :ui treemacs)
+  (:after treemacs
+   (:leader :desc "Toggle Treemacs" "0" #'treemacs)
+   (:prefix "p"
+    :desc "Treemacs Projectile" "A" #'treemacs-projectile))))
 
 (map!
  ;; key bindings for packages
  ;;; multi-cursors
  (:when (featurep! :editor multiple-cursors)
-  (:after evil-mc
+  (:after evil
    :nv "C-n" #'evil-mc-make-and-goto-next-match
    :nv "C-p" #'evil-mc-make-and-goto-prev-match))
+
  ;;; ivy
  (:when (featurep! :completion ivy)
   (:after ivy
    :map ivy-minibuffer-map
    "C-h" #'ivy-backward-delete-char))
+
+ ;;; lsp
+ (:when (featurep! :tools lsp)
+  (:after lsp-mode
+   :map lsp-mode-map
+   (:leader :prefix "c"
+    :desc "Find references" "r" #'lsp-find-references)))
+
  ;;; company
  (:when (featurep! :completion company)
   (:after company
    (:map company-active-map
-    [RET] nil
+    "RET" nil
     [return] nil
-    [tab] #'company-complete-selection
-    "C-l" #'company-complete-selection))))
+    "TAB" nil
+    [tab] nil
+    "C-l" #'company-complete-selection)))
+
+ (:when (featurep! :editor snippets)
+  (:after yasnippet
+   (:map yas-minor-mode-map
+    "TAB" #'yas-next-field-or-maybe-expand
+    [tab] #'yas-next-field-or-maybe-expand))))
+
+
+;; upon spliting window, open projectile-find-file
+(after! evil (after! ivy
+               (setq evil-vsplit-window-right t
+                     evil-split-window-below t)
+               (defadvice! prompt-for-buffer (&rest _)
+                 :after '(evil-window-split evil-window-vsplit)
+                 (counsel-recentf))))
+
+;; others
+;;; disable inserting tabs
+(global-unset-key (kbd "TAB"))
+
+;;; remove latex autofill
+(remove-hook 'text-mode-hook #'turn-on-auto-fill)
+
+;;; disable smartparens globally
+(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
