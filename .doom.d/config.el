@@ -69,7 +69,9 @@
   :when (featurep! :completion company)
   :config
   (setq company-idle-delay 0.1
-        company-minimum-prefix-length 3))
+        company-selection-wrap-around t
+        ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
+        company-minimum-prefix-length 2))
 
 (setq-default history-length 1000) ; remembering history from precedent
 (setq-default prescient-history-length 1000)
@@ -109,10 +111,9 @@
         TeX-source-correlate-start-server t)
   (add-hook 'TeX-after-compilation-finished-functions
             #'TeX-revert-document-buffer)
-  ;; no deferred lsp
-  (add-hook 'TeX-mode-hook #'lsp)
-  (add-hook 'TeX-update-style-hook (lambda () (setq company-backends
-                                                    '((:separate company-capf company-yasnippet company-dabbrev))))))
+  (add-hook 'TeX-mode-hook #'lsp!)
+  (add-hook 'TeX-mode-hook (lambda () (setq +lsp-company-backends
+                                            '(:separate company-capf company-yasnippet company-dabbrev)))))
 
 ;;; pdf-tools
 (use-package! pdf-tools
@@ -128,10 +129,10 @@
   (setq +format-on-save-enabled-modes '(not)))
 
 ;;; evil packages
-;; (use-package! evil
-;;   :when (featurep! :editor evil +everywhere)
-;;   :config
-;;   (setq evil-ex-search-highlight-all nil))
+(use-package! evil
+  :when (featurep! :editor evil +everywhere)
+  :config
+  (setq evil-cross-lines t))
 
 ;; User's defined key bindings
 (map!
@@ -169,10 +170,9 @@
 
 
  (:when (featurep! :ui treemacs)
-  (:after treemacs
-   (:leader :desc "Toggle Treemacs" "0" #'treemacs)
-   (:prefix "p"
-    :desc "Treemacs Projectile" "A" #'treemacs-projectile))))
+  (:leader :desc "Toggle Treemacs" "0" #'treemacs)
+  (:prefix "p"
+   :desc "Treemacs Projectile" "A" #'treemacs-projectile)))
 
 (map!
  ;; key bindings for packages
@@ -205,6 +205,7 @@
     [tab] nil
     "C-l" #'company-complete-selection)))
 
+ ;;; yasnippet
  (:when (featurep! :editor snippets)
   (:after yasnippet
    (:map yas-minor-mode-map
@@ -229,3 +230,6 @@
 
 ;;; disable smartparens globally
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
+
+;;; enable electric pair mode
+(electric-pair-mode)
