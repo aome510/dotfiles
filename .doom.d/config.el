@@ -105,12 +105,7 @@
   ;; variable settings
   (setq TeX-electric-sub-and-superscript nil)
   ;; preview latex using pdf tools
-  (setq +latex-viewers '(pdf-tools evince)
-        TeX-view-program-selection '((output-pdf "PDF Tools"))
-        TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
-        TeX-source-correlate-start-server t)
-  (add-hook 'TeX-after-compilation-finished-functions
-            #'TeX-revert-document-buffer)
+  (setq +latex-viewers '(pdf-tools evince))
   (add-hook 'TeX-mode-hook #'lsp!)
   (add-hook 'TeX-mode-hook (lambda () (setq +lsp-company-backends
                                             '(:separate company-capf company-yasnippet company-dabbrev)))))
@@ -162,17 +157,11 @@
 
  (:when (featurep! :lang latex)
   (:after latex
-   (:prefix "c"
-    :map tex-mode-map
-    :desc  "LaTeX View"    "v" #'TeX-view
-    :desc  "LaTeX Build"   "b" #'TeX-command-master
-    :desc  "LaTeX Run all" "SPC" #'TeX-command-run-all)))
-
-
- (:when (featurep! :ui treemacs)
-  (:leader :desc "Toggle Treemacs" "0" #'treemacs)
-  (:prefix "p"
-   :desc "Treemacs Projectile" "A" #'treemacs-projectile)))
+   (:map latex-mode-map
+    (:prefix "c"
+     :desc  "LaTeX View"    "v" #'TeX-view
+     :desc  "LaTeX Build"   "b" #'TeX-command-master
+     :desc  "LaTeX Run all" "SPC" #'TeX-command-run-all)))))
 
 (map!
  ;; key bindings for packages
