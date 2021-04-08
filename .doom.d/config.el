@@ -76,7 +76,7 @@
 (setq-default history-length 1000) ; remembering history from precedent
 (setq-default prescient-history-length 1000)
 
-;;; flx
+;;; ivy
 (use-package! flx
   :when (featurep! :completion ivy +fuzzy)
   :config
@@ -127,7 +127,8 @@
 (use-package! evil
   :when (featurep! :editor evil +everywhere)
   :config
-  (setq evil-cross-lines t))
+  (setq evil-cross-lines t)
+  (setq evil-snipe-scope 'visible))
 
 ;; User's defined key bindings
 (map!
@@ -147,29 +148,35 @@
 
    :n "U" #'evil-redo)))
 
+;; key bindings
 (map!
- ;; user's defined keybindings with leader keys
- :leader
- (:prefix-map ("a" . "custom keybindings")
+ ;;; custom
+ (:leader
+  :prefix ("a" . "custom keybindings")
   :desc "Align Left"    "l" #'evil-lion-left
   :desc "Align Right"   "r" #'evil-lion-right
   :desc "Expand Region" "v" #'er/expand-region)
 
+ ;;; latex
  (:when (featurep! :lang latex)
   (:after latex
    (:map latex-mode-map
-    (:prefix "c"
-     :desc  "LaTeX View"    "v" #'TeX-view
-     :desc  "LaTeX Build"   "b" #'TeX-command-master
-     :desc  "LaTeX Run all" "SPC" #'TeX-command-run-all)))))
+    :localleader
+    :desc  "LaTeX View"    "v" #'TeX-view
+    :desc  "LaTeX Build"   "b" #'TeX-command-master
+    :desc  "LaTeX Run all" "r" #'TeX-command-run-all)))
 
-(map!
- ;; key bindings for packages
  ;;; multi-cursors
  (:when (featurep! :editor multiple-cursors)
-  (:after evil
+  (:after evil-mc
    :nv "C-n" #'evil-mc-make-and-goto-next-match
    :nv "C-p" #'evil-mc-make-and-goto-prev-match))
+
+ ;; evil
+ (:when (featurep! :editor evil +everywhere)
+  (:after evil
+   :nv "TAB" #'evil-indent-line
+   :nv [tab] #'evil-indent-line))
 
  ;;; ivy
  (:when (featurep! :completion ivy)
@@ -222,3 +229,6 @@
 
 ;;; enable electric pair mode
 (electric-pair-mode)
+
+;;; treat underscore as word character
+(modify-syntax-entry ?_ "w")
