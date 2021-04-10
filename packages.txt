@@ -30,7 +30,7 @@ dracut-hook-uefi 0.4.2-1
 dzen2 0.9.5.14.488ab66-2
 edk2-shell 202102-1
 efitools 1.9.2-3
-emacs 27.2-1
+emacs-native-comp-git 28.0.50.147730-1
 evince 40.1-1
 fakeroot 1.25.3-2
 fd 8.2.1-1

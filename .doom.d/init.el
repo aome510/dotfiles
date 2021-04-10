@@ -186,3 +186,8 @@
        (default +bindings +smartparens))
 
 (setq evil-respect-visual-line-mode nil)
+
+;; start emacs server
+(require 'server)
+(or (server-running-p)
+    (server-start))
