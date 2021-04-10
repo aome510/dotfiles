@@ -12,7 +12,7 @@ bluez 5.58-1
 bluez-utils 5.58-1
 btrfs-progs 5.11.1-1
 caribou 0.4.21+66+g14f5428-3
-ccls 0.20201219-3
+ccls 0.20210330-1
 cdrtools 3.02a09-4
 cheese 3.38.0-1
 cinnamon-screensaver 4.8.1-1
@@ -41,8 +41,8 @@ firefox-developer-edition 88.0b8-1
 fish 3.2.1-1
 flameshot 0.9.0-1
 flex 2.6.4-3
-flyway 7.7.1-1
-fzf 0.26.0-1
+flyway 7.7.2-1
+fzf 0.27.0-1
 gawk 5.1.0-1
 gcc 10.2.0-6
 gdb 10.1-4
@@ -73,7 +73,7 @@ libtool 2.4.6+42+gb88cebd5-14
 light 1.2.2-2
 lightdm 1:1.30.0-4
 lightdm-gtk-greeter 1:2.0.8-1
-linux 5.11.11.arch1-1
+linux 5.11.12.arch1-1
 linux-firmware 20210315.3568f96-1
 lldb 11.1.0-1
 lldb-mi-git r69.807a5e7-1
@@ -115,7 +115,7 @@ sed 4.8-1
 solidity0.5 0.5.17-1
 spotify 1:1.1.42.622-2
 sudo 1.9.6.p1-1
-systemd-resolvconf 248-3
+systemd-resolvconf 248-4
 texinfo 6.7-3
 texlab 2.2.2-1
 texlive-bibtexextra 2020.56991-1
@@ -136,7 +136,7 @@ uno-calculator-bin 1.2.4.725-1
 unzip 6.0-14
 valgrind 3.16.1-4
 vim 8.2.2653-1
-vlc 3.0.12-3
+vlc 3.0.12-4
 volctl 0.8.2-1
 which 2.21-5
 wimlib 1.13.3-1

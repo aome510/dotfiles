@@ -106,6 +106,7 @@
   (setq TeX-electric-sub-and-superscript nil)
   ;; preview latex using pdf tools
   (setq +latex-viewers '(pdf-tools evince))
+  (setq TeX-command-force "LatexMk")
   (add-hook 'TeX-mode-hook #'lsp!)
   (add-hook 'TeX-mode-hook (lambda () (setq +lsp-company-backends
                                             '(:separate company-capf company-yasnippet company-dabbrev)))))
@@ -160,7 +161,7 @@
  ;;; latex
  (:when (featurep! :lang latex)
   (:after latex
-   (:map latex-mode-map
+   (:map LaTeX-mode-map
     :localleader
     :desc  "LaTeX View"    "v" #'TeX-view
     :desc  "LaTeX Build"   "b" #'TeX-command-master
