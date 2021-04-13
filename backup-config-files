@@ -7,47 +7,47 @@ from datetime import date
 home = str(Path.home())
 
 home_white_list = [
-    ".bash_profile", ".bashrc", ".spacemacs", ".tmux.conf", ".vimrc",
-    ".xbindkeysrc", ".xkbcomp", ".tmux", ".gitconfig", ".doom.d",
+    ".bash_profile",
+    ".bashrc",
+    ".spacemacs",
+    ".tmux.conf",
+    ".vimrc",
+    ".xbindkeysrc",
+    ".xkbcomp",
+    ".tmux",
+    ".gitconfig",
+    ".doom.d",
 ]
 
 dot_config_white_list = [
-    "autorandr",
-    "autostart",
-    "fish",
-    "flake8",
-    "flameshot",
-    "fontconfig",
-    "i3",
-    "i3status",
-    "kak",
-    "kak-lsp",
-    "kitty",
-    "light",
-    "picom.conf",
-    "yapf",
-    "systemd",
+    "autorandr", "autostart", "fish", "flake8", "flameshot", "fontconfig", "i3",
+    "i3status", "kak", "kak-lsp", "kitty", "light", "omf", "picom.conf", "yapf",
+    "systemd", ".projectile"
 ]
 
 cwd = os.path.dirname(__file__)
 
 # add git modules first
 if os.path.exists('{cwd}/.config/kak/plugins/plug.kak'):
-  os.system(
-      f'git submodule add https://github.com/robertmeta/plug.kak.git {cwd}/.config/kak/plugins/plug.kak 2>/dev/null'
-  )
+  os.system(f"""
+    git submodule add https://github.com/robertmeta/plug.kak.git
+    {cwd}/.config/kak/plugins/plug.kak 2>/dev/null'
+  """)
 if os.path.exists('{cwd}/.config/kitty/kitty-themes'):
-  os.system(
-      f'git submodule add https://github.com/dexpota/kitty-themes {cwd}/.config/kitty/kitty-themes 2>/dev/null'
-  )
+  os.system(f"""
+      git submodule add https://github.com/dexpota/kitty-themes
+      {cwd}/.config/kitty/kitty-themes 2>/dev/null'
+    """)
 if os.path.exists('{cwd}/.tmux/plugins/tpm'):
-  os.system(
-      f'git submodule add https://github.com/tmux-plugins/tpm {cwd}/.tmux/plugins/tpm 2>/dev/null'
-  )
+  os.system(f"""
+    git submodule add https://github.com/tmux-plugins/tpm
+    {cwd}/.tmux/plugins/tpm 2>/dev/null'
+  """)
 if os.path.exists('{cwd}/.tmux/plugins/tmux-themepack'):
-  os.system(
-      f'git submodule add https://github.com/jimeh/tmux-themepack {cwd}/.tmux/plugins/tmux-themepack 2>/dev/null'
-  )
+  os.system(f"""
+    git submodule add https://github.com/jimeh/tmux-themepack
+    {cwd}/.tmux/plugins/tmux-themepack 2>/dev/null'
+  """)
 
 for f in os.listdir(home):
   if f in home_white_list:

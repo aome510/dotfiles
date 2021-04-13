@@ -88,10 +88,24 @@
   :defer t
   :config
   (setq lsp-ui-doc-enable t
+        lsp-ui-doc-position 'top
         lsp-ui-doc-max-height 16
         lsp-ui-doc-max-width 64
         lsp-ui-doc-show-with-cursor t
         lsp-ui-doc-show-with-mouse t))
+
+(use-package! lsp-pyls
+  :when (featurep! :lang python +lsp)
+  :config
+  (setq lsp-pyls-configuration-sources ["flake8"]
+        lsp-pyls-plugins-flake8-enabled t
+        lsp-pyls-plugins-yapf-enabled t))
+
+(use-package! lsp-rust
+  :when (featurep! :lang rust +lsp)
+  :config
+  (setq lsp-rust-analyzer-proc-macro-enable t
+        lsp-rust-analyzer-cargo-run-build-scripts t))
 
 ;;; snippets
 (use-package! doom-snippets
@@ -107,6 +121,7 @@
   ;; preview latex using pdf tools
   (setq +latex-viewers '(pdf-tools evince))
   (setq TeX-command-force "LatexMk")
+  (add-hook 'TeX-mode-hook #'smartparens-global-mode)
   (add-hook 'TeX-mode-hook #'lsp!)
   (add-hook 'TeX-mode-hook (lambda () (setq +lsp-company-backends
                                             '(:separate company-capf company-yasnippet company-dabbrev)))))
@@ -167,6 +182,11 @@
     :desc  "LaTeX Build"   "b" #'TeX-command-master
     :desc  "LaTeX Run all" "r" #'TeX-command-run-all)))
 
+ ;;; tex-evil
+ (:after evil-tex
+  (:map TeX-mode-map
+   :nv "m" #'evil-set-marker))
+
  ;;; multi-cursors
  (:when (featurep! :editor multiple-cursors)
   (:after evil-mc
@@ -190,6 +210,7 @@
   (:after lsp-mode
    :map lsp-mode-map
    (:leader :prefix "c"
+    :desc "Restart workspace" "R" #'lsp-restart-workspace
     :desc "Find references" "r" #'lsp-find-references)))
 
  ;;; company
@@ -222,14 +243,14 @@
 ;;; disable inserting tabs
 (global-unset-key (kbd "TAB"))
 
+;;; save file
+(global-set-key (kbd "C-s") #'save-buffer)
+
 ;;; remove latex autofill
 (remove-hook 'text-mode-hook #'turn-on-auto-fill)
 
 ;;; disable smartparens globally
-(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
-
-;;; enable electric pair mode
-(electric-pair-mode)
+;; (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 
 ;;; treat underscore as word character
 (modify-syntax-entry ?_ "w")

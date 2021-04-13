@@ -8,6 +8,12 @@ end
 # use fish default key bindings for fish in emacs.
 if not test -n "$INSIDE_EMACS"
     fish_vi_key_bindings
+
+    # user-defined keybindings
+    bind --user 'gh' beginning-of-line
+    bind --user -M visual 'gh' beginning-of-line
+    bind --user 'gl' end-of-line
+    bind --user -M visual 'gl' end-of-line
 else
     fish_default_key_bindings
 end
