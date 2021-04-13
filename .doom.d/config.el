@@ -83,12 +83,19 @@
   (setq ivy-flx-limit 1024))
 
 ;;; lsp packages
+
+(use-package! lsp
+  :when (featurep! :tools lsp)
+  :config
+  (setq read-process-output-max (* 1024 1024)))
+
 (use-package! lsp-ui
   :when (featurep! :tools lsp)
   :defer t
   :config
   (setq lsp-ui-doc-enable t
         lsp-ui-doc-position 'top
+        lsp-ui-doc-alignment 'window
         lsp-ui-doc-max-height 16
         lsp-ui-doc-max-width 64
         lsp-ui-doc-show-with-cursor t
@@ -98,8 +105,7 @@
   :when (featurep! :lang python +lsp)
   :config
   (setq lsp-pyls-configuration-sources ["flake8"]
-        lsp-pyls-plugins-flake8-enabled t
-        lsp-pyls-plugins-yapf-enabled t))
+        lsp-pyls-plugins-flake8-enabled t))
 
 (use-package! lsp-rust
   :when (featurep! :lang rust +lsp)
@@ -121,6 +127,7 @@
   ;; preview latex using pdf tools
   (setq +latex-viewers '(pdf-tools evince))
   (setq TeX-command-force "LatexMk")
+  ;; disable smartparens in latex mode
   (add-hook 'TeX-mode-hook #'smartparens-global-mode)
   (add-hook 'TeX-mode-hook #'lsp!)
   (add-hook 'TeX-mode-hook (lambda () (setq +lsp-company-backends
