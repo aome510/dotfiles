@@ -87,7 +87,8 @@
 (use-package! lsp
   :when (featurep! :tools lsp)
   :config
-  (setq read-process-output-max (* 1024 1024)))
+  (setq read-process-output-max (* 1024 1024)
+        lsp-modeline-diagnostics-enable nil))
 
 (use-package! lsp-ui
   :when (featurep! :tools lsp)
@@ -128,7 +129,7 @@
   (setq +latex-viewers '(pdf-tools evince))
   (setq TeX-command-force "LatexMk")
   ;; disable smartparens in latex mode
-  (add-hook 'TeX-mode-hook #'smartparens-global-mode)
+  (add-hook 'TeX-mode-hook #'turn-off-smartparens-mode)
   (add-hook 'TeX-mode-hook #'lsp!)
   (add-hook 'TeX-mode-hook (lambda () (setq +lsp-company-backends
                                             '(:separate company-capf company-yasnippet company-dabbrev)))))
