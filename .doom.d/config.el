@@ -95,8 +95,6 @@
   :defer t
   :config
   (setq lsp-ui-doc-enable t
-        lsp-ui-doc-position 'top
-        lsp-ui-doc-alignment 'window
         lsp-ui-doc-max-height 16
         lsp-ui-doc-max-width 64
         lsp-ui-doc-show-with-cursor t
