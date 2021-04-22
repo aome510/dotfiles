@@ -159,6 +159,16 @@
 
  "M-<return>" #'toggle-frame-fullscreen
 
+ ;; custom leader key = "a"
+ (:leader
+  :prefix ("a" . "custom keybindings")
+  :desc "Align Left"    "l" #'evil-lion-left
+  :desc "Align Right"   "r" #'evil-lion-right
+  :desc "Expand Region" "v" #'er/expand-region)
+
+ (:leader :prefix "p"
+  :desc "Projectile Dired" "SPC" #'projectile-dired)
+
  (:when (featurep! :editor evil +everywhere)
   (:after evil
    ;; Kakoune-like key bindings
@@ -170,15 +180,8 @@
 
    :n "U" #'evil-redo)))
 
-;; key bindings
+;; Packages key bindings
 (map!
- ;;; custom
- (:leader
-  :prefix ("a" . "custom keybindings")
-  :desc "Align Left"    "l" #'evil-lion-left
-  :desc "Align Right"   "r" #'evil-lion-right
-  :desc "Expand Region" "v" #'er/expand-region)
-
  ;;; latex
  (:when (featurep! :lang latex)
   (:after latex
