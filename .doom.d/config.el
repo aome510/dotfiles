@@ -191,6 +191,12 @@
     :desc  "LaTeX Build"   "b" #'TeX-command-master
     :desc  "LaTeX Run all" "r" #'TeX-command-run-all)))
 
+ ;; dired
+ (:after dired
+  :map dired-mode-map
+  :n "h" #'dired-up-directory
+  :n "l" #'dired-find-file)
+
  ;;; tex-evil
  (:after evil-tex
   (:map TeX-mode-map
