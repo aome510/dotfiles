@@ -70,6 +70,7 @@
   :config
   (setq company-idle-delay 0.1
         company-selection-wrap-around t
+        ;; company-dabbrev-code-everywhere t
         ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
         company-minimum-prefix-length 2))
 
@@ -269,3 +270,4 @@
 
 ;;; treat underscore as word character
 (modify-syntax-entry ?_ "w")
+(modify-syntax-entry ?- "w")
