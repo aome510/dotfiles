@@ -1,5 +1,6 @@
 amd-ucode 20210315.3568f96-1
 anki 2.1.35-3
+asciinema 2.0.2-5
 aspell 0.60.8-2
 aspell-en 2020.12.07-1
 autoconf 2.71-1
