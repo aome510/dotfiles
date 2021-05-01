@@ -55,6 +55,12 @@
 ;; they are implemented.
 ;;
 
+;; Custom commands
+(evil-define-command term-other-window (&optional size side)
+  :repeat nil
+  (interactive)
+  (split-window (selected-window) size (if side side 'left))
+  (term shell-file-name))
 
 ;; Package configurations
 
@@ -153,6 +159,30 @@
   (setq evil-cross-lines t)
   (setq evil-snipe-scope 'visible))
 
+;;; recentf
+
+(defvar recentf-keep-dot-folders
+  '("~/.config" "~/.doom.d" "~/.cargo/registry/src"))
+
+(defun recentf-dot-file-ignore-p (file)
+  (let ((helper (lambda (file keep-dot-folders)
+                  (if keep-dot-folders
+                      (or (string-prefix-p (car keep-dot-folders) file)
+                          (funcall helper file (cdr keep-dot-folders)))
+                    nil))))
+    (if (string-match-p "^~/\.[[:alnum:]_\-\.]+/" file) nil
+      (not (funcall helper file recentf-keep-dot-folders)))))
+
+(defun recentf-file-ignore-p (file)
+  (or
+   (recentf-dot-file-ignore-p file)
+   (not (file-readable-p file))))
+
+(use-package! recentf
+  :config
+  (setq recentf-exclude '("^/" recentf-file-ignore-p)
+        recentf-max-saved-items 1024))
+
 ;; User's defined key bindings
 (map!
  "M-="    #'text-scale-increase
@@ -169,6 +199,11 @@
 
  (:leader :prefix "p"
   :desc "Projectile Dired" "SPC" #'projectile-dired)
+
+ (:leader :prefix "o"
+  :desc "Open terminal in other window (right)" "t" #'term-other-window
+  :desc "Open small terminal in other window (below)" "T"
+  (lambda () (interactive) (term-other-window 10 'above)))
 
  (:when (featurep! :editor evil +everywhere)
   (:after evil
@@ -253,7 +288,7 @@
                      evil-split-window-below t)
                (defadvice! prompt-for-buffer (&rest _)
                  :after '(evil-window-split evil-window-vsplit)
-                 (counsel-recentf))))
+                 (counsel-buffer-or-recentf))))
 
 ;; others
 ;;; disable inserting tabs
