@@ -36,7 +36,6 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -58,9 +57,41 @@
 ;; Custom commands
 (evil-define-command term-other-window (&optional size side)
   :repeat nil
-  (interactive)
+  (interactive "P")
   (split-window (selected-window) size (if side side 'left))
   (term shell-file-name))
+
+(defun evil-mc-make-all-cursors-in-region-regex (regex)
+  (interactive "sregex: ")
+  (let ((beg (region-beginning))
+        (end (region-end)))
+    (goto-char beg)
+    (let ((last-match))
+      (while (and (< (point) end)
+                  (search-forward-regexp regex end t))
+        (message "current point: %s, last-match: %s" (point) last-match)
+        (if (null last-match) (evil-mc-delete-all-regions)
+          (let ((cursor) (region) (pos (car last-match)))
+            (message "pos: %s, last-match: %s" pos last-match)
+            (evil-mc-run-cursors-before)
+            (evil-mc-make-cursor-at-pos pos)
+            (setq region (evil-mc-create-region (point) (point) 'char))
+            (setq cursor
+                  (evil-mc-put-cursor-overlay
+                   (evil-mc-undo-cursor-at-pos pos)
+                   (evil-mc-get-region-overlay region)))
+            (setq cursor
+                  (evil-mc-put-cursor-region
+                   cursor
+                   region))
+            (evil-mc-insert-cursor cursor)
+            ))
+        (setq last-match (match-data 0))
+        (goto-char (match-end 0)))
+      (when last-match
+        (goto-char (first last-match))
+        (push-mark (second last-match))
+        (setq mark-active t)))))
 
 ;; Package configurations
 
@@ -89,12 +120,17 @@
   :config
   (setq ivy-flx-limit 1024))
 
+;;; gcmh
+(use-package! gcmh
+  :config
+  (setq-default gcmh-high-cons-threshold (* 100 1024 1024)))
+
 ;;; lsp packages
 
-(use-package! lsp
+(use-package! lsp-mode
   :when (featurep! :tools lsp)
   :config
-  (setq read-process-output-max (* 1024 1024)
+  (setq lsp-signature-doc-lines 8
         lsp-modeline-diagnostics-enable nil))
 
 (use-package! lsp-ui
@@ -136,8 +172,8 @@
   ;; disable smartparens in latex mode
   (add-hook 'TeX-mode-hook #'turn-off-smartparens-mode)
   (add-hook 'TeX-mode-hook #'lsp!)
-  (add-hook 'TeX-mode-hook (lambda () (setq +lsp-company-backends
-                                            '(:separate company-capf company-yasnippet company-dabbrev)))))
+  (add-hook 'TeX-mode-hook (lambda () (setq-local +lsp-company-backends
+                                                  '(:separate company-capf company-yasnippet company-dabbrev)))))
 
 ;;; pdf-tools
 (use-package! pdf-tools
@@ -170,8 +206,9 @@
                       (or (string-prefix-p (car keep-dot-folders) file)
                           (funcall helper file (cdr keep-dot-folders)))
                     nil))))
-    (if (string-match-p "^~/\.[[:alnum:]_\-\.]+/" file) nil
-      (not (funcall helper file recentf-keep-dot-folders)))))
+    (if (string-match-p "^~/\.[[:alnum:]_\-\.]+/" file)
+        (not (funcall helper file recentf-keep-dot-folders)))
+    nil))
 
 (defun recentf-file-ignore-p (file)
   (or
@@ -190,6 +227,12 @@
 
  "M-<return>" #'toggle-frame-fullscreen
 
+ "M-<escape>" #'normal-mode
+
+ (:after flycheck
+  :n "] e" #'flycheck-next-error
+  :n "[ e" #'flycheck-previous-error)
+
  ;; custom leader key = "a"
  (:leader
   :prefix ("a" . "custom keybindings")
@@ -203,7 +246,8 @@
  (:leader :prefix "o"
   :desc "Open terminal in other window (right)" "t" #'term-other-window
   :desc "Open small terminal in other window (below)" "T"
-  (lambda () (interactive) (term-other-window 10 'above)))
+  (lambda (&optional size) (interactive "P") (term-other-window (if size size 10) 'above)))
+
 
  (:when (featurep! :editor evil +everywhere)
   (:after evil
@@ -240,7 +284,7 @@
 
  ;;; multi-cursors
  (:when (featurep! :editor multiple-cursors)
-  (:after evil-mc
+  (:after evil
    :nv "C-n" #'evil-mc-make-and-goto-next-match
    :nv "C-p" #'evil-mc-make-and-goto-prev-match))
 
