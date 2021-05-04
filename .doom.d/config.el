@@ -2,13 +2,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
-(setq user-full-name "Thang Pham"
-      user-mail-address "phamducthang1234@gmail.com")
+;; sync' after modifying this file! Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets. (setq user-full-name "Thang Pham" user-mail-address "phamducthang1234@gmail.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -61,37 +55,49 @@
   (split-window (selected-window) size (if side side 'left))
   (term shell-file-name))
 
-(defun evil-mc-make-all-cursors-in-region-regex (regex)
-  (interactive "sregex: ")
-  (let ((beg (region-beginning))
-        (end (region-end)))
-    (goto-char beg)
-    (let ((last-match))
-      (while (and (< (point) end)
-                  (search-forward-regexp regex end t))
-        (message "current point: %s, last-match: %s" (point) last-match)
-        (if (null last-match) (evil-mc-delete-all-regions)
-          (let ((cursor) (region) (pos (car last-match)))
-            (message "pos: %s, last-match: %s" pos last-match)
-            (evil-mc-run-cursors-before)
-            (evil-mc-make-cursor-at-pos pos)
-            (setq region (evil-mc-create-region (point) (point) 'char))
-            (setq cursor
-                  (evil-mc-put-cursor-overlay
-                   (evil-mc-undo-cursor-at-pos pos)
-                   (evil-mc-get-region-overlay region)))
-            (setq cursor
-                  (evil-mc-put-cursor-region
-                   cursor
-                   region))
-            (evil-mc-insert-cursor cursor)
-            ))
-        (setq last-match (match-data 0))
-        (goto-char (match-end 0)))
-      (when last-match
-        (goto-char (first last-match))
-        (push-mark (second last-match))
-        (setq mark-active t)))))
+(defun evil-mc-make-all-cursors-in-region-regex (beg end)
+  (interactive "r")
+  (let ((regex (read-regexp "regex: "))
+        (case-fold-search nil))
+    (if (string= regex "")
+        (message "search aborted")
+      (let ((match) (prev))
+        (goto-char beg)
+        (if (search-forward-regexp regex nil end)
+            (setq match (match-data 0)) (setq match nil))
+        ;; (message "evil-mc-make-all-cursors-in-region-regex: beg: %s, end: %s" beg end)
+        (while (and match (<= (cl-second match) end))
+          ;; (message "point: %s, match: %s" (point) match)
+          (if (null prev) (evil-mc-delete-all-regions)
+            (let ((cursor) (region) (pos (1- (cl-second prev))))
+              (goto-char pos)
+              (setq region (evil-mc-create-region (cl-first prev) pos 'char))
+              (setq cursor (evil-mc-put-cursor-property
+                            (evil-mc-read-cursor-state)
+                            'last-position pos
+                            'order (if (null evil-mc-cursor-list) 1 ; ordered "chronologically"
+                                     (1+ (apply #'max
+                                                (mapcar (lambda (cursor)
+                                                          (evil-mc-get-cursor-property cursor 'order))
+                                                        evil-mc-cursor-list))))
+                            'temporary-goal-column (evil-mc-column-number pos)
+                            'overlay (evil-mc-cursor-overlay-at-pos pos)
+                            'region region))
+              (evil-mc-run-cursors-before)
+              (evil-mc-insert-cursor cursor)))
+          (goto-char (cl-second match))
+          ;; (message "point: %s" (point))
+          (setq prev match)
+          (if (search-forward-regexp regex nil end)
+              (setq match (match-data 0)) (setq match nil)))
+        ;; (message "match %s" match)
+        (if prev
+            (progn
+              (goto-char (1- (cl-second prev)))
+              (push-mark (cl-first prev))
+              (setq mark-active t)
+              (evil-visual-char))
+          (goto-char end))))))
 
 ;; Package configurations
 
@@ -220,7 +226,7 @@
   (setq recentf-exclude '("^/" recentf-file-ignore-p)
         recentf-max-saved-items 1024))
 
-;; User's defined key bindings
+
 (map!
  "M-="    #'text-scale-increase
  "M--"    #'text-scale-decrease
@@ -228,6 +234,8 @@
  "M-<return>" #'toggle-frame-fullscreen
 
  "M-<escape>" #'normal-mode
+
+ :v "M-s" #'evil-mc-make-all-cursors-in-region-regex
 
  (:after flycheck
   :n "] e" #'flycheck-next-error
