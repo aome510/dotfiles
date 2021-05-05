@@ -48,56 +48,13 @@
 ;; they are implemented.
 ;;
 
+(load! "kak")
+
 ;; Custom commands
 (evil-define-command term-other-window (&optional size side)
   :repeat nil
   (interactive "P")
-  (split-window (selected-window) size (if side side 'left))
-  (term shell-file-name))
-
-(defun evil-mc-make-all-cursors-in-region-regex (beg end)
-  (interactive "r")
-  (let ((regex (read-regexp "regex: "))
-        (case-fold-search nil))
-    (if (string= regex "")
-        (message "search aborted")
-      (let ((match) (prev))
-        (goto-char beg)
-        (if (search-forward-regexp regex nil end)
-            (setq match (match-data 0)) (setq match nil))
-        ;; (message "evil-mc-make-all-cursors-in-region-regex: beg: %s, end: %s" beg end)
-        (while (and match (<= (cl-second match) end))
-          ;; (message "point: %s, match: %s" (point) match)
-          (if (null prev) (evil-mc-delete-all-regions)
-            (let ((cursor) (region) (pos (1- (cl-second prev))))
-              (goto-char pos)
-              (setq region (evil-mc-create-region (cl-first prev) pos 'char))
-              (setq cursor (evil-mc-put-cursor-property
-                            (evil-mc-read-cursor-state)
-                            'last-position pos
-                            'order (if (null evil-mc-cursor-list) 1 ; ordered "chronologically"
-                                     (1+ (apply #'max
-                                                (mapcar (lambda (cursor)
-                                                          (evil-mc-get-cursor-property cursor 'order))
-                                                        evil-mc-cursor-list))))
-                            'temporary-goal-column (evil-mc-column-number pos)
-                            'overlay (evil-mc-cursor-overlay-at-pos pos)
-                            'region region))
-              (evil-mc-run-cursors-before)
-              (evil-mc-insert-cursor cursor)))
-          (goto-char (cl-second match))
-          ;; (message "point: %s" (point))
-          (setq prev match)
-          (if (search-forward-regexp regex nil end)
-              (setq match (match-data 0)) (setq match nil)))
-        ;; (message "match %s" match)
-        (if prev
-            (progn
-              (goto-char (1- (cl-second prev)))
-              (push-mark (cl-first prev))
-              (setq mark-active t)
-              (evil-visual-char))
-          (goto-char end))))))
+  (split-window (selected-window) size (if side side 'left)))
 
 ;; Package configurations
 
@@ -226,16 +183,12 @@
   (setq recentf-exclude '("^/" recentf-file-ignore-p)
         recentf-max-saved-items 1024))
 
-
 (map!
  "M-="    #'text-scale-increase
  "M--"    #'text-scale-decrease
 
  "M-<return>" #'toggle-frame-fullscreen
-
  "M-<escape>" #'normal-mode
-
- :v "M-s" #'evil-mc-make-all-cursors-in-region-regex
 
  (:after flycheck
   :n "] e" #'flycheck-next-error
@@ -245,8 +198,7 @@
  (:leader
   :prefix ("a" . "custom keybindings")
   :desc "Align Left"    "l" #'evil-lion-left
-  :desc "Align Right"   "r" #'evil-lion-right
-  :desc "Expand Region" "v" #'er/expand-region)
+  :desc "Align Right"   "r" #'evil-lion-right)
 
  (:leader :prefix "p"
   :desc "Projectile Dired" "SPC" #'projectile-dired)
@@ -358,3 +310,11 @@
 ;;; treat underscore as word character
 (modify-syntax-entry ?_ "w")
 (modify-syntax-entry ?- "w")
+
+;;; enable evil-mc globally
+(global-evil-mc-mode 1)
+
+(remove-hook! 'doom-init-ui-hook #'+unicode-init-fonts-h)
+
+(setq scroll-conservatively 8
+      scroll-step 8)
