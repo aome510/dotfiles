@@ -183,6 +183,8 @@
   (setq recentf-exclude '("^/" recentf-file-ignore-p)
         recentf-max-saved-items 1024))
 
+;; user-defined key mappings
+
 (map!
  "M-="    #'text-scale-increase
  "M--"    #'text-scale-decrease
@@ -253,6 +255,20 @@
   (:after evil
    :nv "TAB" #'evil-indent-line
    :nv [tab] #'evil-indent-line))
+
+ ;; winum
+ (:when (featurep! :ui window-select +numbers)
+  (:after winum
+   :leader
+   :desc "winum-select-window-1" "1" #'winum-select-window-1
+   :desc "winum-select-window-2" "2" #'winum-select-window-2
+   :desc "winum-select-window-3" "3" #'winum-select-window-3
+   :desc "winum-select-window-4" "4" #'winum-select-window-4
+   :desc "winum-select-window-5" "5" #'winum-select-window-5
+   :desc "winum-select-window-6" "6" #'winum-select-window-6
+   :desc "winum-select-window-7" "7" #'winum-select-window-7
+   :desc "winum-select-window-8" "8" #'winum-select-window-8
+   :desc "winum-select-window-9" "9" #'winum-select-window-9))
 
  ;;; ivy
  (:when (featurep! :completion ivy)
