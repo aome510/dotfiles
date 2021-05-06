@@ -96,6 +96,9 @@
   (setq lsp-signature-doc-lines 8
         lsp-modeline-diagnostics-enable nil))
 
+(after! lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\build\\'"))
+
 (use-package! lsp-ui
   :when (featurep! :tools lsp)
   :defer t
@@ -157,6 +160,11 @@
   :config
   (setq evil-cross-lines t)
   (setq evil-snipe-scope 'visible))
+
+;;; vue-mode
+(use-package! vue-mode
+  :config
+  (add-hook 'vue-mode-hook #'lsp!))
 
 ;;; recentf
 
