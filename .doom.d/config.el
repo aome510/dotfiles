@@ -49,6 +49,7 @@
 ;;
 
 (load! "kak")
+(load! "vue")
 
 ;; Custom commands
 (evil-define-command term-other-window (&optional size side)
@@ -74,9 +75,6 @@
         ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
         company-minimum-prefix-length 2))
 
-(setq-default history-length 1000) ; remembering history from precedent
-(setq-default prescient-history-length 1000)
-
 ;;; ivy
 (use-package! flx
   :when (featurep! :completion ivy +fuzzy)
@@ -86,24 +84,24 @@
 ;;; gcmh
 (use-package! gcmh
   :config
-  (setq-default gcmh-high-cons-threshold (* 100 1024 1024)))
+  (setq-default gcmh-high-cons-threshold (* 128 1024 1024)))
 
 ;;; lsp packages
 
 (use-package! lsp-mode
   :when (featurep! :tools lsp)
   :config
-  (setq lsp-signature-doc-lines 8
-        lsp-modeline-diagnostics-enable nil))
-
-(after! lsp-mode
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\build\\'"))
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
+  (setq
+   lsp-signature-doc-lines 8
+   lsp-modeline-diagnostics-enable nil))
 
 (use-package! lsp-ui
   :when (featurep! :tools lsp)
   :defer t
   :config
-  (setq lsp-ui-doc-enable t
+  (setq lsp-idle-delay 2
+        lsp-ui-doc-enable t
         lsp-ui-doc-max-height 16
         lsp-ui-doc-max-width 64
         lsp-ui-doc-show-with-cursor t
@@ -152,7 +150,7 @@
   :when (featurep! :editor format)
   :config
   ;;; format on save everywhere
-  (setq +format-on-save-enabled-modes '(not)))
+  (setq +format-on-save-enabled-modes '(not sql-mode js-mode js2-mode vue-mode)))
 
 ;;; evil packages
 (use-package! evil
@@ -160,11 +158,6 @@
   :config
   (setq evil-cross-lines t)
   (setq evil-snipe-scope 'visible))
-
-;;; vue-mode
-(use-package! vue-mode
-  :config
-  (add-hook 'vue-mode-hook #'lsp!))
 
 ;;; recentf
 
@@ -228,7 +221,10 @@
 
    :mvn "M-n" #'evil-ex-search-previous
 
-   :n "U" #'evil-redo)))
+   :n "U" #'evil-redo
+
+   (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
+   (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))))
 
 ;; Packages key bindings
 (map!
@@ -338,7 +334,22 @@
 ;;; enable evil-mc globally
 (global-evil-mc-mode 1)
 
+;;; temporarily remove unicode-init-fonts-h hook (because of unknown error)
 (remove-hook! 'doom-init-ui-hook #'+unicode-init-fonts-h)
 
+;;; auto scrolling
 (setq scroll-conservatively 8
       scroll-step 8)
+
+;;; eslint-related configurations
+
+(defun add-eslint-fix-all-to-before-save-hook ()
+  (add-hook! 'before-save-hook :local #'lsp-eslint-apply-all-fixes))
+
+;; use eslint to format code not the default "prettier" defined in "format-all"
+(add-hook! 'js-mode-hook #'add-eslint-fix-all-to-before-save-hook)
+(add-hook! 'js2-mode-hook #'add-eslint-fix-all-to-before-save-hook)
+(add-hook! 'vue-mode-hook #'add-eslint-fix-all-to-before-save-hook)
+
+;; use eslint for flycheck
+(setq-hook! 'js2-mode-hook flycheck-checker 'javascript-eslint)
