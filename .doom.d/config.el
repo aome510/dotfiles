@@ -100,7 +100,7 @@
   :when (featurep! :tools lsp)
   :defer t
   :config
-  (setq lsp-idle-delay 2
+  (setq lsp-idle-delay 1
         lsp-ui-doc-enable t
         lsp-ui-doc-max-height 16
         lsp-ui-doc-max-width 64
