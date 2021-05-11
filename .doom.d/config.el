@@ -57,6 +57,15 @@
   (interactive "P")
   (split-window (selected-window) size (if side side 'left)))
 
+(evil-define-command evil-shell-command-on-region (beg end command)
+  (interactive (let (string)
+                 (unless (mark)
+                   (user-error "The mark is not set now, so there is no region"))
+                 (setq command (read-shell-command "Shell command on region: "))
+                 (list (region-beginning) (region-end)
+                       command)))
+  (shell-command-on-region beg end command nil t shell-command-default-error-buffer t (region-noncontiguous-p)))
+
 ;; Package configurations
 
 ;;; doom-theme
@@ -150,7 +159,7 @@
   :when (featurep! :editor format)
   :config
   ;;; format on save everywhere
-  (setq +format-on-save-enabled-modes '(not sql-mode js-mode js2-mode vue-mode)))
+  (setq +format-on-save-enabled-modes '(not sql-mode js-mode js2-mode vue-mode json-mode)))
 
 ;;; evil packages
 (use-package! evil
@@ -164,14 +173,15 @@
 (defvar recentf-keep-dot-folders
   '("~/.config" "~/.doom.d" "~/.cargo/registry/src"))
 
+(defun recentf-dot-file-ignore-p-rec (file keep-dot-folders)
+  (if keep-dot-folders
+      (or (string-prefix-p (car keep-dot-folders) file)
+          (recentf-dot-file-ignore-p-rec file (cdr keep-dot-folders)))
+    nil))
+
 (defun recentf-dot-file-ignore-p (file)
-  (let ((helper (lambda (file keep-dot-folders)
-                  (if keep-dot-folders
-                      (or (string-prefix-p (car keep-dot-folders) file)
-                          (funcall helper file (cdr keep-dot-folders)))
-                    nil))))
-    (if (string-match-p "^~/\.[[:alnum:]_\-\.]+/" file)
-        (not (funcall helper file recentf-keep-dot-folders)))
+  (if (string-match-p "^~/\\.[-._[:alnum:]]+/" file)
+      (not (recentf-dot-file-ignore-p-rec file recentf-keep-dot-folders))
     nil))
 
 (defun recentf-file-ignore-p (file)
@@ -222,6 +232,8 @@
    :mvn "M-n" #'evil-ex-search-previous
 
    :n "U" #'evil-redo
+
+   :v "|" #'evil-shell-command-on-region
 
    (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
    (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))))
