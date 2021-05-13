@@ -165,5 +165,6 @@ xorg-xrandr 1.5.1-2
 xsel 1.2.0.20190821-1
 yarn 1.22.10-1
 yay 10.2.2-1
+youtube-dl 2021.04.26-1
 zip 3.0-9
 zoom 5.6.4-1

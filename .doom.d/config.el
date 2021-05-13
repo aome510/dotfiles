@@ -116,11 +116,11 @@
         lsp-ui-doc-show-with-cursor t
         lsp-ui-doc-show-with-mouse t))
 
-(use-package! lsp-pyls
-  :when (featurep! :lang python +lsp)
-  :config
-  (setq lsp-pyls-configuration-sources ["flake8"]
-        lsp-pyls-plugins-flake8-enabled t))
+;; (use-package! lsp-pyls
+;;   :when (featurep! :lang python +lsp)
+;;   :config
+;;   (setq lsp-pyls-configuration-sources ["flake8"]
+;;         lsp-pyls-plugins-flake8-enabled t))
 
 (use-package! lsp-rust
   :when (featurep! :lang rust +lsp)
@@ -364,4 +364,6 @@
 (add-hook! 'vue-mode-hook #'add-eslint-fix-all-to-before-save-hook)
 
 ;; use eslint for flycheck
+(setq-hook! 'js-mode-hook flycheck-checker 'javascript-eslint)
 (setq-hook! 'js2-mode-hook flycheck-checker 'javascript-eslint)
+(setq-hook! 'vue-mode-hook flycheck-checker 'javascript-eslint)
