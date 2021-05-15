@@ -55,7 +55,8 @@
 (evil-define-command term-other-window (&optional size side)
   :repeat nil
   (interactive "P")
-  (split-window (selected-window) size (if side side 'left)))
+  (split-window (selected-window) size (if side side 'left))
+  (term shell-file-name))
 
 (evil-define-command evil-shell-command-on-region (beg end command)
   (interactive (let (string)
@@ -171,7 +172,7 @@
 ;;; recentf
 
 (defvar recentf-keep-dot-folders
-  '("~/.config" "~/.doom.d" "~/.cargo/registry/src"))
+  '("/home/aome510/.config" "/home/aome510/.doom.d" "/home/aome510/.cargo/registry/src"))
 
 (defun recentf-dot-file-ignore-p-rec (file keep-dot-folders)
   (if keep-dot-folders
@@ -180,18 +181,20 @@
     nil))
 
 (defun recentf-dot-file-ignore-p (file)
-  (if (string-match-p "^~/\\.[-._[:alnum:]]+/" file)
+  (if (string-match-p "^/home/aome510/\\.[-._[:alnum:]]+/" file)
       (not (recentf-dot-file-ignore-p-rec file recentf-keep-dot-folders))
     nil))
 
 (defun recentf-file-ignore-p (file)
-  (or
-   (recentf-dot-file-ignore-p file)
-   (not (file-readable-p file))))
+  (if (string-match-p "^/home/aome510/" file)
+      (or
+       (recentf-dot-file-ignore-p file)
+       (not (file-readable-p file)))
+    t))
 
 (use-package! recentf
   :config
-  (setq recentf-exclude '("^/" recentf-file-ignore-p)
+  (setq recentf-exclude '(recentf-file-ignore-p)
         recentf-max-saved-items 1024))
 
 ;; user-defined key mappings
@@ -345,9 +348,6 @@
 
 ;;; enable evil-mc globally
 (global-evil-mc-mode 1)
-
-;;; temporarily remove unicode-init-fonts-h hook (because of unknown error)
-(remove-hook! 'doom-init-ui-hook #'+unicode-init-fonts-h)
 
 ;;; auto scrolling
 (setq scroll-conservatively 8
