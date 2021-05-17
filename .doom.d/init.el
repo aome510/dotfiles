@@ -20,10 +20,10 @@
        ;;layout              ; auie,ctsrnm is the superior home row
 
        :completion
-       company               ; the ultimate code completion backend
-       ;;helm                ; the *other* search engine for love and life
-       ;;ido                 ; the other *other* search engine...
-       (ivy +fuzzy)          ; a search engine for love and life
+       company                  ; the ultimate code completion backend
+       ;;helm                   ; the *other* search engine for love and life
+       ;;ido                    ; the other *other* search engine...
+       (ivy +fuzzy)             ; a search engine for love and life
 
        :ui
        ;;deft                   ; notational velocity for Emacs
@@ -132,9 +132,9 @@
        ;;(haskell +dante)    ; a language that's lazier than I am
        ;;hy                  ; readability of scheme w/ speed of python
        ;;idris               ; a language you can depend on
-       (json +lsp)                  ; At least it ain't XML
+       (json +lsp)           ; At least it ain't XML
        ;;(java +meghanada)   ; the poster child for carpal tunnel syndrome
-       (javascript +lsp)            ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp)     ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia               ; a better, faster MATLAB
        ;;kotlin              ; a better, slicker Java(Script)
        (latex +lsp +latexmk) ; writing papers in Emacs has never been so fun
@@ -155,7 +155,7 @@
        ;;racket              ; a DSL for DSLs
        ;;raku                ; the artist formerly known as perl6
        ;;rest                ; Emacs as a REST client
-       ;;rst                 ; ReST in peace
+       ;;rs
        ;;(ruby +rails)       ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (rust +lsp)           ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala               ; java, but good
@@ -165,7 +165,7 @@
        ;;solidity            ; do you need a blockchain? No.
        ;;swift               ; who asked for emoji variables?
        ;;terra               ; Earth and Moon in alignment for performance.
-       (web +html)                   ; the tubes
+       (web +html)           ; the tubes
        yaml                  ; JSON, but readable
 
        :email

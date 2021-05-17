@@ -1,8 +1,30 @@
 ;;; kak.el -*- lexical-binding: t; -*-
 ;;;
 ;;;
+;;;
+
+
+;;; overidding evil-mc-get-default-cursor to use
+;;; evil-mc-from-real-cursor that creates a fake cursor
+;;; based on real cursor's current state.
+
+(defun evil-mc-from-real-cursor ()
+  "Return a cursor based on the real cursor"
+  (let (cursor
+        (state (evil-mc-read-cursor-state))
+        (names (evil-mc-get-cursor-variables)))
+    (dolist (name names)
+      (setq cursor (evil-mc-put-cursor-property
+                    cursor
+                    name
+                    (copy-tree (evil-mc-get-cursor-property state name)))))
+    cursor))
+
+(advice-add 'evil-mc-get-default-cursor :override
+            #'evil-mc-from-real-cursor)
 
 (defun search-matches-in-region-regexp (beg end regex)
+  "search a regex pattern in the current region then return the sequence of matches"
   (let ((match) (matches))
     (goto-char beg)
     (if (search-forward-regexp regex nil end)
@@ -12,9 +34,11 @@
       (goto-char (cl-second match))
       (if (search-forward-regexp regex nil end)
           (setq match (match-data 0)) (setq match nil)))
-    matches))
+    (reverse matches)))
 
 (defun make-cursors-all-matches (matches)
+  "given all matches (\"beg end\" pairs), create multiple cursors
+marking all the matches. The real cursor is placed at the last match"
   (pcase matches
     (`(,match . nil) (progn
                        (goto-char (1- (cl-second match)))
@@ -28,7 +52,7 @@
                               (setq cursor (evil-mc-put-cursor-property
                                             (evil-mc-read-cursor-state)
                                             'last-position pos
-                                            'order (if (null evil-mc-cursor-list) 1 ; ordered "chronologically"
+                                            'order (if (null evil-mc-cursor-list) 1
                                                      (1+ (apply #'max
                                                                 (mapcar (lambda (cursor)
                                                                           (evil-mc-get-cursor-property cursor 'order))
@@ -40,7 +64,9 @@
                               (evil-mc-insert-cursor cursor))
                             (make-cursors-all-matches matches)))))
 
-(defun make-cursors-in-region-regexp (beg end)
+(defun select-in-region-regexp (beg end)
+  "create multiple cursors marking all the matches matching
+a given regex pattern in the current region"
   (interactive "r")
   (let ((regex (read-regexp "regex: "))
         (case-fold-search nil))
@@ -48,7 +74,7 @@
         (message "search aborted")
       (progn
         (goto-char beg)
-        (let ((matches (reverse (search-matches-in-region-regexp beg end regex))))
+        (let ((matches (search-matches-in-region-regexp beg end regex)))
           (message "matches: %s" matches)
           (if matches
               (make-cursors-all-matches matches)
@@ -64,7 +90,9 @@
          (cons `(,beg ,(cl-first match))
                (get-splits matches (cl-second match) end)))))))
 
-(defun make-cursors-in-region-not-regexp (beg end)
+(defun split-in-region-regexp (beg end)
+  "create multiple cursors marking all intervals in the
+current region that are splitted by the given regex pattern"
   (interactive "r")
   (let ((regex (read-regexp "regex: "))
         (case-fold-search nil))
@@ -72,7 +100,7 @@
         (message "search aborted")
       (progn
         (goto-char beg)
-        (let* ((matches (reverse (search-matches-in-region-regexp beg end regex)))
+        (let* ((matches (search-matches-in-region-regexp beg end regex))
                (splits (get-splits matches beg end)))
           (message "matches: %s,\nsplits: %s" matches splits)
           (if splits
@@ -90,7 +118,9 @@
                 evil-mc-cursor-list))))
     (cl-sort matches #'< :key #'car)))
 
-(defun filter-selections-regexp (keep)
+(defun filter-cursors-regexp (keep)
+  "remove/keep all the cursors whose region matches the given regexp"
+  (interactive)
   (let ((regex (read-regexp "regex: "))
         (case-fold-search nil))
     (if (string= regex "")
@@ -112,39 +142,52 @@
                   (evil-mc-undo-all-cursors)
                   (make-cursors-all-matches (reverse matches)))
               (user-error "no selections remaining")))
-        (user-error "must in visual state")))))
-
-;; (defun funcall-all-cursors-rec (fun matches id)
-;;   (pcase matches
-;;     (`(,match . nil) (funcall fun (cl-first match) (cl-second match) id))
-;;     (`(,match . ,matches) (progn (funcall-all-cursors-rec fun matches (1+ id))
-;;                                  (funcall fun (cl-first match) (cl-second match) id)))))
-
-;; (defun funcall-all-cursors ()
-;;   (interactive)
-;;   (save-excursion (let ((matches (get-all-cursor-regions)))
-;;                     ;; (funcall-all-cursors-rec fun matches 0)
-;;                     (evil-mc-set-command-property :name #'evil-change)
-;;                     (evil-mc-set-command-property :evil-state-end 'insert)
-;;                     (evil-mc-execute-for-all)
-;;                     (evil-exit-visual-state))))
+        (user-error "must be in visual state")))))
 
 (defun evil-shell-command-on-region-all-cursors (command)
+  "call a shell command on all cursors' region"
   (interactive (list (read-shell-command "Shell command on region: ")))
-  (funcall-all-cursors (lambda (beg end _)
-                         (evil-shell-command-on-region beg end command))))
+  (if (evil-visual-state-p)
+      (evil-mc-execute-for-all-cursors
+       (lambda (cursor)
+         (let (region beg end (index (evil-mc-get-cursor-property cursor :index)))
+           (if (eq index 0) ;; real cursor
+               (progn
+                 (setq beg (region-beginning))
+                 (setq end (region-end))
+                 (evil-shell-command-on-region beg end command)
+                 (evil-exit-visual-state))
+             (progn
+               (setq region (evil-mc-get-cursor-region cursor))
+               (setq beg (evil-mc-get-region-start region))
+               (setq end (evil-mc-get-region-end region))
+               (evil-shell-command-on-region beg end command))))))
+    (user-error "must be in visual state")))
 
-(defun test()
-  (interactive)
-  (evil-mc-execute-for-all-cursors (lambda (cursor) (message "%s" cursor))))
+(defun insert-index-all-cursors (base)
+  "insert a number based on a cursor's index after each cursor"
+  (interactive "nBase index: ")
+  (setq base (1- base))
+  (evil-mc-execute-for-all-cursors
+   (lambda (cursor)
+     (let ((index (evil-mc-get-cursor-property cursor :index)))
+       (if (eq index 0) ;; real cursor, assume that it's always the last cursor
+           (progn
+             (insert (number-to-string (+ index base (evil-mc-get-cursor-count))))
+             (evil-exit-visual-state))
+         (progn
+           (goto-char (evil-mc-get-cursor-end cursor))
+           (insert (number-to-string (+ index base)))
+           (backward-char 1)))))))
 
 (map!
  (:leader
   :prefix ("k" . "kakoune")
-  :desc "Kakoune Select" "s" #'make-cursors-in-region-regexp
-  :desc "Kakoune Split" "S" #'make-cursors-in-region-not-regexp
-  :desc "Test" "t" #'test
-  :desc "Kakoune Keep" "k" (lambda () (interactive) (filter-selections-regexp t))
-  :desc "Kakoune Filter" "K" (lambda () (interactive) (filter-selections-regexp nil)))
+  :desc "Shel command on region" "|" #'evil-shell-command-on-region-all-cursors
+  :desc "Insert cursor index" "#" #'insert-index-all-cursors
+  :desc "Select" "s" #'select-in-region-regexp
+  :desc "Split" "S" #'split-in-region-regexp
+  :desc "Keep" "k" (lambda () (interactive) (filter-cursors-regexp t))
+  :desc "Remove" "K" (lambda () (interactive) (filter-cursors-regexp nil)))
  (:leader
   :desc "Expand Region" "v" #'er/expand-region))

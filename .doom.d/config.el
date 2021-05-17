@@ -52,10 +52,8 @@
 (load! "vue")
 
 ;; Custom commands
-(evil-define-command term-other-window (&optional size side)
-  :repeat nil
-  (interactive "P")
-  (split-window (selected-window) size (if side side 'left))
+(defun term-other-window (&optional side size)
+  (split-window (selected-window) size side)
   (term shell-file-name))
 
 (evil-define-command evil-shell-command-on-region (beg end command)
@@ -79,22 +77,16 @@
 (use-package! company
   :when (featurep! :completion company)
   :config
-  (setq company-idle-delay 0.1
+  (setq company-idle-delay 0.0
         company-selection-wrap-around t
         ;; company-dabbrev-code-everywhere t
         ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
-        company-minimum-prefix-length 2))
-
-;;; ivy
-(use-package! flx
-  :when (featurep! :completion ivy +fuzzy)
-  :config
-  (setq ivy-flx-limit 1024))
+        company-minimum-prefix-length 1))
 
 ;;; gcmh
 (use-package! gcmh
   :config
-  (setq-default gcmh-high-cons-threshold (* 128 1024 1024)))
+  (setq-default gcmh-high-cons-threshold (* 64 1024 1024)))
 
 ;;; lsp packages
 
@@ -111,17 +103,10 @@
   :defer t
   :config
   (setq lsp-idle-delay 1
+        lsp-ui-doc-delay 0.5
         lsp-ui-doc-enable t
-        lsp-ui-doc-max-height 16
-        lsp-ui-doc-max-width 64
-        lsp-ui-doc-show-with-cursor t
-        lsp-ui-doc-show-with-mouse t))
-
-;; (use-package! lsp-pyls
-;;   :when (featurep! :lang python +lsp)
-;;   :config
-;;   (setq lsp-pyls-configuration-sources ["flake8"]
-;;         lsp-pyls-plugins-flake8-enabled t))
+        lsp-ui-doc-max-height 8
+        lsp-ui-doc-max-width 32))
 
 (use-package! lsp-rust
   :when (featurep! :lang rust +lsp)
@@ -159,7 +144,6 @@
 (use-package! format
   :when (featurep! :editor format)
   :config
-  ;;; format on save everywhere
   (setq +format-on-save-enabled-modes '(not sql-mode js-mode js2-mode vue-mode json-mode)))
 
 ;;; evil packages
@@ -174,15 +158,12 @@
 (defvar recentf-keep-dot-folders
   '("/home/aome510/.config" "/home/aome510/.doom.d" "/home/aome510/.cargo/registry/src"))
 
-(defun recentf-dot-file-ignore-p-rec (file keep-dot-folders)
-  (if keep-dot-folders
-      (or (string-prefix-p (car keep-dot-folders) file)
-          (recentf-dot-file-ignore-p-rec file (cdr keep-dot-folders)))
-    nil))
-
 (defun recentf-dot-file-ignore-p (file)
   (if (string-match-p "^/home/aome510/\\.[-._[:alnum:]]+/" file)
-      (not (recentf-dot-file-ignore-p-rec file recentf-keep-dot-folders))
+      (not (seq-reduce
+            (lambda (acc folder) (or acc (string-prefix-p folder file)))
+            recentf-keep-dot-folders
+            nil))
     nil))
 
 (defun recentf-file-ignore-p (file)
@@ -220,9 +201,10 @@
   :desc "Projectile Dired" "SPC" #'projectile-dired)
 
  (:leader :prefix "o"
-  :desc "Open terminal in other window (right)" "t" #'term-other-window
+  :desc "Open terminal in other window (right)" "t"
+  #'(lambda (&optional size) (interactive "P") (term-other-window 'left size))
   :desc "Open small terminal in other window (below)" "T"
-  (lambda (&optional size) (interactive "P") (term-other-window (if size size 10) 'above)))
+  #'(lambda (&optional size) (interactive "P") (term-other-window 'above (if size size 10))))
 
 
  (:when (featurep! :editor evil +everywhere)
@@ -320,8 +302,9 @@
     "TAB" #'yas-next-field-or-maybe-expand
     [tab] #'yas-next-field-or-maybe-expand))))
 
+;; others
 
-;; upon spliting window, open projectile-find-file
+;;; upon spliting window, open projectile-find-file
 (after! evil (after! ivy
                (setq evil-vsplit-window-right t
                      evil-split-window-below t)
@@ -329,18 +312,14 @@
                  :after '(evil-window-split evil-window-vsplit)
                  (counsel-buffer-or-recentf))))
 
-;; others
 ;;; disable inserting tabs
 (global-unset-key (kbd "TAB"))
 
-;;; save file
+;;; save file with C-s
 (global-set-key (kbd "C-s") #'save-buffer)
 
 ;;; remove latex autofill
 (remove-hook 'text-mode-hook #'turn-on-auto-fill)
-
-;;; disable smartparens globally
-;; (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 
 ;;; treat underscore as word character
 (modify-syntax-entry ?_ "w")
@@ -361,9 +340,7 @@
 ;; use eslint to format code not the default "prettier" defined in "format-all"
 (add-hook! 'js-mode-hook #'add-eslint-fix-all-to-before-save-hook)
 (add-hook! 'js2-mode-hook #'add-eslint-fix-all-to-before-save-hook)
-(add-hook! 'vue-mode-hook #'add-eslint-fix-all-to-before-save-hook)
 
 ;; use eslint for flycheck
 (setq-hook! 'js-mode-hook flycheck-checker 'javascript-eslint)
 (setq-hook! 'js2-mode-hook flycheck-checker 'javascript-eslint)
-(setq-hook! 'vue-mode-hook flycheck-checker 'javascript-eslint)
