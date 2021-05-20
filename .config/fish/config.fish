@@ -21,9 +21,6 @@ end
 # conda init for fish
 source ~/.config/fish/conda.fish
 
-# aliases
-alias kfzf="kak (fzf)"
-alias skak="sudo -e"
 function disk_usage
     command sudo du -d1 -h $argv | sort -h
 end
@@ -34,4 +31,8 @@ function swap
 end
 
 # allow fzf.fish to search for hidden files
-set fzf_fd_opts --hidden --exclude=.git --no-ignore
+set fzf_fd_opts --hidden -E .git -E node_modules -E .cache -E build -E .ccls-cache
+
+# aliases
+alias kfzf="kak (fd $fzf_fd_opts | fzf)"
+alias ksudo="sudo -e"

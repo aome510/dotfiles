@@ -1,4 +1,4 @@
-###############################
+##############################
 # Theme and layout
 ###############################
 
@@ -96,7 +96,7 @@ map global normal -docstring 'Select all occurrences of the current selection se
 # Kakoune plugins
 ###############################
 
-# plug.kak
+# # plug.kak
 source "%val{config}/plugins/plug.kak/rc/plug.kak"
 
 # kak-lsp
@@ -116,17 +116,11 @@ hook global WinSetOption filetype=(python) %{
     # for python language server
     set-option global lsp_server_configuration pyls.configurationSources=["flake8"]
 }
-# powerline
-plug "andreyorst/powerline.kak" defer powerline %{
-    set-option global powerline_format 'git bufname filetype mode_info line_column position'
-    set-option global powerline_shorten_bufname 'short'
-    powerline-theme base16-gruvbox
-} config %{
-    powerline-start
-}
 
 # fzf for KAK
-plug "andreyorst/fzf.kak" config %{
+plug "andreyorst/fzf.kak" defer fzf %{
+    set-option global fzf_file_command "fd --hidden --hidden -E .git -E node_modules -E .cache -E build -E .ccls-cache"
+} config %{
     map -docstring 'fzf mode' global normal '<c-p>' ': fzf-mode<ret>'
 }
 
