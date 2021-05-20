@@ -17,6 +17,7 @@ home_white_list = [
     ".tmux",
     ".gitconfig",
     ".doom.d",
+    ".makepkg.conf",
 ]
 
 dot_config_white_list = [

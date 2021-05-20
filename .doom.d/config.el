@@ -67,8 +67,14 @@
 
 ;; Package configurations
 
+;;; centaur-tabs
+;; (use-package! centaur-tabs
+;;   :when (featurep! :ui tabs)
+;;   :config
+;;   (setq centaur-tabs-set-icons t))
+
 ;;; doom-theme
-(use-package doom-themes
+(use-package! doom-themes
   :config
   (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
   (doom-themes-treemacs-config))
@@ -94,13 +100,13 @@
   :when (featurep! :tools lsp)
   :config
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
   (setq
    lsp-signature-doc-lines 8
    lsp-modeline-diagnostics-enable nil))
 
 (use-package! lsp-ui
   :when (featurep! :tools lsp)
-  :defer t
   :config
   (setq lsp-idle-delay 1
         lsp-ui-doc-delay 0.5
@@ -187,18 +193,14 @@
  "M-<return>" #'toggle-frame-fullscreen
  "M-<escape>" #'normal-mode
 
- (:after flycheck
-  :n "] e" #'flycheck-next-error
-  :n "[ e" #'flycheck-previous-error)
+ (:when (featurep! :checkers syntax)
+  (:after flycheck
+   :n "] e" #'flycheck-next-error
+   :n "[ e" #'flycheck-previous-error))
 
- ;; custom leader key = "a"
- (:leader
-  :prefix ("a" . "custom keybindings")
-  :desc "Align Left"    "l" #'evil-lion-left
-  :desc "Align Right"   "r" #'evil-lion-right)
-
- (:leader :prefix "p"
-  :desc "Projectile Dired" "SPC" #'projectile-dired)
+ (:after projectile
+  (:leader :prefix "p"
+   :desc "Projectile Dired" "SPC" #'projectile-dired))
 
  (:leader :prefix "o"
   :desc "Open terminal in other window (right)" "t"
@@ -207,8 +209,15 @@
   #'(lambda (&optional size) (interactive "P") (term-other-window 'above (if size size 10))))
 
 
+ ;; evil-related packages
  (:when (featurep! :editor evil +everywhere)
   (:after evil
+
+   (:leader
+    :prefix ("a" . "custom keybindings")
+    :desc "Align Left"    "l" #'evil-lion-left
+    :desc "Align Right"   "r" #'evil-lion-right)
+
    ;; Kakoune-like key bindings
    :mvn "g h" #'evil-beginning-of-line
    :mvn "g i" #'evil-first-non-blank
@@ -216,15 +225,16 @@
 
    :mvn "M-n" #'evil-ex-search-previous
 
+   :nv "TAB" #'evil-indent-line
+   :nv [tab] #'evil-indent-line
+
    :n "U" #'evil-redo
 
    :v "|" #'evil-shell-command-on-region
 
    (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
-   (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))))
+   (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block)))
 
-;; Packages key bindings
-(map!
  ;;; latex
  (:when (featurep! :lang latex)
   (:after latex
@@ -235,27 +245,22 @@
     :desc  "LaTeX Run all" "r" #'TeX-command-run-all)))
 
  ;; dired
- (:after dired
-  :map dired-mode-map
-  :n "h" #'dired-up-directory
-  :n "l" #'dired-find-file)
+ (:when (featurep! :emacs dired)
+  (:after dired
+   :map dired-mode-map
+   :n "h" #'dired-up-directory
+   :n "l" #'dired-find-file))
 
  ;;; tex-evil
- (:after evil-tex
-  (:map TeX-mode-map
-   :nv "m" #'evil-set-marker))
+ ;; (:after evil-tex
+ ;;  (:map TeX-mode-map
+ ;;   :nv "m" #'evil-set-marker))
 
  ;;; multi-cursors
  (:when (featurep! :editor multiple-cursors)
-  (:after evil
+  (:after evil-mc
    :nv "C-n" #'evil-mc-make-and-goto-next-match
    :nv "C-p" #'evil-mc-make-and-goto-prev-match))
-
- ;; evil
- (:when (featurep! :editor evil +everywhere)
-  (:after evil
-   :nv "TAB" #'evil-indent-line
-   :nv [tab] #'evil-indent-line))
 
  ;; winum
  (:when (featurep! :ui window-select +numbers)
