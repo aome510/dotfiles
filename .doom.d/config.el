@@ -98,6 +98,7 @@
 
 (use-package! lsp-mode
   :when (featurep! :tools lsp)
+  :defer t
   :config
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
@@ -107,6 +108,7 @@
 
 (use-package! lsp-ui
   :when (featurep! :tools lsp)
+  :defer t
   :config
   (setq lsp-idle-delay 1
         lsp-ui-doc-delay 0.5
@@ -116,6 +118,7 @@
 
 (use-package! lsp-rust
   :when (featurep! :lang rust +lsp)
+  :defer t
   :config
   (setq lsp-rust-analyzer-proc-macro-enable t
         lsp-rust-analyzer-cargo-run-build-scripts t))

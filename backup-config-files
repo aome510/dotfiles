@@ -18,6 +18,7 @@ home_white_list = [
     ".gitconfig",
     ".doom.d",
     ".makepkg.conf",
+    "scripts",
 ]
 
 dot_config_white_list = [

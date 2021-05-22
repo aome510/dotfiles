@@ -151,9 +151,10 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 # kak-everywhere!
-bindsym $mod+g exec "sh -c kak-everywhere"
+bindsym --release $mod+c exec --no-startup-id "sh -c kak-everywhere"
 
 # resize window (you can also use the mouse for that)
+
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -189,14 +190,14 @@ bar {
 }
 
 # call dex to start autostart applications
-exec dex -a -e i3
+exec --no-startup-id dex -a -e i3
 
 # xkbcomp to change keyboard keybindings
-exec xkbcomp ~/.xkbcomp $DISPLAY
+exec --no-startup-id xkbcomp ~/.xkbcomp $DISPLAY
 
 # other key bindings
 bindsym Print exec flameshot gui
-bindsym Control+Mod1+l exec cinnamon-screensaver-command -l -m "You are the Apple Of My Eyes 🍎"
+bindsym Control+Mod1+l exec --no-startup-id cinnamon-screensaver-command -l -m "You are the Apple Of My Eyes 🍎"
 # bindsym Control+Mod1+l exec betterlockscreen -l dim
 
 # set default workspace layout to tabbed
