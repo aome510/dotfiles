@@ -4,6 +4,8 @@ xdotool key --clearmodifiers ctrl+x
 file=$(mktemp)
 xsel -ob > $file
 kitty --class floating kak $file
+# remove the newline from eol
+truncate -s -1 $file
 cat $file | xsel -ib
 
 xdotool key --clearmodifiers ctrl+v

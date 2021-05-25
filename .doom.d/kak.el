@@ -188,6 +188,4 @@ current region that are splitted by the given regex pattern"
   :desc "Select" "s" #'select-in-region-regexp
   :desc "Split" "S" #'split-in-region-regexp
   :desc "Keep" "k" (lambda () (interactive) (filter-cursors-regexp t))
-  :desc "Remove" "K" (lambda () (interactive) (filter-cursors-regexp nil)))
- (:leader
-  :desc "Expand Region" "v" #'er/expand-region))
+  :desc "Remove" "K" (lambda () (interactive) (filter-cursors-regexp nil))))

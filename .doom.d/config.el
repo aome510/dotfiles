@@ -54,7 +54,7 @@
 ;; Custom commands
 (defun term-other-window (&optional side size)
   (split-window (selected-window) size side)
-  (term shell-file-name))
+  (vterm "*terminal*"))
 
 (evil-define-command evil-shell-command-on-region (beg end command)
   (interactive (let (string)
@@ -67,12 +67,6 @@
 
 ;; Package configurations
 
-;;; centaur-tabs
-;; (use-package! centaur-tabs
-;;   :when (featurep! :ui tabs)
-;;   :config
-;;   (setq centaur-tabs-set-icons t))
-
 ;;; doom-theme
 (use-package! doom-themes
   :config
@@ -83,18 +77,26 @@
 (use-package! company
   :when (featurep! :completion company)
   :config
-  (setq company-idle-delay 0.0
+  (setq company-idle-delay 0.2
+        company-async-redisplay-delay 0.001
         company-selection-wrap-around t
         ;; company-dabbrev-code-everywhere t
         ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
-        company-minimum-prefix-length 1))
+        company-minimum-prefix-length 2))
 
 ;;; gcmh
 (use-package! gcmh
   :config
-  (setq-default gcmh-high-cons-threshold (* 64 1024 1024)))
+  (setq-default gcmh-idle-delay 15)
+  (setq-default gcmh-high-cons-threshold (* 50 1024 1024)))
 
 ;;; lsp packages
+
+(use-package! lsp-eslint
+  :when (featurep! :tools lsp)
+  :config
+  (setq lsp-eslint-format nil
+        lsp-eslint-auto-fix-on-save t))
 
 (use-package! lsp-mode
   :when (featurep! :tools lsp)
@@ -150,10 +152,11 @@
   (setq-default pdf-view-display-size 'fit-width))
 
 ;;; format
-(use-package! format
-  :when (featurep! :editor format)
-  :config
-  (setq +format-on-save-enabled-modes '(not sql-mode js-mode js2-mode vue-mode json-mode)))
+;; (use-package! format
+;;   :when (featurep! :editor format)
+;;   :config
+;;   ;; (setq +format-on-save-enabled-modes '(not sql-mode js-mode js2-mode vue-mode))
+;;   )
 
 ;;; evil packages
 (use-package! evil
@@ -192,6 +195,9 @@
 (map!
  "M-="    #'text-scale-increase
  "M--"    #'text-scale-decrease
+
+ "C-=" #'er/expand-region
+ "C--" #'er/contract-region
 
  "M-<return>" #'toggle-frame-fullscreen
  "M-<escape>" #'normal-mode
@@ -343,12 +349,15 @@
 ;;; eslint-related configurations
 
 (defun add-eslint-fix-all-to-before-save-hook ()
-  (add-hook! 'before-save-hook :local #'lsp-eslint-apply-all-fixes))
+  (add-hook! 'before-save-hook :local #'lsp-eslint-fix-all))
 
-;; use eslint to format code not the default "prettier" defined in "format-all"
 (add-hook! 'js-mode-hook #'add-eslint-fix-all-to-before-save-hook)
 (add-hook! 'js2-mode-hook #'add-eslint-fix-all-to-before-save-hook)
+(add-hook! 'typescript-mode-hook #'add-eslint-fix-all-to-before-save-hook)
 
-;; use eslint for flycheck
 (setq-hook! 'js-mode-hook flycheck-checker 'javascript-eslint)
 (setq-hook! 'js2-mode-hook flycheck-checker 'javascript-eslint)
+(setq-hook! 'typescript-mode-hook flycheck-checker 'javascript-eslint)
+
+;;; config safe local variables
+(add-to-list 'safe-local-variable-values '(+format-with-lsp . nil))

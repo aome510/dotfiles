@@ -3,3 +3,5 @@
 [user]
 	name = Thang Pham
 	email = phamducthang1234@gmail.com
+[init]
+	defaultBranch = master

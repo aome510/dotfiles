@@ -79,6 +79,7 @@ map global user r '<a-d>!xsel --output --clipboard<ret>' -docstring 'replace a s
 
 # save file
 map global normal '<c-s>' :write<ret> -docstring 'save file'
+map global normal '<c-q>' :write-quit<ret> -docstring 'save file then quit'
 
 # comment
 map global normal '#' :comment-line<ret> -docstring 'comment line'

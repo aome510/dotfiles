@@ -5,5 +5,11 @@
 
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
 (add-hook! 'vue-mode-hook #'lsp!)
+(setq-hook! 'vue-mode-hook +format-with :none)
+
 (add-hook! 'vue-mode-hook #'add-eslint-fix-all-to-before-save-hook)
 (setq-hook! 'vue-mode-hook flycheck-checker 'javascript-eslint)
+
+(use-package! lsp-vetur
+  :config
+  (setq lsp-vetur-format-enable nil))

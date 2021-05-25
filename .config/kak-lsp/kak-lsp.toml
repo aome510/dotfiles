@@ -36,6 +36,12 @@ roots = [".flowconfig"]
 command = "flow"
 args = ["lsp"]
 
+[language.typescript]
+filetypes = ["typescript"]
+roots = ["package.json"]
+command = "typescript-language-server"
+args = ["--stdio"]
+
 [language.json]
 filetypes = ["json"]
 roots = ["package.json"]
