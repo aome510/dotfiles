@@ -196,8 +196,8 @@
  "M-="    #'text-scale-increase
  "M--"    #'text-scale-decrease
 
- "C-=" #'er/expand-region
- "C--" #'er/contract-region
+ (:after expand-region (:leader
+  :desc "Expand Region" "=" #'er/expand-region))
 
  "M-<return>" #'toggle-frame-fullscreen
  "M-<escape>" #'normal-mode
@@ -212,11 +212,9 @@
    :desc "Projectile Dired" "SPC" #'projectile-dired))
 
  (:leader :prefix "o"
-  :desc "Open terminal in other window (right)" "t"
+  :desc "Open terminal in other window (right)" "T"
   #'(lambda (&optional size) (interactive "P") (term-other-window 'left size))
-  :desc "Open small terminal in other window (below)" "T"
-  #'(lambda (&optional size) (interactive "P") (term-other-window 'above (if size size 10))))
-
+  :desc "Open small terminal (below)" "t" #'vterm)
 
  ;; evil-related packages
  (:when (featurep! :editor evil +everywhere)
