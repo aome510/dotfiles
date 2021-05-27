@@ -79,7 +79,7 @@
 (use-package! company
   :when (featurep! :completion company)
   :config
-  (setq company-idle-delay 0.2
+  (setq company-idle-delay 0.1
         company-async-redisplay-delay 0.001
         company-selection-wrap-around t
         ;; company-dabbrev-code-everywhere t
@@ -109,10 +109,9 @@
   ;; disable smartparens in latex mode
   (add-hook 'TeX-mode-hook #'turn-off-smartparens-mode)
 
-  ;; (add-hook 'TeX-mode-hook #'lsp!)
-  ;; (add-hook 'TeX-mode-hook (lambda () (setq-local +lsp-company-backends
-  ;;                                                 '(:separate company-capf company-yasnippet company-dabbrev))))
-  )
+  (add-hook 'TeX-mode-hook #'lsp!)
+  (add-hook 'TeX-mode-hook (lambda () (setq-local +lsp-company-backends
+                                                  '(:separate company-capf company-yasnippet company-dabbrev)))))
 
 ;;; pdf-tools
 (use-package! pdf-tools

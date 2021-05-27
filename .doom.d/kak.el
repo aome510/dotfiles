@@ -181,11 +181,9 @@ current region that are splitted by the given regex pattern"
            (backward-char 1)))))))
 
 (map!
- :v
- (:prefix ("." . "kakoune mode")
-  :desc "Shel command on region" "|" #'evil-shell-command-on-region-all-cursors
-  :desc "Insert cursor index" "#" #'insert-index-all-cursors
-  :desc "Select" "s" #'select-in-region-regexp
-  :desc "Split" "S" #'split-in-region-regexp
-  :desc "Keep" "k" (lambda () (interactive) (filter-cursors-regexp t))
-  :desc "Remove" "K" (lambda () (interactive) (filter-cursors-regexp nil))))
+ :v ". |" #'evil-shell-command-on-region-all-cursors
+ :v ". #" #'insert-index-all-cursors
+ :v ". s" #'select-in-region-regexp
+ :v ". S" #'split-in-region-regexp
+ :v ". k" (lambda () (interactive) (filter-cursors-regexp t))
+ :v ". K" (lambda () (interactive) (filter-cursors-regexp nil)))

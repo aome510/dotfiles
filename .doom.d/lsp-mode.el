@@ -25,8 +25,8 @@
   (setq lsp-idle-delay 1
         lsp-ui-doc-delay 0.5
         lsp-ui-doc-enable t
-        lsp-ui-doc-max-height 8
-        lsp-ui-doc-max-width 32))
+        lsp-ui-doc-max-height 16
+        lsp-ui-doc-max-width 64))
 
 (use-package! lsp-rust
   :when (featurep! :lang rust +lsp)
@@ -44,8 +44,11 @@
     :desc "Restart workspace" "R" #'lsp-restart-workspace
     :desc "Find references" "r" #'lsp-find-references))))
 
+;;; disable the lsp's provided formatter
+(setq +format-with-lsp nil)
+
 ;;; config safe local variables
-(add-to-list 'safe-local-variable-values '(+format-with-lsp . nil))
+;; (add-to-list 'safe-local-variable-values '(+format-with-lsp . nil))
 
 ;;; eslint-related configurations
 
