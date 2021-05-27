@@ -16,8 +16,8 @@ if not test -n "$INSIDE_EMACS"
     bind --user 'gl' end-of-line
     bind --user -M visual 'gl' end-of-line
     
-    bind --user \cH backward-kill-word
-    bind --user -M insert \cH backward-kill-word
+    # bind --user \cH backward-kill-word
+    # bind --user -M insert \cH backward-kill-word
     
 else
     fish_default_key_bindings
@@ -37,13 +37,13 @@ end
 
 function kfzf
     if test -n "$argv"
-        command kak (fd $fzf_fd_opts --search-path $argv | fzf)
+        command kak (fd $fzf_fd_opts -t f --search-path $argv | fzf)
     else
-        command kak (fd $fzf_fd_opts | fzf)
+        command kak (fd $fzf_fd_opts -t f | fzf)
     end
 end
 
 # allow fzf.fish to search for hidden files
-set fzf_fd_opts --hidden -E .git -E node_modules -E .cache -E build -E .ccls-cache -t f
+set fzf_fd_opts --hidden -E .git -E node_modules -E .cache -E build -E .ccls-cache
 
 alias ksudo="sudo -e"

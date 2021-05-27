@@ -22,9 +22,24 @@ home_white_list = [
 ]
 
 dot_config_white_list = [
-    "autorandr", "autostart", "fish", "flake8", "flameshot", "fontconfig", "i3",
-    "i3status", "kak", "kak-lsp", "kitty", "light", "omf", "picom.conf", "yapf",
-    "systemd", ".projectile"
+    "autorandr",
+    "autostart",
+    "fish",
+    "flake8",
+    "flameshot",
+    "fontconfig",
+    "i3",
+    "i3status",
+    "kak",
+    "kak-lsp",
+    "kitty",
+    "light",
+    "omf",
+    "picom.conf",
+    "yapf",
+    "systemd",
+    ".projectile",
+    "yarn/global/package.json",
 ]
 
 cwd = os.path.dirname(__file__)

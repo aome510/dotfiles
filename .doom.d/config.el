@@ -48,8 +48,10 @@
 ;; they are implemented.
 ;;
 
+;;; additional loadings
 (load! "kak")
 (load! "vue")
+(load! "lsp-mode")
 
 ;; Custom commands
 (defun term-other-window (&optional side size)
@@ -90,41 +92,6 @@
   (setq-default gcmh-idle-delay 15)
   (setq-default gcmh-high-cons-threshold (* 50 1024 1024)))
 
-;;; lsp packages
-
-(use-package! lsp-eslint
-  :when (featurep! :tools lsp)
-  :config
-  (setq lsp-eslint-format nil
-        lsp-eslint-auto-fix-on-save t))
-
-(use-package! lsp-mode
-  :when (featurep! :tools lsp)
-  :defer t
-  :config
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
-  (setq
-   lsp-signature-doc-lines 8
-   lsp-modeline-diagnostics-enable nil))
-
-(use-package! lsp-ui
-  :when (featurep! :tools lsp)
-  :defer t
-  :config
-  (setq lsp-idle-delay 1
-        lsp-ui-doc-delay 0.5
-        lsp-ui-doc-enable t
-        lsp-ui-doc-max-height 8
-        lsp-ui-doc-max-width 32))
-
-(use-package! lsp-rust
-  :when (featurep! :lang rust +lsp)
-  :defer t
-  :config
-  (setq lsp-rust-analyzer-proc-macro-enable t
-        lsp-rust-analyzer-cargo-run-build-scripts t))
-
 ;;; snippets
 (use-package! doom-snippets
   :load-path "~/.doom.d/snippets"
@@ -141,9 +108,11 @@
   (setq TeX-command-force "LatexMk")
   ;; disable smartparens in latex mode
   (add-hook 'TeX-mode-hook #'turn-off-smartparens-mode)
-  (add-hook 'TeX-mode-hook #'lsp!)
-  (add-hook 'TeX-mode-hook (lambda () (setq-local +lsp-company-backends
-                                                  '(:separate company-capf company-yasnippet company-dabbrev)))))
+
+  ;; (add-hook 'TeX-mode-hook #'lsp!)
+  ;; (add-hook 'TeX-mode-hook (lambda () (setq-local +lsp-company-backends
+  ;;                                                 '(:separate company-capf company-yasnippet company-dabbrev))))
+  )
 
 ;;; pdf-tools
 (use-package! pdf-tools
@@ -152,11 +121,10 @@
   (setq-default pdf-view-display-size 'fit-width))
 
 ;;; format
-;; (use-package! format
-;;   :when (featurep! :editor format)
-;;   :config
-;;   ;; (setq +format-on-save-enabled-modes '(not sql-mode js-mode js2-mode vue-mode))
-;;   )
+(use-package! format
+  :when (featurep! :editor format)
+  :config
+  (setq +format-on-save-enabled-modes '(not sql-mode)))
 
 ;;; evil packages
 (use-package! evil
@@ -197,7 +165,7 @@
  "M--"    #'text-scale-decrease
 
  (:after expand-region (:leader
-  :desc "Expand Region" "=" #'er/expand-region))
+                        :desc "Expand Region" "=" #'er/expand-region))
 
  "M-<return>" #'toggle-frame-fullscreen
  "M-<escape>" #'normal-mode
@@ -269,6 +237,10 @@
    :nv "C-n" #'evil-mc-make-and-goto-next-match
    :nv "C-p" #'evil-mc-make-and-goto-prev-match))
 
+ (:when (featurep! :ui treemacs)
+  (:after treemacs
+   :leader
+   :desc "Select treemacs window" "0" #'treemacs-select-window))
  ;; winum
  (:when (featurep! :ui window-select +numbers)
   (:after winum
@@ -289,14 +261,6 @@
    :map ivy-minibuffer-map
    "C-h" #'ivy-backward-delete-char))
 
- ;;; lsp
- (:when (featurep! :tools lsp)
-  (:after lsp-mode
-   :map lsp-mode-map
-   (:leader :prefix "c"
-    :desc "Restart workspace" "R" #'lsp-restart-workspace
-    :desc "Find references" "r" #'lsp-find-references)))
-
  ;;; company
  (:when (featurep! :completion company)
   (:after company
@@ -314,7 +278,7 @@
     "TAB" #'yas-next-field-or-maybe-expand
     [tab] #'yas-next-field-or-maybe-expand))))
 
-;; others
+;; miscellaneous
 
 ;;; upon spliting window, open projectile-find-file
 (after! evil (after! ivy
@@ -343,19 +307,3 @@
 ;;; auto scrolling
 (setq scroll-conservatively 8
       scroll-step 8)
-
-;;; eslint-related configurations
-
-(defun add-eslint-fix-all-to-before-save-hook ()
-  (add-hook! 'before-save-hook :local #'lsp-eslint-fix-all))
-
-(add-hook! 'js-mode-hook #'add-eslint-fix-all-to-before-save-hook)
-(add-hook! 'js2-mode-hook #'add-eslint-fix-all-to-before-save-hook)
-(add-hook! 'typescript-mode-hook #'add-eslint-fix-all-to-before-save-hook)
-
-(setq-hook! 'js-mode-hook flycheck-checker 'javascript-eslint)
-(setq-hook! 'js2-mode-hook flycheck-checker 'javascript-eslint)
-(setq-hook! 'typescript-mode-hook flycheck-checker 'javascript-eslint)
-
-;;; config safe local variables
-(add-to-list 'safe-local-variable-values '(+format-with-lsp . nil))
