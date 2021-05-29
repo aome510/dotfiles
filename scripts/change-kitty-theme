@@ -1,0 +1,2 @@
+#!/bin/sh
+ln -sf /home/aome510/.config/kitty/kitty-themes/themes/$1.conf /home/aome510/.config/kitty/theme.conf
