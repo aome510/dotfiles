@@ -1,0 +1,37 @@
+#!/bin/fish
+
+set bw_log "/tmp/bw_log"
+set bw_items "/tmp/bw_items"
+set bw_session_file "/tmp/bw_session"
+set allows 3
+
+if not test -f $bw_session_file
+    while test $allows -gt 0;
+        bw unlock > $bw_log
+        if test $status -eq 0
+            rg 'BW_SESSION="(.*?)"' $bw_log -or '$1' | head -n 1 > $bw_session_file
+            break
+        end
+        set allows (math $allows - 1)
+        echo "You have $allows tries left"
+    end
+
+    # allows == 0 means that we ran out of tries
+    if test $allows -eq 0
+        exit 1
+    end
+end
+
+export BW_SESSION=(cat $bw_session_file)
+
+if not test -f $bw_items
+   bw list items | jq -r '.[] | .name + " " + .login.username + " " + .id' > $bw_items 
+end
+
+set selected_id (cat $bw_items | fzf | awk '{print $3}')
+
+if not test $status -eq 0
+    exit 1
+end
+
+bw get password $selected_id | xsel -ib

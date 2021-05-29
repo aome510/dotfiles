@@ -3,7 +3,6 @@
 ;;;
 ;;;
 
-
 ;;; overidding evil-mc-get-default-cursor to use
 ;;; evil-mc-from-real-cursor that creates a fake cursor
 ;;; based on real cursor's current state.

@@ -121,6 +121,9 @@ hook global WinSetOption filetype=(python) %{
 # fzf for KAK
 plug "andreyorst/fzf.kak" defer fzf %{
     set-option global fzf_file_command "fd --hidden --hidden -E .git -E node_modules -E .cache -E build -E .ccls-cache"
+    set-option global fzf_window_map "ctrl-n"
+    set-option global fzf_vertical_map "ctrl-s"
+    set-option global fzf_horizontal_map "ctrl-v" 
 } config %{
     map -docstring 'fzf mode' global normal '<c-p>' ': fzf-mode<ret>'
 }

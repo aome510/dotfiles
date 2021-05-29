@@ -48,12 +48,18 @@
 ;; they are implemented.
 ;;
 
-;;; additional loadings
+;; ----------------------------------
+;; additional loadings
+;; ----------------------------------
+
 (load! "kak")
 (load! "vue")
 (load! "lsp-mode")
 
+;; ----------------------------------
 ;; Custom commands
+;; ----------------------------------
+
 (defun term-other-window (&optional side size)
   (split-window (selected-window) size side)
   (vterm "*terminal*"))
@@ -67,7 +73,9 @@
                        command)))
   (shell-command-on-region beg end command nil t shell-command-default-error-buffer t (region-noncontiguous-p)))
 
+;; ----------------------------------
 ;; Package configurations
+;; ----------------------------------
 
 ;;; doom-theme
 (use-package! doom-themes
@@ -157,26 +165,28 @@
   (setq recentf-exclude '(recentf-file-ignore-p)
         recentf-max-saved-items 1024))
 
+;; ----------------------------------
 ;; user-defined key mappings
+;; ----------------------------------
 
 (map!
  "M-="    #'text-scale-increase
  "M--"    #'text-scale-decrease
 
- (:after expand-region (:leader
-                        :desc "Expand Region" "=" #'er/expand-region))
+ (:leader
+  :desc "Expand Region" "=" #'er/expand-region)
 
  "M-<return>" #'toggle-frame-fullscreen
  "M-<escape>" #'normal-mode
 
  (:when (featurep! :checkers syntax)
   (:after flycheck
+   :map flycheck-mode-map
    :n "] e" #'flycheck-next-error
    :n "[ e" #'flycheck-previous-error))
 
- (:after projectile
-  (:leader :prefix "p"
-   :desc "Projectile Dired" "SPC" #'projectile-dired))
+ (:leader :prefix "p"
+  :desc "Projectile Dired" "SPC" #'projectile-dired)
 
  (:leader :prefix "o"
   :desc "Open terminal in other window (right)" "T"
@@ -185,29 +195,27 @@
 
  ;; evil-related packages
  (:when (featurep! :editor evil +everywhere)
-  (:after evil
+  (:leader
+   :prefix ("a" . "custom keybindings")
+   :desc "Align Left"    "l" #'evil-lion-left
+   :desc "Align Right"   "r" #'evil-lion-right)
 
-   (:leader
-    :prefix ("a" . "custom keybindings")
-    :desc "Align Left"    "l" #'evil-lion-left
-    :desc "Align Right"   "r" #'evil-lion-right)
+  ;; Kakoune-like key bindings
+  :mvn "g h" #'evil-beginning-of-line
+  :mvn "g i" #'evil-first-non-blank
+  :mvn "g l" #'evil-end-of-line
 
-   ;; Kakoune-like key bindings
-   :mvn "g h" #'evil-beginning-of-line
-   :mvn "g i" #'evil-first-non-blank
-   :mvn "g l" #'evil-end-of-line
+  :mvn "M-n" #'evil-ex-search-previous
 
-   :mvn "M-n" #'evil-ex-search-previous
+  :nv "TAB" #'evil-indent-line
+  :nv [tab] #'evil-indent-line
 
-   :nv "TAB" #'evil-indent-line
-   :nv [tab] #'evil-indent-line
+  :n "U" #'evil-redo
 
-   :n "U" #'evil-redo
+  :v "|" #'evil-shell-command-on-region
 
-   :v "|" #'evil-shell-command-on-region
-
-   (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
-   (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block)))
+  (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
+  (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))
 
  ;;; latex
  (:when (featurep! :lang latex)
@@ -232,27 +240,25 @@
 
  ;;; multi-cursors
  (:when (featurep! :editor multiple-cursors)
-  (:after evil-mc
-   :nv "C-n" #'evil-mc-make-and-goto-next-match
-   :nv "C-p" #'evil-mc-make-and-goto-prev-match))
+  :nv "C-n" #'evil-mc-make-and-goto-next-match
+  :nv "C-p" #'evil-mc-make-and-goto-prev-match)
 
  (:when (featurep! :ui treemacs)
-  (:after treemacs
-   :leader
-   :desc "Select treemacs window" "0" #'treemacs-select-window))
+  :leader
+  :desc "Select treemacs window" "0" #'treemacs-select-window)
+
  ;; winum
  (:when (featurep! :ui window-select +numbers)
-  (:after winum
-   :leader
-   :desc "winum-select-window-1" "1" #'winum-select-window-1
-   :desc "winum-select-window-2" "2" #'winum-select-window-2
-   :desc "winum-select-window-3" "3" #'winum-select-window-3
-   :desc "winum-select-window-4" "4" #'winum-select-window-4
-   :desc "winum-select-window-5" "5" #'winum-select-window-5
-   :desc "winum-select-window-6" "6" #'winum-select-window-6
-   :desc "winum-select-window-7" "7" #'winum-select-window-7
-   :desc "winum-select-window-8" "8" #'winum-select-window-8
-   :desc "winum-select-window-9" "9" #'winum-select-window-9))
+  :leader
+  :desc "winum-select-window-1" "1" #'winum-select-window-1
+  :desc "winum-select-window-2" "2" #'winum-select-window-2
+  :desc "winum-select-window-3" "3" #'winum-select-window-3
+  :desc "winum-select-window-4" "4" #'winum-select-window-4
+  :desc "winum-select-window-5" "5" #'winum-select-window-5
+  :desc "winum-select-window-6" "6" #'winum-select-window-6
+  :desc "winum-select-window-7" "7" #'winum-select-window-7
+  :desc "winum-select-window-8" "8" #'winum-select-window-8
+  :desc "winum-select-window-9" "9" #'winum-select-window-9)
 
  ;;; ivy
  (:when (featurep! :completion ivy)
@@ -277,7 +283,9 @@
     "TAB" #'yas-next-field-or-maybe-expand
     [tab] #'yas-next-field-or-maybe-expand))))
 
-;; miscellaneous
+;; ----------------------------------
+;; misc
+;; ----------------------------------
 
 ;;; upon spliting window, open projectile-find-file
 (after! evil (after! ivy
