@@ -39,7 +39,6 @@ dot_config_white_list = [
     "yapf",
     "systemd",
     ".projectile",
-    "yarn/global/package.json",
 ]
 
 cwd = os.path.dirname(__file__)
@@ -82,6 +81,9 @@ os.system("mkdir -p .config")
 for f in os.listdir("{}/.config".format(home)):
     if f in dot_config_white_list:
         os.system(f"cp -r ~/.config/{f} {cwd}/.config")
+
+# list all globally installed packages using yarn into package.json
+os.system(f"cp ~/.config/yarn/global/package.json package.json")
 
 # list all explicitly installed packages into packages.txt
 os.system(f"pacman -Qe > {cwd}/packages.txt")

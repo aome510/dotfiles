@@ -54,11 +54,32 @@
 
 (load! "kak")
 (load! "vue")
-(load! "lsp-mode")
+(load! "lsp-eglot")
+;; (load! "lsp-mode")
 
 ;; ----------------------------------
-;; Custom commands
+;; Custom commands/functions
 ;; ----------------------------------
+
+(defun ripgrep-search-project (search-term &rest args)
+  (interactive
+   (list (projectile--read-search-string-with-default
+          (format "Ripgrep %ssearch for" (if current-prefix-arg "regexp " "")))
+         current-prefix-arg))
+  (if (require 'ripgrep nil 'noerror)
+      (let ((rg-args (mapcar (lambda (val) (concat "--glob !" val))
+                             (append projectile-globally-ignored-files
+                                     projectile-globally-ignored-directories))))
+        (ripgrep-regexp search-term
+                        (projectile-acquire-root)
+                        (append rg-args args)))))
+
+(defun save-buffer-without-auto-formatting ()
+  (interactive)
+  (setq temp before-save-hook)
+  (setq before-save-hook nil)
+  (save-buffer)
+  (setq before-save-hook temp))
 
 (defun term-other-window (&optional side size)
   (split-window (selected-window) size side)
@@ -115,11 +136,7 @@
   (setq +latex-viewers '(pdf-tools evince))
   (setq TeX-command-force "LatexMk")
   ;; disable smartparens in latex mode
-  (add-hook 'TeX-mode-hook #'turn-off-smartparens-mode)
-
-  (add-hook 'TeX-mode-hook #'lsp!)
-  (add-hook 'TeX-mode-hook (lambda () (setq-local +lsp-company-backends
-                                                  '(:separate company-capf company-yasnippet company-dabbrev)))))
+  (add-hook 'TeX-mode-hook #'turn-off-smartparens-mode))
 
 ;;; pdf-tools
 (use-package! pdf-tools
@@ -131,7 +148,7 @@
 (use-package! format
   :when (featurep! :editor format)
   :config
-  (setq +format-on-save-enabled-modes '(not sql-mode)))
+  (setq +format-on-save-enabled-modes '(not sql-mode tex-mode latex-mode)))
 
 ;;; evil packages
 (use-package! evil
@@ -139,6 +156,13 @@
   :config
   (setq evil-cross-lines t)
   (setq evil-snipe-scope 'visible))
+
+;;; emacs-tree-sitter
+(use-package! tree-sitter
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 ;;; recentf
 
@@ -176,6 +200,12 @@
  (:leader
   :desc "Expand Region" "=" #'er/expand-region)
 
+ (:leader :prefix "b"
+  :desc "Save buffer without formatting" "s" #'save-buffer-without-auto-formatting)
+
+ (:leader :prefix "t"
+  :desc "Treesitter mode" "t" #'tree-sitter-mode)
+
  "M-<return>" #'toggle-frame-fullscreen
  "M-<escape>" #'normal-mode
 
@@ -184,6 +214,9 @@
    :map flycheck-mode-map
    :n "] e" #'flycheck-next-error
    :n "[ e" #'flycheck-previous-error))
+
+ (:leader :prefix "s"
+  :desc "Ripgrep Search Project" "g" #'ripgrep-search-project)
 
  (:leader :prefix "p"
   :desc "Projectile Dired" "SPC" #'projectile-dired)
@@ -264,7 +297,10 @@
  (:when (featurep! :completion ivy)
   (:after ivy
    :map ivy-minibuffer-map
-   "C-h" #'ivy-backward-delete-char))
+   "C-h" #'ivy-backward-delete-char
+   :map ivy-reverse-i-search-map
+   "C-k" #'previous-line
+   "C-d" #'ivy-reverse-i-search-kill))
 
  ;;; company
  (:when (featurep! :completion company)
@@ -295,10 +331,14 @@
                  :after '(evil-window-split evil-window-vsplit)
                  (counsel-buffer-or-recentf))))
 
-;;; disable inserting tabs
-(global-unset-key (kbd "TAB"))
+;;; increase history length
+(setq-default history-length 1000)
+(setq-default prescient-history-length 1000)
 
-;;; save file with C-s
+;;; disable inserting tabs
+;; (global-unset-key (kbd "TAB"))
+
+;;; save file with C-s or C-S (without formatting)
 (global-set-key (kbd "C-s") #'save-buffer)
 
 ;;; remove latex autofill

@@ -20,10 +20,10 @@
        ;;layout              ; auie,ctsrnm is the superior home row
 
        :completion
-       company                  ; the ultimate code completion backend
-       ;;helm                   ; the *other* search engine for love and life
-       ;;ido                    ; the other *other* search engine...
-       (ivy +prescient)             ; a search engine for love and life
+       (company +childframe) ; the ultimate code completion backend
+       ;;helm                ; the *other* search engine for love and life
+       ;;ido                 ; the other *other* search engine...
+       (ivy +prescient)      ; a search engine for love and life
 
        :ui
        ;;deft                   ; notational velocity for Emacs
@@ -93,7 +93,8 @@
        (eval +overlay)       ; run code, run (also, repls)
        ;;gist                ; interacting with github gists
        lookup                ; navigate your code and its documentation
-       (lsp +peek)
+       ;; (lsp +peek)
+       (lsp +eglot)
        magit                 ; a git porcelain for Emacs
        ;;make                ; run make tasks from Emacs
        ;;pass                ; password manager for nerds

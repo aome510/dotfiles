@@ -7,10 +7,10 @@
 (add-hook! 'vue-mode-hook #'lsp!)
 
 ;; only use eslint.fixAll to format
-(setq-hook! 'vue-mode-hook +format-with :none)
-(add-hook! 'vue-mode-hook #'add-eslint-fix-all-to-before-save-hook)
+;; (setq-hook! 'vue-mode-hook +format-with :none)
+;; (add-hook! 'vue-mode-hook #'add-eslint-fix-all-to-before-save-hook)
 ;; (setq-hook! 'vue-mode-hook flycheck-checker 'javascript-eslint)
 
-(use-package! lsp-vetur
-  :config
-  (setq lsp-vetur-format-enable nil))
+;; (use-package! lsp-vetur
+;;   :config
+;;   (setq lsp-vetur-format-enable nil))

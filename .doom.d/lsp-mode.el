@@ -35,20 +35,11 @@
   (setq lsp-rust-analyzer-proc-macro-enable t
         lsp-rust-analyzer-cargo-run-build-scripts t))
 
-(map!
- ;;; lsp
- (:when (featurep! :tools lsp)
-  (:after lsp-mode
-   :map lsp-mode-map
-   (:leader :prefix "c"
-    :desc "Restart workspace" "R" #'lsp-restart-workspace
-    :desc "Find references" "r" #'lsp-find-references))))
-
 ;;; disable the lsp's provided formatter
-(setq +format-with-lsp nil)
+;; (setq +format-with-lsp nil)
 
 ;;; config safe local variables
-;; (add-to-list 'safe-local-variable-values '(+format-with-lsp . nil))
+(add-to-list 'safe-local-variable-values '(+format-with-lsp . nil))
 
 ;;; eslint-related configurations
 
@@ -63,3 +54,8 @@
 
 ;; (setq-hook! 'js-mode-hook flycheck-checker 'javascript-eslint)
 ;; (setq-hook! 'js2-mode-hook flycheck-checker 'javascript-eslint)
+
+;;; setup lsp server for latex-mode
+(add-hook 'TeX-mode-hook #'lsp!)
+(add-hook 'TeX-mode-hook (lambda () (setq-local +lsp-company-backends
+                                                '(:separate company-capf company-yasnippet company-dabbrev))))
