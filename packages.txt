@@ -13,7 +13,7 @@ bison 3.7.6-1
 bluez 5.58-1
 bluez-utils 5.58-1
 btrfs-progs 5.12.1-1
-calibre 5.18.0-1
+calibre 5.19.0-1
 caribou 0.4.21+66+g14f5428-3
 ccls 0.20210330-1
 cdrtools 3.02a09-4
@@ -31,16 +31,16 @@ docker 1:20.10.6-1
 dracut 053-1
 dracut-hook-uefi 0.4.2-1
 dzen2 0.9.5.14.488ab66-2
-edk2-shell 202102-1
+edk2-shell 202105-1
 efitools 1.9.2-3
 emacs-git 28.0.50.148398-1
 evince 40.1-1
 fakeroot 1.25.3-2
 fd 8.2.1-1
 feh 3.7-1
-file 5.40-3
+file 5.40-5
 findutils 4.8.0-1
-firefox-developer-edition 89.0b15-1
+firefox-developer-edition 90.0b2-1
 fish 3.2.2-2
 flameshot 0.9.0-1
 flex 2.6.4-3
@@ -95,7 +95,7 @@ lynx 2.8.9-3
 m4 1.4.18-3
 make 4.3-3
 man-db 2.9.4-1
-marked 2.0.6-1
+marked 2.0.7-1
 mplayer 38157-4
 nautilus 40.1-1
 net-tools 2.10-1
@@ -106,8 +106,8 @@ noto-fonts-cjk 20201206-2
 noto-fonts-emoji 20200916-1
 ntfs-3g 2017.3.23-5
 openssh 8.6p1-1
-pacman 5.2.2-4
-pandoc-bin 2.13-1
+pacman 6.0.0-2
+pandoc-bin 2.14.0.1-1
 patch 2.7.6-8
 pavucontrol 1:4.0-2
 picom 8.2-1
@@ -175,7 +175,7 @@ xorg-xinput 1.6.3-2
 xorg-xrandr 1.5.1-2
 xsel 1.2.0.20190821-1
 yarn 1.22.10-1
-yay 10.2.2-2
+yay 10.2.2-4
 youtube-dl 2021.05.16-1
 zip 3.0-9
 zoom 5.6.6-1

@@ -54,8 +54,8 @@
 
 (load! "kak")
 (load! "vue")
-(load! "lsp-eglot")
-;; (load! "lsp-mode")
+;; (load! "lsp-eglot")
+(load! "lsp-mode")
 
 ;; ----------------------------------
 ;; Custom commands/functions

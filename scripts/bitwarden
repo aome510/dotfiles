@@ -28,7 +28,7 @@ if not test -f $bw_items
    bw list items | jq -r '.[] | .name + " " + .login.username + " " + .id' > $bw_items 
 end
 
-set selected_id (cat $bw_items | fzf | awk '{print $3}')
+set selected_id (cat $bw_items | fzf $fzf_otps | awk '{print $3}')
 
 if not test $status -eq 0
     exit 1
