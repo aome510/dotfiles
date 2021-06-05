@@ -20,7 +20,8 @@
        ;;layout              ; auie,ctsrnm is the superior home row
 
        :completion
-       (company +childframe) ; the ultimate code completion backend
+       ;; (company +childframe) ; the ultimate code completion backend
+       (company)
        ;;helm                ; the *other* search engine for love and life
        ;;ido                 ; the other *other* search engine...
        (ivy +prescient)      ; a search engine for love and life
@@ -108,7 +109,7 @@
 
        :os
        (:if IS-MAC macos)    ; improve compatibility with macOS
-       ;;tty                 ; improve the terminal Emacs experience
+       tty                 ; improve the terminal Emacs experience
 
        :lang
        ;;agda                ; types of types of types of types...

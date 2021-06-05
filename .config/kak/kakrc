@@ -7,7 +7,7 @@ add-highlighter global/ number-lines -relative -hlcursor
 add-highlighter global/ wrap
 
 # Color scheme
-colorscheme github
+colorscheme gruvbox
 # for transparency
 face global Default         default,default
 face global BufferPadding   default,default

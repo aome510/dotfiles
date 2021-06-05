@@ -26,7 +26,7 @@ end
 
 function history-fzf
     history merge
-    history -z | fzf $fzf_otps --read0 --print0 --tiebreak index -q (commandline) | read -z result
+    history | fzf $fzf_otps --tiebreak index -q (commandline) | read result
     commandline -- $result
     commandline -f repaint
 end
@@ -53,7 +53,8 @@ end
 set fd_opts --hidden -E .git -E node_modules -E .cache -E build -E .ccls-cache
 set fzf_otps --reverse --height 50%
 
-alias ksudo="sudo -e"
+alias se="sudo -e"
+alias cl="emacsclient -nw"
 
 # use vim key bindings for normal terminal,
 # use fish default key bindings for fish in emacs.
@@ -61,11 +62,11 @@ if not test -n "$INSIDE_EMACS"
     fish_vi_key_bindings
 
     # user-defined keybindings
-    bind --user 'gh' beginning-oine
-    bind --user -M visual 'gh' beginning-oine
+    bind --user 'gh' beginning-of-line
+    bind --user -M visual 'gh' beginning-of-line
     
-    bind --user 'gl' end-oine
-    bind --user -M visual 'gl' end-oine
+    bind --user 'gl' end-of-line
+    bind --user -M visual 'gl' end-of-line
     
     bind --user \ce kak-fzf
     bind --user -M insert \ce kak-fzf
