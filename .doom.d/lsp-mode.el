@@ -5,7 +5,6 @@
 (defun add-eslint-fix-all-to-before-save-hook ()
   (add-hook! 'before-save-hook :local #'lsp-eslint-fix-all))
 
-
 (use-package! lsp-mode
   :when (featurep! :tools lsp)
   :config
@@ -13,7 +12,7 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
   (setq
    lsp-idle-delay 1.0
-   lsp-signature-doc-lines 16
+   lsp-signature-doc-lines 10
    lsp-modeline-diagnostics-enable nil))
 
 ;; (use-package! lsp-ui
@@ -33,9 +32,8 @@
   (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]))
 
 ;;; setup lsp server for latex-mode
+(setq +latex--company-backends '(:separate company-capf company-yasnippet company-dabbrev))
 (add-hook 'TeX-mode-hook #'lsp!)
-(add-hook 'TeX-mode-hook (lambda () (setq-local +lsp-company-backends
-                                                '(:separate company-capf company-yasnippet company-dabbrev))))
 
 ;;; lsp-eslint
 (use-package! lsp-eslint

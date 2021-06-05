@@ -109,8 +109,8 @@
 (use-package! company
   :when (featurep! :completion company)
   :config
-  (setq company-idle-delay 0.1
-        company-async-redisplay-delay 0.001
+  (setq company-idle-delay 0.2
+        company-async-redisplay-delay 0.005
         company-selection-wrap-around t
         ;; company-dabbrev-code-everywhere t
         ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
