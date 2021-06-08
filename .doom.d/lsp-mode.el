@@ -12,6 +12,7 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
   (setq
    lsp-idle-delay 1.0
+   lsp-eldoc-render-all t
    lsp-signature-doc-lines 10
    lsp-modeline-diagnostics-enable nil))
 
@@ -29,7 +30,8 @@
 (use-package! lsp-rust
   :when (featurep! :lang rust +lsp)
   :config
-  (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]))
+  (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
+        lsp-rust-analyzer-cargo-watch-command "clippy"))
 
 ;;; setup lsp server for latex-mode
 (setq +latex--company-backends '(:separate company-capf company-yasnippet company-dabbrev))

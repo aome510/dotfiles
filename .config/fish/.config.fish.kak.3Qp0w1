@@ -22,19 +22,17 @@ function kak-fzf
     else
         kak (fd $fd_opts -t f | fzf $fzf_otps)
     end
-    commandline -f repaint
 end
 
 function history-fzf
     history merge
     history | fzf $fzf_otps --tiebreak index -q (commandline) | read result
-    commandline -r -- $result
+    commandline -- $result
     commandline -f repaint
 end
 
 function file-fzf
-    set query_dir ""
-    set current_cmd commandline
+    set current_cmd (commandline)
     
     if not string match -r '\s+$' $current_cmd
         set query_dir (commandline | awk '{print $NF}')
@@ -47,6 +45,7 @@ function file-fzf
     end
     
     set result (string escape $result)
+    set current_cmd (string replace -r '[^\s]+' $result $current_cmd)
     commandline -rt -- $result
     commandline -f repaint
 end
@@ -86,7 +85,3 @@ bind --user -M insert \cf file-fzf
 
 bind --user \cl forward-char
 bind --user -M insert \cl forward-char
-bind --user \cj down-or-search
-bind --user -M insert \cj down-or-search
-bind --user \ck up-or-search
-bind --user -M insert \ck up-or-search

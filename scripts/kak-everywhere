@@ -1,5 +1,6 @@
 #!/bin/bash
-xdotool key --clearmodifiers ctrl+x
+
+# xdotool key --clearmodifiers ctrl+c
 
 file=$(mktemp)
 xsel -ob > $file
