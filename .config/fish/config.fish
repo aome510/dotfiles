@@ -79,14 +79,8 @@ else
     fish_default_key_bindings
 end
 
-bind --user \cr history-fzf
 bind --user -M insert \cr history-fzf
-bind --user \cf file-fzf
-bind --user -M insert \cf file-fzf
-
-bind --user \cl forward-char
-bind --user -M insert \cl forward-char
-bind --user \cj down-or-search
-bind --user -M insert \cj down-or-search
-bind --user \ck up-or-search
-bind --user -M insert \ck up-or-search
+bind --user -M insert \ef file-fzf
+bind --user -M insert \cf forward-char
+bind --user -M insert \cn down-or-search
+bind --user -M insert \cp up-or-search
