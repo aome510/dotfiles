@@ -24,7 +24,7 @@
        (company)
        ;;helm                ; the *other* search engine for love and life
        ;;ido                 ; the other *other* search engine...
-       (ivy +prescient)      ; a search engine for love and life
+       (ivy)      ; a search engine for love and life
 
        :ui
        ;;deft                   ; notational velocity for Emacs
@@ -96,7 +96,7 @@
        lookup                ; navigate your code and its documentation
        (lsp +peek)
        ;; (lsp +eglot)
-       magit                 ; a git porcelain for Emacs
+       (magit +forge)                 ; a git porcelain for Emacs
        ;;make                ; run make tasks from Emacs
        ;;pass                ; password manager for nerds
        pdf                   ; pdf enhancements

@@ -28,6 +28,7 @@ dot_config_white_list = [
     "flake8",
     "flameshot",
     "fontconfig",
+    "hn-tui.toml",
     "i3",
     "i3status",
     "kak",

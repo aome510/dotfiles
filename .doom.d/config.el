@@ -202,6 +202,9 @@
  "M-="    #'text-scale-increase
  "M--"    #'text-scale-decrease
 
+ :nv "TAB" #'indent-for-tab-command
+ :nv [tab] #'indent-for-tab-command
+
  (:leader
   :desc "Expand Region" "=" #'er/expand-region)
 
@@ -244,9 +247,6 @@
   :mvn "g l" #'evil-end-of-line
 
   :mvn "M-n" #'evil-ex-search-previous
-
-  :nv "TAB" #'evil-indent-line
-  :nv [tab] #'evil-indent-line
 
   :n "U" #'evil-redo
 
@@ -315,7 +315,7 @@
     [return] nil
     "TAB" nil
     [tab] nil
-    "C-l" #'company-complete-selection)))
+    "C-f" #'company-complete-selection)))
 
  ;;; yasnippet
  (:when (featurep! :editor snippets)
@@ -340,11 +340,11 @@
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
 
-;;; disable inserting tabs
-;; (global-unset-key (kbd "TAB"))
-
 ;;; save file with C-s or C-S (without formatting)
 (global-set-key (kbd "C-s") #'save-buffer)
+
+;;; tab always indent
+(setq-default tab-always-indent t)
 
 ;;; remove latex autofill
 (remove-hook 'text-mode-hook #'turn-on-auto-fill)

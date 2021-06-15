@@ -1,0 +1,30 @@
+article_parse_command = {command = "article_md", options = []}
+
+[client.lazy_loading_comments]
+num_comments_init = 10
+
+[keymap.global_keymap]
+quit = "M-q"
+goto_previous_view = "C-q"
+
+[[keymap.custom_keymap.custom_view_navigation]]
+key = "M-1"
+tag = "story"
+by_date = true
+[keymap.custom_keymap.custom_view_navigation.numeric_filters]
+elapsed_days_interval = {start = 0, end = 1}
+points_interval = {start = 100}
+
+[[keymap.custom_keymap.custom_view_navigation]]
+key = "M-2"
+tag = "story"
+by_date = false
+[keymap.custom_keymap.custom_view_navigation.numeric_filters]
+elapsed_days_interval = {start = 0, end = 3}
+
+[[keymap.custom_keymap.custom_view_navigation]]
+key = "M-3"
+tag = "story"
+by_date = false
+[keymap.custom_keymap.custom_view_navigation.numeric_filters]
+elapsed_days_interval = {start = 0, end = 7}
