@@ -1,0 +1,18 @@
+[submodule "/home/aome510/Backups/my-config-files/.config/kak/plugins/plug.kak"]
+	path = /home/aome510/Backups/my-config-files/.config/kak/plugins/plug.kak
+	url = https://github.com/robertmeta/plug.kak.git
+[submodule "/home/aome510/Backups/my-config-files/.config/kak/plugins/kakoune-surround"]
+	path = /home/aome510/Backups/my-config-files/.config/kak/plugins/kakoune-surround
+	url = https://github.com/h-youhei/kakoune-surround.git
+[submodule "/home/aome510/Backups/my-config-files/.config/kak/plugins/fzf.kak"]
+	path = /home/aome510/Backups/my-config-files/.config/kak/plugins/fzf.kak
+	url = https://github.com/andreyorst/fzf.kak.git
+[submodule "/home/aome510/Backups/my-config-files/.config/kitty/kitty-themes"]
+	path = /home/aome510/Backups/my-config-files/.config/kitty/kitty-themes
+	url = https://github.com/dexpota/kitty-themes
+[submodule "/home/aome510/Backups/my-config-files/.tmux/plugins/tpm"]
+	path = /home/aome510/Backups/my-config-files/.tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
+[submodule "/home/aome510/Backups/my-config-files/.tmux/plugins/tmux-themepack"]
+	path = /home/aome510/Backups/my-config-files/.tmux/plugins/tmux-themepack
+	url = https://github.com/jimeh/tmux-themepack
