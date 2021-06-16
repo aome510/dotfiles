@@ -49,29 +49,29 @@ cwd = os.path.dirname(__file__)
 if not os.path.exists(f"{cwd}/.config/kak/plugins/plug.kak"):
     os.system(
         f"""
-    git submodule add https://github.com/robertmeta/plug.kak.git \
-    {cwd}/.config/kak/plugins/plug.kak
+    cd {cwd} && git submodule add https://github.com/robertmeta/plug.kak.git \
+    .config/kak/plugins/plug.kak
   """
     )
 if not os.path.exists(f"{cwd}/.config/kak/plugins/kakoune-surround"):
     os.system(
         f"""
-    git submodule add https://github.com/h-youhei/kakoune-surround.git \
-    {cwd}/.config/kak/plugins/kakoune-surround
+    cd {cwd} && git submodule add https://github.com/h-youhei/kakoune-surround.git \
+    .config/kak/plugins/kakoune-surround
   """
     )
 if not os.path.exists(f"{cwd}/.config/kak/plugins/fzf.kak"):
     os.system(
         f"""
-    git submodule add https://github.com/andreyorst/fzf.kak.git \
-    {cwd}/.config/kak/plugins/fzf.kak
+    cd {cwd} && git submodule add https://github.com/andreyorst/fzf.kak.git \
+    .config/kak/plugins/fzf.kak
   """
     )
 if not os.path.exists(f"{cwd}/.config/kitty/kitty-themes"):
     os.system(
         f"""
-      git submodule add https://github.com/dexpota/kitty-themes \
-      {cwd}/.config/kitty/kitty-themes
+      cd {cwd} && git submodule add https://github.com/dexpota/kitty-themes \
+      .config/kitty/kitty-themes
     """
     )
 if not os.path.exists(f"{cwd}/.tmux/plugins/tpm"):
@@ -84,33 +84,33 @@ if not os.path.exists(f"{cwd}/.tmux/plugins/tpm"):
 if not os.path.exists(f"{cwd}/.tmux/plugins/tmux-themepack"):
     os.system(
         f"""
-    git submodule add https://github.com/jimeh/tmux-themepack \
-    {cwd}/.tmux/plugins/tmux-themepack
+    cd {cwd} && git submodule add https://github.com/jimeh/tmux-themepack \
+    .tmux/plugins/tmux-themepack
   """
     )
 
-for f in os.listdir(home):
-    if f in home_white_list:
-        os.system(f"cp -r ~/{f} {cwd}")
+# for f in os.listdir(home):
+#     if f in home_white_list:
+#         os.system(f"cp -r ~/{f} {cwd}")
 
-os.system("mkdir -p .config")
-for f in os.listdir("{}/.config".format(home)):
-    if f in dot_config_white_list:
-        os.system(f"cp -r ~/.config/{f} {cwd}/.config")
+# os.system("mkdir -p .config")
+# for f in os.listdir("{}/.config".format(home)):
+#     if f in dot_config_white_list:
+#         os.system(f"cp -r ~/.config/{f} {cwd}/.config")
 
-# list all globally installed packages using yarn into package.json
-os.system(f"cp ~/.config/yarn/global/package.json package.json")
+# # list all globally installed packages using yarn into package.json
+# os.system(f"cp ~/.config/yarn/global/package.json package.json")
 
-# list all explicitly installed packages into packages.txt
-os.system(f"pacman -Qe > {cwd}/packages.txt")
+# # list all explicitly installed packages into packages.txt
+# os.system(f"pacman -Qe > {cwd}/packages.txt")
 
-weekday = date.today().weekday()
-# only backup using git on Tue, Thu, Sat
-if weekday % 2 == 1:
-    # commit/push new changes using git
-    os.system(
-        f'cd {cwd} && \
-      git add . && \
-      git commit -m "backup configs {date.today().strftime("%Y-%m-%d")}"'
-    )
-    os.system(f"cd {cwd} && git push")
+# weekday = date.today().weekday()
+# # only backup using git on Tue, Thu, Sat
+# if weekday % 2 == 1:
+#     # commit/push new changes using git
+#     os.system(
+#         f'cd {cwd} && \
+#       git add . && \
+#       git commit -m "backup configs {date.today().strftime("%Y-%m-%d")}"'
+#     )
+#     os.system(f"cd {cwd} && git push")
