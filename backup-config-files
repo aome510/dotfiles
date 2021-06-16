@@ -78,7 +78,7 @@ if not os.path.exists(f"{cwd}/.tmux/plugins/tpm"):
     os.system(
         f"""
     git submodule add https://github.com/tmux-plugins/tpm \
-    {cwd}/.tmux/plugins/tpm
+    .tmux/plugins/tpm
   """
     )
 if not os.path.exists(f"{cwd}/.tmux/plugins/tmux-themepack"):
@@ -89,28 +89,28 @@ if not os.path.exists(f"{cwd}/.tmux/plugins/tmux-themepack"):
   """
     )
 
-# for f in os.listdir(home):
-#     if f in home_white_list:
-#         os.system(f"cp -r ~/{f} {cwd}")
+for f in os.listdir(home):
+    if f in home_white_list:
+        os.system(f"cp -r ~/{f} {cwd}")
 
-# os.system("mkdir -p .config")
-# for f in os.listdir("{}/.config".format(home)):
-#     if f in dot_config_white_list:
-#         os.system(f"cp -r ~/.config/{f} {cwd}/.config")
+os.system("mkdir -p .config")
+for f in os.listdir("{}/.config".format(home)):
+    if f in dot_config_white_list:
+        os.system(f"cp -r ~/.config/{f} {cwd}/.config")
 
-# # list all globally installed packages using yarn into package.json
-# os.system(f"cp ~/.config/yarn/global/package.json package.json")
+# list all globally installed packages using yarn into package.json
+os.system(f"cp ~/.config/yarn/global/package.json package.json")
 
-# # list all explicitly installed packages into packages.txt
-# os.system(f"pacman -Qe > {cwd}/packages.txt")
+# list all explicitly installed packages into packages.txt
+os.system(f"pacman -Qe > {cwd}/packages.txt")
 
-# weekday = date.today().weekday()
-# # only backup using git on Tue, Thu, Sat
-# if weekday % 2 == 1:
-#     # commit/push new changes using git
-#     os.system(
-#         f'cd {cwd} && \
-#       git add . && \
-#       git commit -m "backup configs {date.today().strftime("%Y-%m-%d")}"'
-#     )
-#     os.system(f"cd {cwd} && git push")
+weekday = date.today().weekday()
+# only backup using git on Tue, Thu, Sat
+if weekday % 2 == 1:
+    # commit/push new changes using git
+    os.system(
+        f'cd {cwd} && \
+      git add . && \
+      git commit -m "backup configs {date.today().strftime("%Y-%m-%d")}"'
+    )
+    os.system(f"cd {cwd} && git push")

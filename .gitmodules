@@ -10,8 +10,8 @@
 [submodule ".config/kitty/kitty-themes"]
 	path = .config/kitty/kitty-themes
 	url = https://github.com/dexpota/kitty-themes
-[submodule "/home/aome510/Backups/test/.tmux/plugins/tpm"]
-	path = /home/aome510/Backups/test/.tmux/plugins/tpm
+[submodule ".tmux/plugins/tpm"]
+	path = .tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
 [submodule ".tmux/plugins/tmux-themepack"]
 	path = .tmux/plugins/tmux-themepack
