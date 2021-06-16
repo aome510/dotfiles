@@ -6,6 +6,9 @@ export GOPRIVATE="github.com/curvegrid/*"
 
 export EDITOR=kak
 export VISUAL=kak
+export TERMINAL=/usr/bin/kitty
+export BROWSER=/usr/bin/firefox-developer-edition
+
 
 export PYTHONPATH="$HOME/.local/lib/python/site-packages:$PYTHONPATH"
 export PATH="$HOME/.local/bin:$PATH"

@@ -8,6 +8,7 @@ home = str(Path.home())
 
 home_white_list = [
     ".bash_profile",
+    ".profile",
     ".bashrc",
     ".spacemacs",
     ".tmux.conf",
@@ -103,6 +104,9 @@ os.system(f"cp ~/.config/yarn/global/package.json package.json")
 
 # list all explicitly installed packages into packages.txt
 os.system(f"pacman -Qe > {cwd}/packages.txt")
+
+# Copy .ssh config file
+os.system(f"mkdir -p {cwd}/.ssh && cp ~/.ssh/config {cwd}/.ssh")
 
 weekday = date.today().weekday()
 # only backup using git on Tue, Thu, Sat
