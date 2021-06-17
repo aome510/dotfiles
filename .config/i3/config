@@ -16,6 +16,7 @@ for_window [class=".*"] border pixel 4
 gaps inner 4
 gaps outer 6
 smart_gaps on
+smart_borders on
 
 set $mod Mod4
 
@@ -37,6 +38,15 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
+
+# call dex to start autostart applications
+exec --no-startup-id dex -a -e i3
+
+# xkbcomp to change keyboard keybindings
+exec --no-startup-id xkbcomp ~/.xkbcomp $DISPLAY
+
+# init betterlockscreen with background image
+exec --no-startup-id betterlockscreen -u ~/.background
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -189,21 +199,59 @@ mode "resize" {
 
 bindsym $mod+b mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+# # Start i3bar to display a workspace bar (plus the system information i3status
+# # finds out, if available)
+# bar {
+#     status_command    i3status
+#     strip_workspace_numbers yes
+#     # tray_output none
+# }
+
+# -----------------------------------
+# i3bar based on Manjaro i3 setup
+# -----------------------------------
+
+# Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
-    status_command    i3status
-    strip_workspace_numbers yes
-    # tray_output none
+	i3bar_command i3bar
+	status_command i3status
+	position bottom
+
+## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+#	tray_output primary
+#	tray_output eDP1
+
+	bindsym button4 nop
+	bindsym button5 nop
+#   font xft:URWGothic-Book 11
+	strip_workspace_numbers yes
+
+    colors {
+        background #222D31
+        statusline #F9FAF9
+        separator  #454947
+
+#                      border  backgr. text
+        focused_workspace  #F9FAF9 #16a085 #292F34
+        active_workspace   #595B5B #353836 #FDF6E3
+        inactive_workspace #595B5B #222D31 #EEE8D5
+        binding_mode       #16a085 #2C2C2C #F9FAF9
+        urgent_workspace   #16a085 #FDF6E3 #E5201D
+    }
 }
 
-# call dex to start autostart applications
-exec --no-startup-id dex -a -e i3
+# hide/unhide i3status bar
+bindsym $mod+m bar mode toggle
 
-# xkbcomp to change keyboard keybindings
-exec --no-startup-id xkbcomp ~/.xkbcomp $DISPLAY
+# Theme colors
+# class                   border  backgr. text    indic.   child_border
+  client.focused          #556064 #556064 #80FFF9 #FDF6E3
+  client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
+  client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
+  client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
+  client.placeholder      #000000 #0c0c0c #ffffff #000000 
 
-exec --no-startup-id betterlockscreen -u ~/.background
+  client.background       #2B2C2B
 
 # other key bindings
 bindsym Print exec flameshot gui
