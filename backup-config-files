@@ -104,6 +104,7 @@ os.system(f"cp ~/.config/yarn/global/package.json package.json")
 
 # list all explicitly installed packages into packages.txt
 os.system(f"pacman -Qe > {cwd}/packages.txt")
+os.system(f"cp /desktopfs-pkgs.txt > {cwd}/")
 
 # Copy .ssh config file
 os.system(f"mkdir -p {cwd}/.ssh && cp ~/.ssh/config {cwd}/.ssh")
