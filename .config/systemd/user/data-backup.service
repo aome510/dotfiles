@@ -1,0 +1,5 @@
+[Unit]
+Description=Backup Data
+
+[Service]
+ExecStart=/home/aome510/scripts/snapbackup

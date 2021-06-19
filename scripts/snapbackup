@@ -1,21 +1,21 @@
 #!/bin/fish
 
 set OPT "-aq"
-set LINK "--link-dest=/data/snapshots/home/last/" 
 set SRC "/home/aome510/"
 set SNAP "/data/snapshots/home/"
-set LAST "/data/snapshots/home/last/"
+set LAST "/data/snapshots/home/last"
+set LINK "--link-dest=$LAST" 
 set date (date "+%y-%m-%d_%T")
 
+# not the first time running the backup script
 if test -d $LAST
     rsync $OPT $LINK $SRC $SNAP$date
     rm -f $LAST
 else
-    rsync -a --quiet $SRC $LAST
+    rsync -a --quiet $SRC $SNAP$date
 end
 
-# Create new symlink to latest snapshot for the next backup to hardlink
-ln -s $SNAP$date $LAST
+ln -s $SNAP$date/ $LAST
 
 # Backup /etc folder
-rsync -a --quiet --delete /etc /data
+rsync -a --quiet --delete /etc /data 2> /dev/null
