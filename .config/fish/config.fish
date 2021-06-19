@@ -8,7 +8,7 @@ end
 # source ~/.config/fish/conda.fish
 
 function disk_usage
-    sudo du -d1 -h $argv | sort -h
+    du -d1 -h $argv | sort -h
 end
 
 function swap
