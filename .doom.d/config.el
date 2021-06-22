@@ -16,7 +16,7 @@
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
       doom-big-font (font-spec :family "monospace" :size 24)
-      doom-variable-pitch-font (font-spec :family "sans" :size 14))
+      doom-variable-pitch-font (font-spec :family "sans" :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -64,7 +64,8 @@
 
 (defun enable-big-font-mode ()
   (interactive)
-  (set-face-attribute 'default (selected-frame) :height 120))
+  (set-face-attribute 'default (selected-frame) :height 120)
+  (set-face-attribute 'variable-pitch (selected-frame) :height 120))
 
 (defun ripgrep-search-project (search-term &rest args)
   (interactive
@@ -78,6 +79,12 @@
         (ripgrep-regexp search-term
                         (projectile-acquire-root)
                         (append rg-args args)))))
+
+(defun replace-from-clipboard (beg end)
+  (interactive "r")
+  (delete-region beg end)
+  (goto-char beg)
+  (insert-for-yank (current-kill 0)))
 
 (defun save-buffer-without-auto-formatting ()
   (interactive)
@@ -106,19 +113,22 @@
 ;;; doom-theme
 (use-package! doom-themes
   :config
-  (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+  (setq doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config))
 
 ;;; company
 (use-package! company
   :when (featurep! :completion company)
   :config
-  (setq company-idle-delay 0.2
-        company-async-redisplay-delay 0.005
-        company-selection-wrap-around t
-        ;; company-dabbrev-code-everywhere t
-        ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
-        company-minimum-prefix-length 2))
+  (set-company-backend! 'prog-mode '(company-files company-capf company-yasnippet))
+  (setq
+   +lsp-company-backends '(company-files company-capf company-yasnippet)
+   company-idle-delay 0.2
+   company-async-redisplay-delay 0.005
+   company-selection-wrap-around t
+   ;; company-dabbrev-code-everywhere t
+   ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
+   company-minimum-prefix-length 2))
 
 ;;; gcmh
 (use-package! gcmh
@@ -204,6 +214,8 @@
 
  :nv "TAB" #'indent-for-tab-command
  :nv [tab] #'indent-for-tab-command
+
+ :v "R" #'replace-from-clipboard
 
  (:leader
   :desc "Expand Region" "=" #'er/expand-region)
@@ -353,8 +365,9 @@
 (modify-syntax-entry ?_ "w")
 (modify-syntax-entry ?- "w")
 
-;;; enable evil-mc globally
+;;; global modes
 (global-evil-mc-mode 1)
+(solaire-global-mode 1)
 
 ;;; auto scrolling
 (setq scroll-conservatively 8

@@ -1,8 +1,5 @@
 article_parse_command = {command = "article_md", options = []}
 
-[client.lazy_loading_comments]
-num_comments_init = 10
-
 [keymap.global_keymap]
 quit = "M-q"
 goto_previous_view = "C-q"

@@ -1,4 +1,10 @@
+!map Caps_Lock to Control_L and Shift+Caps_Lock to Caps_Lock
 clear lock
+keycode 66 = Control_L 
 clear control
-keycode 66 = Control_L
 add control = Control_L Control_R
+
+!map shift_R to backslash
+clear shift
+keycode 62 = backslash bar
+add shift = Shift_L

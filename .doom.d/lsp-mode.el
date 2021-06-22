@@ -10,7 +10,20 @@
   :config
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
+  ;; lsp on-change hack based on https://github.com/redguardtoo/emacs.d#set-up-lsp-mode
+  ;; don't ping LSP language server too frequently
+  ;; (defvar lsp-on-touch-time 0)
+  ;; (defun my-lsp-on-change-hack (orig-fun &rest args)
+    ;; do NOT run `lsp-on-change' too frequently
+  ;;   (when (> (- (float-time (current-time))
+  ;;               lsp-on-touch-time) 60) ;; 1 min
+  ;;     (setq lsp-on-touch-time (float-time (current-time)))
+  ;;     (apply orig-fun args)))
+  ;; (advice-add 'lsp-on-change :around #'my-lsp-on-change-hack)
+  ;; lsp variables
   (setq
+   lsp-restart 'auto-restart
+   lsp-enable-symbol-highlighting nil
    lsp-idle-delay 1.0
    lsp-eldoc-render-all t
    lsp-signature-doc-lines 10
