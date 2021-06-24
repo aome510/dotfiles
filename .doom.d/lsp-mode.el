@@ -64,3 +64,12 @@
 (use-package! lsp-vetur
   :config
   (setq lsp-vetur-format-enable nil))
+
+;;; dap-mode configurations
+(use-package! dap-mode
+  :config
+  (require 'dap-go)
+  (map!
+   (:map dap-mode-map
+    :localleader
+    :desc "Dap hydra mode" "d" #'dap-hydra)))

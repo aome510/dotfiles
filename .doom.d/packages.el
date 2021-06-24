@@ -49,5 +49,6 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
                                         ;(unpin! t)
 (package! ripgrep)
+(package! dap-mode)
 (package! tree-sitter)
 (package! tree-sitter-langs)
