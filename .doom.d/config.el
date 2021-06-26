@@ -367,7 +367,7 @@
 
 ;;; global modes
 (global-evil-mc-mode 1)
-(solaire-global-mode 1)
+(solaire-global-mode +1)
 
 ;;; auto scrolling
 (setq scroll-conservatively 8

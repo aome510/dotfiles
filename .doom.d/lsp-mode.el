@@ -58,7 +58,6 @@
   (setq lsp-eslint-validate (vconcat lsp-eslint-validate '("typescript" "vue"))))
 
 ;;; setup lsp server for vue-mode
-
 (add-hook! 'vue-mode-hook #'add-eslint-fix-all-to-before-save-hook)
 
 (use-package! lsp-vetur
