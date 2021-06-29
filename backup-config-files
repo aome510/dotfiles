@@ -102,7 +102,7 @@ for f in os.listdir("{}/.config".format(home)):
         os.system(f"cp -r ~/.config/{f} {cwd}/.config")
 
 # list all globally installed packages using yarn into package.json
-os.system(f"cp ~/.config/yarn/global/package.json package.json")
+os.system(f"cp ~/.config/yarn/global/package.json {cwd}/package.json")
 
 # list all explicitly installed packages into packages.txt
 os.system(f"pacman -Qe > {cwd}/packages.txt")
