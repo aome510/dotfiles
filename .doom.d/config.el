@@ -212,8 +212,8 @@
  "M-="    #'text-scale-increase
  "M--"    #'text-scale-decrease
 
- :nv "TAB" #'indent-for-tab-command
- :nv [tab] #'indent-for-tab-command
+ :nvi "TAB" #'indent-for-tab-command
+ :nvi [tab] #'indent-for-tab-command
 
  :v "R" #'replace-from-clipboard
 
@@ -356,7 +356,7 @@
 (global-set-key (kbd "C-s") #'save-buffer)
 
 ;;; tab always indent
-(setq-default tab-always-indent t)
+(setq-default tab-always-indent nil)
 
 ;;; remove latex autofill
 (remove-hook 'text-mode-hook #'turn-on-auto-fill)
