@@ -22,9 +22,16 @@
 (advice-add 'evil-mc-get-default-cursor :override
             #'evil-mc-from-real-cursor)
 
-(defun search-matches-in-region-regexp (beg end regex)
+;;; variables
+(defvar kak-current-buffer nil)
+(defvar kak-region-beg nil)
+(defvar kak-region-end nil)
+
+(defun search-matches-in-region-regexp (beg end pattern)
   "search a regex pattern in the current region then return the sequence of matches"
-  (let ((match) (matches))
+  (let ((match) (matches)
+        (case-fold-search (evil-ex-pattern-ignore-case pattern))
+        (regex (evil-ex-pattern-regex pattern)))
     (goto-char beg)
     (if (search-forward-regexp regex nil end)
         (setq match (match-data 0)) (setq match nil))
@@ -63,21 +70,46 @@ marking all the matches. The real cursor is placed at the last match"
                               (evil-mc-insert-cursor cursor))
                             (make-cursors-all-matches matches)))))
 
+;; Test
+;; test
+
+(defun update-search-highlighting (_beg _end _range)
+  (save-match-data
+    (let ((pattern (minibuffer-contents)))
+      (with-current-buffer kak-current-buffer
+        (progn
+          (evil-ex-hl-set-region 'evil-ex-search kak-region-beg kak-region-end)
+          (evil-ex-search-activate-highlight (evil-ex-make-search-pattern pattern)))))))
+
+(defun start-search-session()
+  (add-hook 'after-change-functions #'update-search-highlighting nil t))
+
+(defun end-search-session ()
+  (remove-hook 'minibuffer-setup-hook #'start-search-session)
+  (remove-hook 'minibuffer-exit-hook #'end-search-session)
+  (remove-hook 'after-change-functions #'update-search-highlighting))
+
+;; Test
+;; test
+
 (defun select-in-region-regexp (beg end)
   "create multiple cursors marking all the matches matching
 a given regex pattern in the current region"
   (interactive "r")
-  (let ((regex (read-regexp "regex: "))
-        (case-fold-search nil))
-    (if (string= regex "")
-        (message "search aborted")
-      (progn
-        (goto-char beg)
-        (let ((matches (search-matches-in-region-regexp beg end regex)))
-          (message "matches: %s" matches)
-          (if matches
-              (make-cursors-all-matches matches)
-            (user-error "no match")))))))
+  (let ((kak-current-buffer (current-buffer))
+        (kak-region-beg beg)
+        (kak-region-end end))
+    (add-hook 'minibuffer-setup-hook #'start-search-session)
+    (add-hook 'minibuffer-exit-hook #'end-search-session)
+    (let ((pattern (evil-ex-make-search-pattern (read-regexp "pattern: "))))
+      (evil-ex-delete-hl 'evil-ex-search)
+        (progn
+          (goto-char beg)
+          (let ((matches (search-matches-in-region-regexp beg end pattern)))
+            (message "matches: %s" matches)
+            (if matches
+                (make-cursors-all-matches matches)
+              (user-error "no match")))))))
 
 (defun get-splits (matches beg end)
   (if (> beg end) nil
@@ -93,8 +125,7 @@ a given regex pattern in the current region"
   "create multiple cursors marking all intervals in the
 current region that are splitted by the given regex pattern"
   (interactive "r")
-  (let ((regex (read-regexp "regex: "))
-        (case-fold-search nil))
+  (let ((regex (read-regexp "regex: ")))
     (if (string= regex "")
         (message "search aborted")
       (progn
@@ -120,8 +151,7 @@ current region that are splitted by the given regex pattern"
 (defun filter-cursors-regexp (keep)
   "remove/keep all the cursors whose region matches the given regexp"
   (interactive)
-  (let ((regex (read-regexp "regex: "))
-        (case-fold-search nil))
+  (let ((regex (read-regexp "regex: ")))
     (if (string= regex "")
         (message "search aborted")
       (if (evil-visual-state-p)
