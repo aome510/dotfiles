@@ -66,7 +66,7 @@ ecryptfs-utils 111-4
 edk2-shell 202105-1
 efibootmgr 17-2
 efitools 1.9.2-3
-emacs-native-comp-git-enhanced 28.0.50.148839-1
+emacs-ng 0.0.e57bacf-1
 epdfview 0.1.8-11
 evince 40.1-2
 exfat-utils 1.3.0-2

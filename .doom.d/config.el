@@ -123,7 +123,7 @@
   (set-company-backend! 'prog-mode '(company-files company-capf company-yasnippet))
   (setq
    +lsp-company-backends '(company-files company-capf company-yasnippet)
-   company-idle-delay 0.2
+   company-idle-delay 0.0
    company-async-redisplay-delay 0.005
    company-selection-wrap-around t
    ;; company-dabbrev-code-everywhere t
@@ -150,6 +150,8 @@
   ;; preview latex using pdf tools
   (setq +latex-viewers '(pdf-tools evince))
   (setq TeX-command-force "LatexMk")
+  ;;; remove latex autofill
+  (remove-hook 'text-mode-hook #'turn-on-auto-fill)
   ;; disable smartparens in latex mode
   (add-hook 'TeX-mode-hook #'turn-off-smartparens-mode))
 
@@ -180,7 +182,6 @@
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 ;;; recentf
-
 (defvar recentf-keep-dot-folders
   '("/home/aome510/.config" "/home/aome510/.doom.d" "/home/aome510/.cargo/registry/src"))
 
@@ -203,6 +204,9 @@
   :config
   (setq recentf-exclude '(recentf-file-ignore-p)
         recentf-max-saved-items 1024))
+
+;; auto save recentf list every 5 minutes
+(run-at-time nil (* 5 60) 'recentf-save-list)
 
 ;; ----------------------------------
 ;; user-defined key mappings
@@ -257,9 +261,7 @@
   :mvn "g h" #'evil-beginning-of-line
   :mvn "g i" #'evil-first-non-blank
   :mvn "g l" #'evil-end-of-line
-
   :mvn "M-n" #'evil-ex-search-previous
-
   :n "U" #'evil-redo
 
   :v "|" #'evil-shell-command-on-region
@@ -358,9 +360,6 @@
 ;;; tab always indent
 (setq-default tab-always-indent nil)
 
-;;; remove latex autofill
-(remove-hook 'text-mode-hook #'turn-on-auto-fill)
-
 ;;; treat underscore as word character
 (modify-syntax-entry ?_ "w")
 (modify-syntax-entry ?- "w")
@@ -372,6 +371,3 @@
 ;;; auto scrolling
 (setq scroll-conservatively 8
       scroll-step 8)
-
-;; auto save recentf list every 5 minutes
-(run-at-time nil (* 5 60) 'recentf-save-list)
