@@ -25,7 +25,7 @@
    lsp-restart 'auto-restart
    lsp-enable-symbol-highlighting nil
    lsp-idle-delay 1.0
-   lsp-eldoc-render-all t
+   ;; lsp-eldoc-render-all t
    lsp-signature-doc-lines 10
    lsp-modeline-diagnostics-enable nil))
 

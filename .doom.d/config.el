@@ -367,8 +367,11 @@
 
 ;;; global modes
 (global-evil-mc-mode 1)
-(solaire-global-mode +1)
+(add-hook 'after-init-hook #'solaire-global-mode)
 
 ;;; auto scrolling
 (setq scroll-conservatively 8
       scroll-step 8)
+
+;; auto save recentf list every 5 minutes
+(run-at-time nil (* 5 60) 'recentf-save-list)
