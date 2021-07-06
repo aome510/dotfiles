@@ -52,3 +52,7 @@
 (package! dap-mode)
 (package! tree-sitter)
 (package! tree-sitter-langs)
+(package! ssh-agency)
+
+(package! kak
+  :recipe (:local-repo "/home/aome510/Projects/kak.el"))

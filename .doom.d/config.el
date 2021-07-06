@@ -53,7 +53,6 @@
 ;; additional loadings
 ;; ----------------------------------
 
-(load! "kak")
 (load! "vue")
 ;; (load! "lsp-eglot")
 (load! "lsp-mode")
@@ -96,15 +95,6 @@
 (defun term-other-window (&optional side size)
   (split-window (selected-window) size side)
   (vterm "*terminal*"))
-
-(evil-define-command evil-shell-command-on-region (beg end command)
-  (interactive (let (string)
-                 (unless (mark)
-                   (user-error "The mark is not set now, so there is no region"))
-                 (setq command (read-shell-command "Shell command on region: "))
-                 (list (region-beginning) (region-end)
-                       command)))
-  (shell-command-on-region beg end command nil t shell-command-default-error-buffer t (region-noncontiguous-p)))
 
 ;; ----------------------------------
 ;; Package configurations
@@ -205,6 +195,12 @@
   (setq recentf-exclude '(recentf-file-ignore-p)
         recentf-max-saved-items 1024))
 
+;;; kak
+(use-package! kak)
+
+;;; ssh-agency
+(use-package! ssh-agency)
+
 ;; auto save recentf list every 5 minutes
 (run-at-time nil (* 5 60) 'recentf-save-list)
 
@@ -268,6 +264,19 @@
 
   (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
   (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))
+
+ ;;; kak
+ (:after kak
+  :v "|" #'kak-exec-shell-command
+  :v "s" (lambda (beg end) (interactive "r") (kak-select beg end nil))
+  :v "S" (lambda (beg end) (interactive "r") (kak-select beg end t))
+  :v "M-k" (lambda () (interactive) (kak-filter t))
+  :v "M-K" (lambda () (interactive) (kak-filter nil))
+  :v ". #" #'kak-insert-index)
+
+ ;; snipe/surround remap for kak commands in visual modes
+ :v ". s" #'evil-snipe-s
+ :v ". S" #'evil-surround-region
 
  ;;; latex
  (:when (featurep! :lang latex)
