@@ -212,8 +212,8 @@
  "M-="    #'text-scale-increase
  "M--"    #'text-scale-decrease
 
- :nvi "TAB" #'indent-for-tab-command
- :nvi [tab] #'indent-for-tab-command
+ :nv "TAB" #'indent-for-tab-command
+ :nv [tab] #'indent-for-tab-command
 
  :v "R" #'replace-from-clipboard
 
