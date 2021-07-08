@@ -198,6 +198,11 @@
 ;;; kak
 (use-package! kak)
 
+;;; magit
+(use-package! magit
+  :config
+  (setq git-commit-summary-max-length 100))
+
 ;;; ssh-agency
 (use-package! ssh-agency)
 
