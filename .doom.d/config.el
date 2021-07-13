@@ -267,6 +267,8 @@
 
   :v "|" #'evil-shell-command-on-region
 
+  :n "g w" nil
+
   (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
   (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))
 
