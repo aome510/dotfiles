@@ -55,4 +55,4 @@
 (package! ssh-agency)
 
 (package! kak
-  :recipe (:local-repo "/home/aome510/Projects/kak.el"))
+  :recipe (:host github :repo "aome510/kak.el"))

@@ -59,7 +59,7 @@ dmraid 1.0.0.rc16.3-13
 dnsmasq 2.85-1
 docker 1:20.10.7-1
 dosfstools 4.2-1
-downgrade 10.0.0-1
+downgrade 10.1.0-1.1
 dracut 053-1
 dzen2 0.9.5.14.488ab66-2
 e2fsprogs 1.46.2-1
@@ -67,7 +67,7 @@ ecryptfs-utils 111-4
 edk2-shell 202105-1
 efibootmgr 17-2
 efitools 1.9.2-3
-emacs-gcc-wayland-devel-bin 28.0.50.149085-1
+emacs-gcc-wayland-devel-bin 28.0.50.149159-1
 epdfview 0.1.8-11
 evince 40.1-2
 exfat-utils 1.3.0-2
@@ -194,7 +194,7 @@ manjaro-system 20210612-1
 manjaro-zsh-config 0.20-3
 markdown_previewer 0.r6.64ad4d7-1
 marked 2.0.7-1
-matcha-gtk-theme 20210624-0.1
+matcha-gtk-theme 20210708-0.1
 mdadm 4.1-2
 memtest86+ 5.01-4
 mesa-demos 8.4.0-4
@@ -369,4 +369,4 @@ yay 10.2.3-1
 youtube-dl 2021.06.06-1
 zensu 0.3-1
 zip 3.0-9
-zoom 5.7.0-1
+zoom 5.7.1-1

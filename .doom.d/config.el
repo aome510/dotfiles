@@ -271,18 +271,22 @@
   (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))
 
  ;;; kak
- (:after kak
-  :v "|" #'kak-exec-shell-command
-  :v "s" (lambda (beg end) (interactive "r") (kak-select beg end nil))
-  :v "S" (lambda (beg end) (interactive "r") (kak-select beg end t))
-  :v "M-s" #'kak-split-lines
-  :v "M-k" (lambda () (interactive) (kak-filter t))
-  :v "M-K" (lambda () (interactive) (kak-filter nil))
-  :v ". #" #'kak-insert-index)
+ :v "|" #'kak-exec-shell-command
+ :v "s" (lambda (beg end) (interactive "r") (kak-select beg end nil))
+ :v "S" (lambda (beg end) (interactive "r") (kak-select beg end t))
+ :v "M-s" #'kak-split-lines
+ :v "M-k" (lambda () (interactive) (kak-filter t))
+ :v "M-K" (lambda () (interactive) (kak-filter nil))
+ :v ". #" #'kak-insert-index
+ :v ". r" (lambda () (interactive) (kak-exec-shell-command "xsel -ob"))
 
  ;; snipe/surround remap for kak commands in visual modes
  :v ". s" #'evil-snipe-s
  :v ". S" #'evil-surround-region
+ (:after evil-surround
+  (:map evil-surround-mode-map
+   :v "S" nil
+   :v ". S" #'evil-surround-region))
 
  ;;; latex
  (:when (featurep! :lang latex)
