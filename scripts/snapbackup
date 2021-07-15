@@ -1,6 +1,6 @@
 #!/bin/fish
 
-set OPT "-aq"
+set ARGS -aq --exclude={"Downloads/*", ".cache/*"}
 set SRC "/home/aome510/"
 set SNAP "/data/snapshots/home/"
 set LAST "/data/snapshots/home/last"
@@ -9,10 +9,10 @@ set date (date "+%y-%m-%d_%T")
 
 # not the first time running the backup script
 if test -d $LAST
-    rsync $OPT $LINK $SRC $SNAP$date
+    rsync $ARGS $LINK $SRC $SNAP$date
     rm -f $LAST
 else
-    rsync -a --quiet $SRC $SNAP$date
+    rsync $ARGS $SRC $SNAP$date
 end
 
 ln -s $SNAP$date/ $LAST

@@ -63,8 +63,8 @@
 
 (defun enable-big-font-mode ()
   (interactive)
-  (set-face-attribute 'default (selected-frame) :height 120)
-  (set-face-attribute 'variable-pitch (selected-frame) :height 120))
+  (set-face-attribute 'default (selected-frame) :height 108)
+  (set-face-attribute 'variable-pitch (selected-frame) :height 108))
 
 (defun ripgrep-search-project (search-term &rest args)
   (interactive
@@ -263,7 +263,9 @@
   :mvn "g i" #'evil-first-non-blank
   :mvn "g l" #'evil-end-of-line
   :mvn "M-n" #'evil-ex-search-previous
-  :n "U" #'evil-redo
+
+  :n "U" #'undo-tree-redo
+  :n "u" #'undo-tree-undo
 
   :v "|" #'evil-shell-command-on-region
 
@@ -272,7 +274,7 @@
   (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
   (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))
 
- ;;; kak
+ ;;; kak (evil-mc/multiple cursors)
  :v "|" #'kak-exec-shell-command
  :v "s" (lambda (beg end) (interactive "r") (kak-select beg end nil))
  :v "S" (lambda (beg end) (interactive "r") (kak-select beg end t))
@@ -281,6 +283,9 @@
  :v "M-K" (lambda () (interactive) (kak-filter nil))
  :v ". #" #'kak-insert-index
  :v ". r" (lambda () (interactive) (kak-exec-shell-command "xsel -ob"))
+ :mnv "h" #'backward-char ;; normal evil-backward-char doesn't allow cross-line when the fake cursor's at bol
+ :nv "g j" #'evil-mc-make-cursor-move-next-line
+ :nv "g k" #'evil-mc-make-cursor-move-prev-line
 
  ;; snipe/surround remap for kak commands in visual modes
  :v ". s" #'evil-snipe-s
@@ -338,6 +343,7 @@
   (:after ivy
    :map ivy-minibuffer-map
    "C-h" #'ivy-backward-delete-char
+   "C-f" #'ivy-alt-done
    :map ivy-reverse-i-search-map
    "C-k" #'previous-line
    "C-d" #'ivy-reverse-i-search-kill))

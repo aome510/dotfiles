@@ -72,3 +72,11 @@
    (:map dap-mode-map
     :localleader
     :desc "Dap hydra mode" "d" #'dap-hydra)))
+
+;; lsp-mode mapping
+(map!
+ :when (featurep! :tools lsp)
+ (:leader :prefix "c"
+  :desc "LSP Treemacs Symbols" "T" #'lsp-treemacs-symbols
+  )
+ )
