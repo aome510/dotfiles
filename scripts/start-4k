@@ -1,0 +1,6 @@
+#!/bin/fish
+
+xrandr --output eDP --off
+xrandr --output HDMI-A-0 --auto
+xrdb -merge /usr/share/xsessions/4k.Xresources
+i3 restart
