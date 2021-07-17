@@ -7,6 +7,9 @@ end
 # conda init for fish
 # source ~/.config/fish/conda.fish
 
+# zoxide init for fish
+source ~/.config/fish/zoxide.fish
+
 function disk_usage
     du -d1 -h $argv | sort -h
 end

@@ -370,3 +370,4 @@ youtube-dl 2021.06.06-1
 zensu 0.3-1
 zip 3.0-9
 zoom 5.7.1-1
+zoxide-bin 0.7.2-1

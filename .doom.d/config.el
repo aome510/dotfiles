@@ -113,12 +113,12 @@
   (set-company-backend! 'prog-mode '(company-files company-capf company-yasnippet))
   (setq
    +lsp-company-backends '(company-files company-capf company-yasnippet)
-   company-idle-delay 0.0
-   company-async-redisplay-delay 0.005
+   company-idle-delay 0.1
+   company-async-redisplay-delay 0.001
    company-selection-wrap-around t
    ;; company-dabbrev-code-everywhere t
    ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
-   company-minimum-prefix-length 2))
+   company-minimum-prefix-length 1))
 
 ;;; gcmh
 (use-package! gcmh
@@ -263,6 +263,8 @@
   :mvn "g i" #'evil-first-non-blank
   :mvn "g l" #'evil-end-of-line
   :mvn "M-n" #'evil-ex-search-previous
+  :mvn "g %" #'mark-whole-buffer
+
 
   :n "U" #'undo-tree-redo
   :n "u" #'undo-tree-undo
@@ -284,8 +286,8 @@
  :v ". #" #'kak-insert-index
  :v ". r" (lambda () (interactive) (kak-exec-shell-command "xsel -ob"))
  :mnv "h" #'backward-char ;; normal evil-backward-char doesn't allow cross-line when the fake cursor's at bol
- :nv "g j" #'evil-mc-make-cursor-move-next-line
- :nv "g k" #'evil-mc-make-cursor-move-prev-line
+ ;; :nv "g j" #'evil-mc-make-cursor-move-next-line
+ ;; :nv "g k" #'evil-mc-make-cursor-move-prev-line
 
  ;; snipe/surround remap for kak commands in visual modes
  :v ". s" #'evil-snipe-s

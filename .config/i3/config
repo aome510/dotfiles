@@ -261,7 +261,7 @@ bindsym Control+Mod1+l exec betterlockscreen -l dim -t "You are the Apple Of My 
 # set default workspace layout to tabbed
 workspace_layout tabbed
 
-for_window [class="discord"] move container to workspace $ws2
-for_window [class="Spotify"] move container to workspace $ws2
+for_window [class="discord"] move container to workspace $ws1
+for_window [class="Spotify"] move container to workspace $ws1
 
 for_window [class="floating"] floating enable resize set 1024 512, move position center
