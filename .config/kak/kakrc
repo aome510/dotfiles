@@ -86,7 +86,11 @@ map global goto p -docstring 'Go to the current cursor''s grep position' '<esc>:
 # edit kakrc
 map global user e ':edit ~/.config/kak/kakrc<ret>' -docstring 'edit kakrc'
 
-map global normal -docstring 'Select all occurrences of the current selection set' '<a-%>' '*%s<ret>'
+# other bindings
+map global normal -docstring 'Select all occurrences of the current selection' '<a-%>' '*%s<ret>'
+map global normal -docstring 'Select next occurrence of the current selection' '<c-n>' '*N'
+map global normal -docstring 'Select previous occurrence of the current selection' '<c-p>' '*<a-N>'
+map global normal -docstring 'Remove secondary cursors' '<esc>' '<space>'
 
 ###############################
 # Kakoune plugins
@@ -121,7 +125,7 @@ plug "andreyorst/fzf.kak" defer "fzf" %{
 } defer "fzf-file" %{
     set-option global fzf_file_command "fd --hidden --hidden -E .git -E node_modules -E .cache -E build -E .ccls-cache"
 } config %{
-    map -docstring 'fzf mode' global normal '<c-p>' ': fzf-mode<ret>'
+    map -docstring 'fzf mode' global user 'f' ': fzf-mode<ret>'
 }
 
 # surround

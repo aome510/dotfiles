@@ -57,8 +57,10 @@ end
 set fd_opts --hidden -E .git -E node_modules -E .cache -E build -E .ccls-cache
 set fzf_otps --reverse --height 50%
 
+alias e="kak"
 alias se="sudo -e"
 alias cl="emacsclient -nw"
+alias l="exa --color always"
 
 # use vim key bindings for normal terminal,
 # use fish default key bindings for fish in emacs.
@@ -82,6 +84,7 @@ else
     fish_default_key_bindings
 end
 
+# other custom bindings
 bind --user -M insert \cr history-fzf
 bind --user -M insert \ef file-fzf
 bind --user -M insert \cf forward-char
