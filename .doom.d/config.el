@@ -49,131 +49,159 @@
 ;; they are implemented.
 ;;
 
-;; ----------------------------------
-;; additional loadings
-;; ----------------------------------
-
 (load! "vue")
 ;; (load! "lsp-eglot")
 (load! "lsp-mode")
+(load! "vertico")
+;; (load! "corfu")
+;; (load! "selectrum")
 
-;; ----------------------------------
-;; Custom commands/functions
-;; ----------------------------------
+;; --------------------------------------------------------------------
+;;                         Package configurations
+;; --------------------------------------------------------------------
 
-(defun enable-big-font-mode ()
-  (interactive)
-  (set-face-attribute 'default (selected-frame) :height 108)
-  (set-face-attribute 'variable-pitch (selected-frame) :height 108))
-
-(defun ripgrep-search-project (search-term &rest args)
-  (interactive
-   (list (projectile--read-search-string-with-default
-          (format "Ripgrep %ssearch for" (if current-prefix-arg "regexp " "")))
-         current-prefix-arg))
-  (if (require 'ripgrep nil 'noerror)
-      (let ((rg-args (mapcar (lambda (val) (concat "--glob !" val))
-                             (append projectile-globally-ignored-files
-                                     projectile-globally-ignored-directories))))
-        (ripgrep-regexp search-term
-                        (projectile-acquire-root)
-                        (append rg-args args)))))
-
-(defun replace-from-clipboard (beg end)
-  (interactive "r")
-  (delete-region beg end)
-  (goto-char beg)
-  (insert-for-yank (current-kill 0)))
-
-(defun save-buffer-without-auto-formatting ()
-  (interactive)
-  (setq temp before-save-hook)
-  (setq before-save-hook nil)
-  (save-buffer)
-  (setq before-save-hook temp))
-
-(defun term-other-window (&optional side size)
-  (split-window (selected-window) size side)
-  (vterm "*terminal*"))
-
-;; ----------------------------------
-;; Package configurations
-;; ----------------------------------
-
+;;; ----------------------------------
 ;;; doom-theme
+;;; ----------------------------------
 (use-package! doom-themes
   :config
   (setq doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config))
 
+;;; ----------------------------------
+;;; dired
+;;; ----------------------------------
+(use-package! dired
+  :when (featurep! :emacs dired)
+  :config
+  (map!
+   :map dired-mode-map
+   :n "h" #'dired-up-directory
+   :n "l" #'dired-find-file))
+
+;;; ----------------------------------
 ;;; company
+;;; ----------------------------------
 (use-package! company
   :when (featurep! :completion company)
   :config
   (set-company-backend! 'prog-mode '(company-files company-capf company-yasnippet))
   (setq
    +lsp-company-backends '(company-files company-capf company-yasnippet)
-   company-idle-delay 0.1
-   company-async-redisplay-delay 0.001
+   company-idle-delay 0.2
+   company-async-redisplay-delay 0.005
    company-selection-wrap-around t
    ;; company-dabbrev-code-everywhere t
    ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
-   company-minimum-prefix-length 1))
+   company-minimum-prefix-length 2)
+  (map!
+   (:map company-active-map
+    "RET" nil
+    [return] nil
+    "TAB" nil
+    [tab] nil
+    "C-f" #'company-complete-selection)))
 
+;;; ----------------------------------
 ;;; gcmh
+;;; ----------------------------------
 (use-package! gcmh
   :config
   (setq-default gcmh-idle-delay 15)
   (setq-default gcmh-high-cons-threshold (* 50 1024 1024)))
 
+;;; ----------------------------------
+;;; flycheck
+;;; ----------------------------------
+(use-package! flycheck
+  :when (featurep! :checkers syntax)
+  :config
+  (map!
+   :map flycheck-mode-map
+   :n "] e" #'flycheck-next-error
+   :n "[ e" #'flycheck-previous-error))
+
+;;; ----------------------------------
 ;;; snippets
+;;; ----------------------------------
 (use-package! doom-snippets
   :load-path "~/.doom.d/snippets"
   :after yasnippet)
 
-;;; latex
-(use-package! latex
-  :when (featurep! :lang latex +lsp)
+(use-package! yasnippet
+  :when (featurep! :editor snippets)
   :config
-  ;; variable settings
-  (setq TeX-electric-sub-and-superscript nil)
-  ;; preview latex using pdf tools
-  (setq +latex-viewers '(pdf-tools evince))
-  (setq TeX-command-force "LatexMk")
-  ;;; remove latex autofill
-  (remove-hook 'text-mode-hook #'turn-on-auto-fill)
-  ;; disable smartparens in latex mode
-  (add-hook 'TeX-mode-hook #'turn-off-smartparens-mode))
+  (map!
+   (:map yas-keymap
+    "TAB" #'yas-next-field-or-maybe-expand
+    [tab] #'yas-next-field-or-maybe-expand)))
 
+;;; ----------------------------------
+;;; ivy
+;;; ----------------------------------
+(use-package! ivy
+  :when (featurep! :completion ivy)
+  :config
+  (map!
+   (:map ivy-minibuffer-map
+   "C-h" #'ivy-backward-delete-char
+   "C-f" #'ivy-alt-done
+   :map ivy-reverse-i-search-map
+   "C-k" #'previous-line
+   "C-d" #'ivy-reverse-i-search-kill)))
+
+;;; ----------------------------------
+;;; latex
+;;; ----------------------------------
+(use-package! latex
+  :when (featurep! :lang latex)
+  :config
+  (setq
+   TeX-electric-sub-and-superscript nil
+   +latex-viewers '(pdf-tools evince)
+   TeX-command-force "LatexMk")
+  (remove-hook 'text-mode-hook #'turn-on-auto-fill)
+  (add-hook 'TeX-mode-hook #'turn-off-smartparens-mode)
+  (map!
+   :map LaTeX-mode-map
+   :localleader
+   :desc  "LaTeX View"    "v" #'TeX-view
+   :desc  "LaTeX Build"   "b" #'TeX-command-master
+   :desc  "LaTeX Run all" "r" #'TeX-command-run-all))
+
+;;; ----------------------------------
 ;;; pdf-tools
+;;; ----------------------------------
 (use-package! pdf-tools
   :when (featurep! :tools pdf)
   :config
   (setq-default pdf-view-display-size 'fit-width))
 
+;;; ----------------------------------
 ;;; format
+;;; ----------------------------------
 (use-package! format
   :when (featurep! :editor format)
   :config
   (setq +format-on-save-enabled-modes '(not sql-mode tex-mode latex-mode vue-mode)))
 
-;;; evil packages
-(use-package! evil
-  :when (featurep! :editor evil +everywhere)
-  :config
-  (setq evil-cross-lines t)
-  (setq evil-snipe-scope 'visible))
-
+;;; ----------------------------------
 ;;; emacs-tree-sitter
+;;; ----------------------------------
 (use-package! tree-sitter
   :config
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+  (map!
+   (:leader :prefix "t"
+    :desc "Treesitter mode" "t" #'tree-sitter-mode)))
 
+;;; ----------------------------------
 ;;; recentf
+;;; ----------------------------------
 (defvar recentf-keep-dot-folders
-  '("/home/aome510/.config" "/home/aome510/.doom.d" "/home/aome510/.cargo/registry/src"))
+  '("/home/aome510/.config" "/home/aome510/.doom.d"))
 
 (defun recentf-dot-file-ignore-p (file)
   (if (string-match-p "^/home/aome510/\\.[-._[:alnum:]]+/" file)
@@ -195,50 +223,109 @@
   (setq recentf-exclude '(recentf-file-ignore-p)
         recentf-max-saved-items 1024))
 
+;;; ----------------------------------
 ;;; kak
-(use-package! kak)
+;;; ----------------------------------
+(use-package! kak
+  :config
+  (map!
+   ;; Kakoune-like key bindings
+   :mvn "g h" #'evil-beginning-of-line
+   :mvn "g i" #'evil-first-non-blank
+   :mvn "g l" #'evil-end-of-line
+   :mvn "M-n" #'evil-ex-search-previous
+   :mvn "g %" #'mark-whole-buffer
+   :v "|" #'kak-exec-shell-command
+   :v "s" (lambda (beg end) (interactive "r") (kak-select beg end nil))
+   :v "S" (lambda (beg end) (interactive "r") (kak-select beg end t))
+   :v "M-s" #'kak-split-lines
+   :v "M-k" (lambda () (interactive) (kak-filter t))
+   :v "M-K" (lambda () (interactive) (kak-filter nil))
+   :v ". #" #'kak-insert-index
+   :v ". r" (lambda () (interactive) (kak-exec-shell-command "xsel -ob"))))
 
+;;; ----------------------------------
 ;;; magit
+;;; ----------------------------------
 (use-package! magit
+  :when (featurep! :tools magit)
   :config
   (setq git-commit-summary-max-length 100))
 
+;;; ----------------------------------
+;;; evil-mc
+;;; ----------------------------------
+(use-package! evil-mc
+  :when (featurep! :editor multiple-cursors)
+  :config
+  (global-evil-mc-mode 1)
+  (map!
+   :nv "C-n" #'evil-mc-make-and-goto-next-match
+   :nv "C-p" #'evil-mc-make-and-goto-prev-match))
+
+;;; ----------------------------------
+;;; vterm
+;;; ----------------------------------
+(defun term-other-window (&optional side size)
+  (split-window (selected-window) size side)
+  (vterm "*terminal*"))
+
+(use-package! vterm
+  :when (featurep! :term vterm)
+  :config
+  (map!
+   :leader :prefix "o"
+   :desc "Open terminal in other window (right)" "T"
+   #'(lambda (&optional size) (interactive "P") (term-other-window 'left size))
+   :desc "Open small terminal (below)" "t" #'vterm))
+
+;;; ----------------------------------
 ;;; ssh-agency
+;;; ----------------------------------
 (use-package! ssh-agency)
 
-;; auto save recentf list every 5 minutes
-(run-at-time nil (* 5 60) 'recentf-save-list)
+;;; ----------------------------------
+;;; evil-related and other packages
+;;; ----------------------------------
 
-;; ----------------------------------
-;; user-defined key mappings
-;; ----------------------------------
+;;;; custom functions
+
+(defun ripgrep-search-project (search-term &rest args)
+  (interactive
+   (list (projectile--read-search-string-with-default
+          (format "Ripgrep %ssearch for" (if current-prefix-arg "regexp " "")))
+         current-prefix-arg))
+  (if (require 'ripgrep nil 'noerror)
+      (let ((rg-args (mapcar (lambda (val) (concat "--glob !" val))
+                             (append projectile-globally-ignored-files
+                                     projectile-globally-ignored-directories))))
+        (ripgrep-regexp search-term
+                        (projectile-acquire-root)
+                        (append rg-args args)))))
+
+(defun replace-from-clipboard (beg end)
+  (interactive "r")
+  (delete-region beg end)
+  (goto-char beg)
+  (insert-for-yank (current-kill 0)))
+
+(defun save-buffer-without-hooks ()
+  (interactive)
+  (setq temp before-save-hook)
+  (setq before-save-hook nil)
+  (save-buffer)
+  (setq before-save-hook temp))
+
+;;;; variables
+
+(setq evil-cross-lines t)
+(setq evil-snipe-scope 'visible)
 
 (map!
- "M-="    #'text-scale-increase
- "M--"    #'text-scale-decrease
-
- :nv "TAB" #'indent-for-tab-command
- :nv [tab] #'indent-for-tab-command
-
- :v "R" #'replace-from-clipboard
-
- (:leader
-  :desc "Expand Region" "=" #'er/expand-region)
+ (:leader :desc "Expand Region" "=" #'er/expand-region)
 
  (:leader :prefix "b"
-  :desc "Save buffer without formatting" "s" #'save-buffer-without-auto-formatting)
-
- (:leader :prefix "t"
-  :desc "Treesitter mode" "t" #'tree-sitter-mode)
-
- "M-<return>" #'toggle-frame-fullscreen
- "M-<escape>" #'normal-mode
-
- (:when (featurep! :checkers syntax)
-  (:after flycheck
-   :map flycheck-mode-map
-   :n "] e" #'flycheck-next-error
-   :n "[ e" #'flycheck-previous-error))
+  :desc "Save buffer without hooks" "s" #'save-buffer-without-hooks)
 
  (:leader :prefix "s"
   :desc "Ripgrep Search Project" "g" #'ripgrep-search-project)
@@ -246,130 +333,29 @@
  (:leader :prefix "p"
   :desc "Projectile Dired" "SPC" #'projectile-dired)
 
- (:leader :prefix "o"
-  :desc "Open terminal in other window (right)" "T"
-  #'(lambda (&optional size) (interactive "P") (term-other-window 'left size))
-  :desc "Open small terminal (below)" "t" #'vterm)
+ (:leader
+  :prefix ("a" . "custom keybindings")
+  :desc "Align Left"    "l" #'evil-lion-left
+  :desc "Align Right"   "r" #'evil-lion-right)
 
- ;; evil-related packages
- (:when (featurep! :editor evil +everywhere)
-  (:leader
-   :prefix ("a" . "custom keybindings")
-   :desc "Align Left"    "l" #'evil-lion-left
-   :desc "Align Right"   "r" #'evil-lion-right)
+ "M-<escape>" #'normal-mode
+ "M-="        #'text-scale-increase
+ "M--"        #'text-scale-decrease
+ :mnv "h"     #'backward-char
+ :n "U"       #'undo-tree-redo
+ :n "u"       #'undo-tree-undo
+ :n "g w"     nil
+ :v ". s"     #'evil-snipe-s
+ :v ". S"     #'evil-surround-region
+ :v "|"       #'evil-shell-command-on-region
+ :v "R"       #'replace-from-clipboard
+ (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
+ (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))
 
-  ;; Kakoune-like key bindings
-  :mvn "g h" #'evil-beginning-of-line
-  :mvn "g i" #'evil-first-non-blank
-  :mvn "g l" #'evil-end-of-line
-  :mvn "M-n" #'evil-ex-search-previous
-  :mvn "g %" #'mark-whole-buffer
 
-
-  :n "U" #'undo-tree-redo
-  :n "u" #'undo-tree-undo
-
-  :v "|" #'evil-shell-command-on-region
-
-  :n "g w" nil
-
-  (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
-  (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))
-
- ;;; kak (evil-mc/multiple cursors)
- :v "|" #'kak-exec-shell-command
- :v "s" (lambda (beg end) (interactive "r") (kak-select beg end nil))
- :v "S" (lambda (beg end) (interactive "r") (kak-select beg end t))
- :v "M-s" #'kak-split-lines
- :v "M-k" (lambda () (interactive) (kak-filter t))
- :v "M-K" (lambda () (interactive) (kak-filter nil))
- :v ". #" #'kak-insert-index
- :v ". r" (lambda () (interactive) (kak-exec-shell-command "xsel -ob"))
- :mnv "h" #'backward-char ;; normal evil-backward-char doesn't allow cross-line when the fake cursor's at bol
- ;; :nv "g j" #'evil-mc-make-cursor-move-next-line
- ;; :nv "g k" #'evil-mc-make-cursor-move-prev-line
-
- ;; snipe/surround remap for kak commands in visual modes
- :v ". s" #'evil-snipe-s
- :v ". S" #'evil-surround-region
- (:after evil-surround
-  (:map evil-surround-mode-map
-   :v "S" nil
-   :v ". S" #'evil-surround-region))
-
- ;;; latex
- (:when (featurep! :lang latex)
-  (:after latex
-   (:map LaTeX-mode-map
-    :localleader
-    :desc  "LaTeX View"    "v" #'TeX-view
-    :desc  "LaTeX Build"   "b" #'TeX-command-master
-    :desc  "LaTeX Run all" "r" #'TeX-command-run-all)))
-
- ;; dired
- (:when (featurep! :emacs dired)
-  (:after dired
-   :map dired-mode-map
-   :n "h" #'dired-up-directory
-   :n "l" #'dired-find-file))
-
- ;;; tex-evil
- ;; (:after evil-tex
- ;;  (:map TeX-mode-map
- ;;   :nv "m" #'evil-set-marker))
-
- ;;; multi-cursors
- (:when (featurep! :editor multiple-cursors)
-  :nv "C-n" #'evil-mc-make-and-goto-next-match
-  :nv "C-p" #'evil-mc-make-and-goto-prev-match)
-
- (:when (featurep! :ui treemacs)
-  :leader
-  :desc "Select treemacs window" "0" #'treemacs-select-window)
-
- ;; winum
- (:when (featurep! :ui window-select +numbers)
-  :leader
-  :desc "winum-select-window-1" "1" #'winum-select-window-1
-  :desc "winum-select-window-2" "2" #'winum-select-window-2
-  :desc "winum-select-window-3" "3" #'winum-select-window-3
-  :desc "winum-select-window-4" "4" #'winum-select-window-4
-  :desc "winum-select-window-5" "5" #'winum-select-window-5
-  :desc "winum-select-window-6" "6" #'winum-select-window-6
-  :desc "winum-select-window-7" "7" #'winum-select-window-7
-  :desc "winum-select-window-8" "8" #'winum-select-window-8
-  :desc "winum-select-window-9" "9" #'winum-select-window-9)
-
- ;;; ivy
- (:when (featurep! :completion ivy)
-  (:after ivy
-   :map ivy-minibuffer-map
-   "C-h" #'ivy-backward-delete-char
-   "C-f" #'ivy-alt-done
-   :map ivy-reverse-i-search-map
-   "C-k" #'previous-line
-   "C-d" #'ivy-reverse-i-search-kill))
-
- ;;; company
- (:when (featurep! :completion company)
-  (:after company
-   (:map company-active-map
-    "RET" nil
-    [return] nil
-    "TAB" nil
-    [tab] nil
-    "C-f" #'company-complete-selection)))
-
- ;;; yasnippet
- (:when (featurep! :editor snippets)
-  (:after yasnippet
-  (:map yas-minor-mode-map
-    "TAB" #'yas-next-field-or-maybe-expand
-    [tab] #'yas-next-field-or-maybe-expand))))
-
-;; ----------------------------------
-;; misc
-;; ----------------------------------
+;; --------------------------------------------------------------------
+;;                         Misc settings
+;; --------------------------------------------------------------------
 
 ;;; upon spliting window, open projectile-find-file
 (after! evil (after! ivy
@@ -383,9 +369,6 @@
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
 
-;;; save file with C-s or C-S (without formatting)
-(global-set-key (kbd "C-s") #'save-buffer)
-
 ;;; tab always indent
 (setq-default tab-always-indent nil)
 
@@ -393,10 +376,9 @@
 (modify-syntax-entry ?_ "w")
 (modify-syntax-entry ?- "w")
 
-;;; global modes
-(global-evil-mc-mode 1)
-(add-hook 'after-init-hook #'solaire-global-mode)
-
 ;;; auto scrolling
 (setq scroll-conservatively 8
       scroll-step 8)
+
+;;; auto save recentf list every 30 minutes
+(run-at-time nil (* 30 60) 'recentf-save-list)

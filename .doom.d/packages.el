@@ -53,6 +53,12 @@
 (package! tree-sitter)
 (package! tree-sitter-langs)
 (package! ssh-agency)
+;; (package! corfu)
+(package! vertico)
+(package! consult)
+(package! orderless)
+(package! marginalia)
+;; (package! selectrum)
 
 (package! kak
   :recipe (:host github :repo "aome510/kak.el"))
