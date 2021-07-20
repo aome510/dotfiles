@@ -16,6 +16,7 @@
    lsp-enable-symbol-highlighting nil
    lsp-idle-delay 1.0
    ;; lsp-eldoc-render-all t
+   lsp-diagnostics--flycheck-enabled nil
    lsp-signature-doc-lines 10
    lsp-modeline-code-actions-enable nil
    lsp-modeline-diagnostics-enable nil)
