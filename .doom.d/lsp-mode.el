@@ -16,7 +16,6 @@
    lsp-enable-symbol-highlighting nil
    lsp-idle-delay 1.0
    ;; lsp-eldoc-render-all t
-   lsp-diagnostics--flycheck-enabled nil
    lsp-signature-doc-lines 10
    lsp-modeline-code-actions-enable nil
    lsp-modeline-diagnostics-enable nil)
@@ -24,6 +23,10 @@
    :when (featurep! :tools lsp)
    (:leader :prefix "c"
     :desc "LSP Treemacs Symbols" "T" #'lsp-treemacs-symbols)))
+
+(use-package! lsp-diagnostics
+  :config
+  (setq lsp-diagnostics--flycheck-enabled nil))
 
 ;; (use-package! lsp-ui
 ;;   :when (featurep! :tools lsp)
