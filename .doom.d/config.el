@@ -86,20 +86,19 @@
   (set-company-backend! 'prog-mode '(company-files company-capf company-yasnippet))
   (setq
    +lsp-company-backends '(company-files company-capf company-yasnippet)
-   company-idle-delay 0.1
+   company-idle-delay 0
    company-async-redisplay-delay 0.001
    company-selection-wrap-around t
    ;; company-dabbrev-code-everywhere t
    ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
-   company-minimum-prefix-length 2)
+   company-minimum-prefix-length 1)
   (map!
    (:map company-active-map
     "RET" nil
     [return] nil
-    "TAB" #'company-complete-selection
-    [tab] #'company-complete-selection
-    ;; "C-f" #'company-complete-selection
-    )))
+    "TAB" nil
+    [tab] nil
+    "C-f" #'company-complete-selection)))
 
 ;;; ----------------------------------
 ;;; gcmh
@@ -345,11 +344,13 @@
  :mnv "h"     #'backward-char
  :n "U"       #'undo-tree-redo
  :n "u"       #'undo-tree-undo
- :n "g w"     nil
  :v ". s"     #'evil-snipe-s
  :v ". S"     #'evil-surround-region
  :v "|"       #'evil-shell-command-on-region
  :v "R"       #'replace-from-clipboard
+ :n "g w"  nil
+ :gi "C-j" nil
+ :gi "C-k" nil
  (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
  (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))
 
@@ -357,14 +358,6 @@
 ;; --------------------------------------------------------------------
 ;;                         Misc settings
 ;; --------------------------------------------------------------------
-
-;;; upon spliting window, open projectile-find-file
-(after! evil (after! ivy
-               (setq evil-vsplit-window-right t
-                     evil-split-window-below t)
-               (defadvice! prompt-for-buffer (&rest _)
-                 :after '(evil-window-split evil-window-vsplit)
-                 (counsel-buffer-or-recentf))))
 
 ;;; increase history length
 (setq-default history-length 1000)
