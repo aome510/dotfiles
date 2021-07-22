@@ -1,5 +1,14 @@
 ;;; vertico.el -*- lexical-binding: t; -*-
 
+(use-package! corfu
+  :config
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-commit-predicate nil)
+  (corfu-quit-at-boundary t)
+  :init
+  (corfu-global-mode))
+
 (use-package! vertico
   :hook (doom-first-input . vertico-mode)
   :config

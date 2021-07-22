@@ -53,7 +53,7 @@
 (package! tree-sitter)
 (package! tree-sitter-langs)
 (package! ssh-agency)
-;; (package! corfu)
+(package! corfu)
 (package! vertico)
 (package! consult)
 (package! orderless)

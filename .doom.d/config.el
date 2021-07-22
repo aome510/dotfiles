@@ -53,8 +53,6 @@
 ;; (load! "lsp-eglot")
 (load! "lsp-mode")
 (load! "vertico")
-;; (load! "corfu")
-;; (load! "selectrum")
 
 ;; --------------------------------------------------------------------
 ;;                         Package configurations
@@ -98,9 +96,10 @@
    (:map company-active-map
     "RET" nil
     [return] nil
-    "TAB" nil
-    [tab] nil
-    "C-f" #'company-complete-selection)))
+    "TAB" #'company-complete-selection
+    [tab] #'company-complete-selection
+    ;; "C-f" #'company-complete-selection
+    )))
 
 ;;; ----------------------------------
 ;;; gcmh
@@ -116,6 +115,7 @@
 (use-package! flycheck
   :when (featurep! :checkers syntax)
   :config
+  (setq flycheck-check-syntax-automatically '(save idle-buffer-switch mode-enabled))
   (map!
    :map flycheck-mode-map
    :n "] e" #'flycheck-next-error
@@ -157,11 +157,12 @@
   :when (featurep! :lang latex)
   :config
   (setq
-   TeX-electric-sub-and-superscript nil
+   +latex--company-backends '(:separate company-capf company-yasnippet company-dabbrev)
    +latex-viewers '(pdf-tools evince)
+   TeX-electric-sub-and-superscript nil
    TeX-command-force "LatexMk")
   (remove-hook 'text-mode-hook #'turn-on-auto-fill)
-  (add-hook 'TeX-mode-hook #'turn-off-smartparens-mode)
+  (add-hook! 'TeX-mode-hook #'turn-off-smartparens-mode #'lsp!)
   (map!
    :map LaTeX-mode-map
    :localleader

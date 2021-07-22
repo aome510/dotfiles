@@ -8,14 +8,9 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
-  (add-hook 'TeX-mode-hook #'lsp!)
   (setq
-   +latex--company-backends '(:separate company-capf company-yasnippet company-dabbrev)
-   ;; lsp-enable-file-watchers nil
    lsp-restart 'auto-restart
-   lsp-enable-symbol-highlighting nil
    lsp-idle-delay 1.0
-   ;; lsp-eldoc-render-all t
    lsp-signature-doc-lines 10
    lsp-modeline-code-actions-enable nil
    lsp-modeline-diagnostics-enable nil)
@@ -23,10 +18,6 @@
    :when (featurep! :tools lsp)
    (:leader :prefix "c"
     :desc "LSP Treemacs Symbols" "T" #'lsp-treemacs-symbols)))
-
-(use-package! lsp-diagnostics
-  :config
-  (setq lsp-diagnostics--flycheck-enabled nil))
 
 ;; (use-package! lsp-ui
 ;;   :when (featurep! :tools lsp)
@@ -50,15 +41,18 @@
 
 (use-package! lsp-eslint
   :config
+  (setq lsp-eslint-auto-fix-on-save t
+        lsp-eslint-run "onSave")
   (add-hook! 'vue-mode-hook #'add-eslint-fix-all-to-before-save-hook)
   (add-hook! 'js2-mode-hook #'add-eslint-fix-all-to-before-save-hook)
   (add-hook! 'typescript-mode-hook #'add-eslint-fix-all-to-before-save-hook)
-  (setq lsp-eslint-validate (vconcat lsp-eslint-validate '("typescript" "vue"))))
+  ;; (setq lsp-eslint-validate (vconcat lsp-eslint-validate '("typescript" "vue")))
+  )
 
 ;;; lsp-vetur
-(use-package! lsp-vetur
-  :config
-  (setq lsp-vetur-format-enable nil))
+;; (use-package! lsp-vetur
+;;   :config
+;;   (setq lsp-vetur-format-enable nil))
 
 ;;; dap-mode
 (use-package! dap-mode

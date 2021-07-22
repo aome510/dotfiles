@@ -2,6 +2,7 @@
   "dependencies": {
     "@bitwarden/cli": "^1.16.0",
     "@postlight/mercury-parser": "^2.2.0",
+    "@vue/cli": "^4.5.13",
     "article_md": "^0.1.1",
     "flow-bin": "^0.151.0",
     "js-beautify": "^1.13.13",
