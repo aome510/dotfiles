@@ -1,22 +1,22 @@
 ;;; vertico.el -*- lexical-binding: t; -*-
 
-(use-package! corfu
-  :config
-  (setq
-   corfu-cycle t
-   corfu-auto t
-   corfu-auto-delay 0.2
-   corfu-auto-prefix 2
-   corfu-commit-predicate nil
-   corfu-quit-at-boundary t)
-  (map!
-   :map corfu-map
-   "TAB" nil
-   [tab] nil
-   "C-j" #'corfu-next
-   "C-k" #'corfu-previous
-   "C-f" #'corfu-insert)
-  (add-hook! 'corfu-mode-hook (if (company-mode) (company-mode -1) (company-mode +1))))
+;; (use-package! corfu
+;;   :config
+;;   (setq
+;;    corfu-cycle t
+;;    corfu-auto t
+;;    corfu-auto-delay 0.2
+;;    corfu-auto-prefix 2
+;;    corfu-commit-predicate nil
+;;    corfu-quit-at-boundary t)
+;;   (map!
+;;    :map corfu-map
+;;    "TAB" nil
+;;    [tab] nil
+;;    "C-j" #'corfu-next
+;;    "C-k" #'corfu-previous
+;;    "C-f" #'corfu-insert)
+;;   (add-hook! 'corfu-mode-hook (if (company-mode) (company-mode -1) (company-mode +1))))
 
 (use-package! vertico
   :hook (doom-first-input . vertico-mode)

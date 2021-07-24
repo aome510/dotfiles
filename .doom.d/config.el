@@ -334,7 +334,7 @@
   :desc "Projectile Dired" "SPC" #'projectile-dired)
 
  (:leader
-  :prefix ("a" . "custom keybindings")
+  :prefix-map ("a" . "custom keybindings")
   :desc "Align Left"    "l" #'evil-lion-left
   :desc "Align Right"   "r" #'evil-lion-right)
 
