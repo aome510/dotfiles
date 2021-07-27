@@ -86,12 +86,12 @@
   (set-company-backend! 'prog-mode '(company-files company-capf company-yasnippet))
   (setq
    +lsp-company-backends '(company-files company-capf company-yasnippet)
-   company-idle-delay 0
+   company-idle-delay 0.1
    company-async-redisplay-delay 0.001
    company-selection-wrap-around t
    ;; company-dabbrev-code-everywhere t
    ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
-   company-minimum-prefix-length 1)
+   company-minimum-prefix-length 2)
   (map!
    (:map company-active-map
     "RET" nil

@@ -42,10 +42,9 @@
 (use-package! lsp-eslint
   :config
   (setq lsp-eslint-auto-fix-on-save t
+        lsp-eslint-format nil
         lsp-eslint-run "onSave")
   (add-hook! 'vue-mode-hook #'add-eslint-fix-all-to-before-save-hook)
-  (add-hook! 'js2-mode-hook #'add-eslint-fix-all-to-before-save-hook)
-  (add-hook! 'typescript-mode-hook #'add-eslint-fix-all-to-before-save-hook)
   ;; (setq lsp-eslint-validate (vconcat lsp-eslint-validate '("typescript" "vue")))
   )
 
