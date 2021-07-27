@@ -106,7 +106,7 @@
 (use-package! gcmh
   :config
   (setq-default gcmh-idle-delay 15)
-  (setq-default gcmh-high-cons-threshold (* 50 1024 1024)))
+  (setq-default gcmh-high-cons-threshold (* 128 1024 1024)))
 
 ;;; ----------------------------------
 ;;; flycheck
@@ -332,11 +332,6 @@
 
  (:leader :prefix "p"
   :desc "Projectile Dired" "SPC" #'projectile-dired)
-
- (:leader
-  :prefix-map ("a" . "custom keybindings")
-  :desc "Align Left"    "l" #'evil-lion-left
-  :desc "Align Right"   "r" #'evil-lion-right)
 
  "M-<escape>" #'normal-mode
  "M-="        #'text-scale-increase

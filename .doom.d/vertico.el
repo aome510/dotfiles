@@ -19,16 +19,7 @@
 ;;   (add-hook! 'corfu-mode-hook (if (company-mode) (company-mode -1) (company-mode +1))))
 
 (use-package! vertico
-  :hook (doom-first-input . vertico-mode)
   :config
-  (add-hook 'vertico-mode-hook (lambda ()
-                                 (setq completion-in-region-function
-                                       (if vertico-mode
-                                           #'consult-completion-in-region
-                                         #'completion--in-region))))
-  (advice-add #'completing-read-multiple
-              :override #'consult-completing-read-multiple)
-  (setq vertico-cycle t)
   (map! :i "C-;" #'completion-at-point))
 
 ;;; orderless integration
@@ -49,7 +40,7 @@
   :init
   (marginalia-mode)
   :config
-  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+  (add-hook! 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 
 ;;; consult integration
 (use-package! consult
