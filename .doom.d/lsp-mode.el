@@ -41,7 +41,8 @@
 
 (use-package! lsp-eslint
   :config
-  (setq lsp-eslint-auto-fix-on-save t
+  (setq
+   lsp-eslint-auto-fix-on-save t
         lsp-eslint-format nil
         lsp-eslint-run "onSave")
   (add-hook! 'typescript-mode-hook #'add-eslint-fix-all-to-before-save-hook)

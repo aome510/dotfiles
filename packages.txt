@@ -68,7 +68,7 @@ ecryptfs-utils 111-4
 edk2-shell 202105-1
 efibootmgr 17-2
 efitools 1.9.2-3
-emacs-gcc-wayland-devel-bin 28.0.50.149328-1
+emacs-gcc-wayland-devel-bin 28.0.50.149496-1
 epdfview 0.1.8-11
 evince 40.3-1
 exa 0.10.1-1
@@ -203,7 +203,7 @@ memtest86+ 5.31b-1
 mesa-demos 8.4.0-4
 mesa-vdpau 21.1.5-1
 mhwd 0.6.5-2
-mhwd-db 0.6.5-10
+mhwd-db 0.6.5-14
 minicom 2.8-1
 mkinitcpio-openswap 0.1.0-3
 mlocate 0.26.git.20170220-7
@@ -254,7 +254,7 @@ playerctl 2.3.1-1
 polkit-gnome 0.105-8
 poppler-data 0.4.10-1
 postgresql 13.3-3
-postman-bin 8.9.0-1
+postman-bin 8.9.1-1
 powertop 2.14-1
 procps-ng 3.3.17-1
 psmisc 23.4-1
@@ -374,5 +374,5 @@ yay 10.3.0-1
 youtube-dl 2021.06.06-1
 zensu 0.3-1
 zip 3.0-9
-zoom 5.7.3-1
+zoom 5.7.4-1
 zoxide-bin 0.7.2-1

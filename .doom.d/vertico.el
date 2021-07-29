@@ -44,6 +44,9 @@
 
 ;;; consult integration
 (use-package! consult
+  :init
+  (define-key!
+      [remap recentf-open-files] #'consult-recent-file)
   :config
   (setq consult-project-root-function #'projectile-project-root)
 ;;; upon spliting window (evil-window-split), open consult-buffer
