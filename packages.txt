@@ -212,6 +212,7 @@ moc 1:2.5.2-3
 modemmanager 1.16.6-1
 morc_menu 1.0-2
 mousepad 0.5.5-3
+mpd-mpris 0.3.1-1
 mplayer 38157-4
 nano 5.8-1
 nautilus 40.2-1

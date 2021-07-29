@@ -9,7 +9,7 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
   (setq
-   lsp-idle-delay 1.0
+   lsp-idle-delay 0.5
    lsp-signature-doc-lines 10
    lsp-modeline-code-actions-enable nil
    lsp-modeline-diagnostics-enable nil)
