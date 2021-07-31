@@ -86,7 +86,7 @@
   (set-company-backend! 'prog-mode '(company-files company-capf company-yasnippet))
   (setq
    +lsp-company-backends '(company-files company-capf company-yasnippet)
-   company-idle-delay 0.1
+   company-idle-delay 0
    company-async-redisplay-delay 0.001
    company-selection-wrap-around t
    ;; company-dabbrev-code-everywhere t
@@ -106,7 +106,7 @@
 (use-package! gcmh
   :config
   (setq-default gcmh-idle-delay 15)
-  (setq-default gcmh-high-cons-threshold (* 64 1024 1024)))
+  (setq-default gcmh-high-cons-threshold (* 128 1024 1024)))
 
 ;;; ----------------------------------
 ;;; flycheck
@@ -342,7 +342,6 @@
  :v ". s"     #'evil-snipe-s
  :v ". S"     #'evil-surround-region
  :v "|"       #'evil-shell-command-on-region
- :v "R"       #'replace-from-clipboard
  :n "g w"  nil
  :gi "C-j" nil
  :gi "C-k" nil
