@@ -143,6 +143,7 @@ jfsutils 1.1.15-7
 jq 1.6-4
 kak-lsp 10.0.0-1
 kakoune 2020.09.01-1
+kepubify-bin 4.0.0-1
 keybase-bin 5.7.1_20210623205749+763227b4c6-1
 kitty 0.21.2-2
 kvantum-manjaro 0.13.5-1

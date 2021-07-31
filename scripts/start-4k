@@ -1,6 +1,9 @@
 #!/bin/fish
 
+set -l 4k_screen (xrandr | rg '3840x2160.*normal' | awk '{print $1}' | tail -n 1)
+
 xrandr --output eDP --off
-xrandr --output HDMI-A-0 --auto
+xrandr --output $4k_screen --auto
 xrdb -merge /usr/share/xsessions/4k.Xresources
 i3 restart
+feh --bg-scale ~/.background
