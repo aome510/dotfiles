@@ -235,6 +235,8 @@
    :mvn "g l" #'evil-end-of-line
    :mvn "M-n" #'evil-ex-search-previous
    :mvn "g %" #'mark-whole-buffer
+   :n "M-o" #'+evil/insert-newline-below
+   :n "M-O" #'+evil/insert-newline-above
    :v "|" #'kak-exec-shell-command
    :v "s" (lambda (beg end) (interactive "r") (kak-select beg end nil))
    :v "S" (lambda (beg end) (interactive "r") (kak-select beg end t))
