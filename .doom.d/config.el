@@ -339,6 +339,7 @@
  "M-="        #'text-scale-increase
  "M--"        #'text-scale-decrease
  :mnv "h"     #'backward-char
+ :mnv "l"     #'forward-char
  :n "U"       #'undo-tree-redo
  :n "u"       #'undo-tree-undo
  :v ". s"     #'evil-snipe-s
