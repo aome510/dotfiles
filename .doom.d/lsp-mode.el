@@ -32,6 +32,8 @@
   :config
   (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
         lsp-rust-analyzer-server-display-inlay-hints t
+        lsp-rust-analyzer-display-chaining-hints t
+        lsp-rust-analyzer-display-parameter-hints t
         ;; lsp-rust-analyzer-cargo-watch-enable nil
         lsp-rust-analyzer-cargo-watch-command "clippy"))
 

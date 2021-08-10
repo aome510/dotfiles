@@ -362,6 +362,7 @@ xf86-video-nouveau 1.0.17-1
 xfburn 0.6.2-1
 xfce4-power-manager 4.16.0-3
 xfsprogs 5.12.0-1
+xkeycaps 2.47-1
 xorg-server 1.20.11-1
 xorg-twm 1.0.11-1
 xorg-xev 1.2.4-1
