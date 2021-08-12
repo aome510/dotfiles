@@ -14,9 +14,9 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "monospace" :size 16)
-      doom-big-font (font-spec :family "monospace" :size 24)
-      doom-variable-pitch-font (font-spec :family "monospace" :size 16))
+(setq doom-font (font-spec :family "IBM Plex Mono" :size 16)
+      doom-big-font (font-spec :family "IBM Plex Mono" :size 24)
+      doom-variable-pitch-font (font-spec :family "IBM Plex Serif" :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -106,7 +106,7 @@
 (use-package! gcmh
   :config
   (setq-default gcmh-idle-delay 15)
-  (setq-default gcmh-high-cons-threshold (* 128 1024 1024)))
+  (setq-default gcmh-high-cons-threshold (* 50 1024 1024)))
 
 ;;; ----------------------------------
 ;;; flycheck
