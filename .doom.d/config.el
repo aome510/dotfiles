@@ -105,7 +105,7 @@
 ;;; ----------------------------------
 (use-package! gcmh
   :config
-  (setq-default gcmh-idle-delay 15)
+  (setq-default gcmh-idle-delay 5)
   (setq-default gcmh-high-cons-threshold (* 50 1024 1024)))
 
 ;;; ----------------------------------
