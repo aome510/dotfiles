@@ -90,7 +90,6 @@ map global user e ':edit ~/.config/kak/kakrc<ret>' -docstring 'edit kakrc'
 map global normal -docstring 'Select all occurrences of the current selection' '<a-%>' '*%s<ret>'
 map global normal -docstring 'Select next occurrence of the current selection' '<c-n>' '*N'
 map global normal -docstring 'Select previous occurrence of the current selection' '<c-p>' '*<a-N>'
-map global normal -docstring 'Remove secondary cursors' '<esc>' '<space>'
 
 ###############################
 # Kakoune plugins
