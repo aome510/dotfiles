@@ -256,7 +256,7 @@ bindsym $mod+m bar mode toggle
 # other key bindings
 bindsym Print exec flameshot gui
 # bindsym Control+Mod1+l exec --no-startup-id cinnamon-screensaver-command -l -m "You are the Apple Of My Eyes 🍎"
-bindsym Control+Mod1+l exec betterlockscreen -l dim -t "You are the Apple Of My Eyes"
+bindsym Control+Mod1+l exec betterlockscreen -l dim
 
 # set default workspace layout to tabbed
 workspace_layout tabbed
