@@ -98,7 +98,7 @@ github-cli 1.14.0-1
 glibc 2.33-5
 gnome-keyring 1:40.0-1
 go 2:1.16.7-1
-go-ethereum 1.10.7-1
+go-ethereum 1.10.3-1
 golangci-lint-bin 1.42.0-1
 google-chrome 92.0.4515.159-1
 gopls 0.7.1-1
