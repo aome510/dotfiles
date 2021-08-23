@@ -49,12 +49,12 @@
       [remap recentf-open-files] #'consult-recent-file)
   :config
   (setq consult-project-root-function #'projectile-project-root)
-;;; upon spliting window (evil-window-split), open consult-buffer
+  ;; upon spliting window (evil-window-split), open `project-find-file'
   (setq evil-vsplit-window-right t
         evil-split-window-below t)
   (defadvice! prompt-for-buffer (&rest _)
     :after '(evil-window-split evil-window-vsplit)
-    (consult-buffer))
+    (project-find-file))
   (consult-customize
    consult-lsp-symbols
    :preview-key (kbd "C-SPC"))
