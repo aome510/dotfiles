@@ -188,23 +188,26 @@
 ;;; ----------------------------------
 ;;; emacs-tree-sitter
 ;;; ----------------------------------
-(use-package! tree-sitter
-  :config
-  (require 'tree-sitter-langs)
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-  (map!
-   (:leader :prefix "t"
-    :desc "Treesitter mode" "t" #'tree-sitter-mode)))
+;; (use-package! tree-sitter
+;;   :config
+;;   (require 'tree-sitter-langs)
+;;   (global-tree-sitter-mode)
+;;   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+;;   (map!
+;;    (:leader :prefix "t"
+;;     :desc "Treesitter mode" "t" #'tree-sitter-mode)))
 
 ;;; ----------------------------------
 ;;; recentf
 ;;; ----------------------------------
+
+(defvar home "/Users/aome510/")
+
 (defvar recentf-keep-dot-folders
-  '("/home/aome510/.config" "/home/aome510/.doom.d"))
+  `(,(concat home ".config") ,(concat home ".doom.d")))
 
 (defun recentf-dot-file-ignore-p (file)
-  (if (string-match-p "^/home/aome510/\\.[-._[:alnum:]]+/" file)
+  (if (string-match-p (concat "^" home "\\.[-._[:alnum:]]+/") file)
       (not (seq-reduce
             (lambda (acc folder) (or acc (string-prefix-p folder file)))
             recentf-keep-dot-folders
@@ -212,7 +215,7 @@
     nil))
 
 (defun recentf-file-ignore-p (file)
-  (if (string-match-p "^/home/aome510/" file)
+  (if (string-match-p (concat "^" home) file)
       (or
        (recentf-dot-file-ignore-p file)
        (not (file-readable-p file)))

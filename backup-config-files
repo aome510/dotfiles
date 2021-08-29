@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/python3
 
 import os
 from pathlib import Path
@@ -22,6 +22,8 @@ home_white_list = [
     ".doom.d",
     ".makepkg.conf",
     "scripts",
+    ".zshenv",
+    ".zshrc",
 ]
 
 dot_config_white_list = [
@@ -84,11 +86,11 @@ if not os.path.exists(f"{cwd}/.tmux/plugins/tpm"):
     .tmux/plugins/tpm
   """
     )
-if not os.path.exists(f"{cwd}/.tmux/plugins/tmux-themepack"):
+if not os.path.exists(f"{cwd}/.tmux/plugins/tmux"):
     os.system(
         f"""
-    cd {cwd} && git submodule add https://github.com/jimeh/tmux-themepack \
-    .tmux/plugins/tmux-themepack
+    cd {cwd} && git submodule add https://github.com/dracula/tmux \
+    .tmux/plugins/tmux
   """
     )
 
@@ -105,8 +107,9 @@ for f in os.listdir("{}/.config".format(home)):
 os.system(f"cp ~/.config/yarn/global/package.json {cwd}/package.json")
 
 # list all explicitly installed packages into packages.txt
-os.system(f"pacman -Qe > {cwd}/packages.txt")
-os.system(f"cp /desktopfs-pkgs.txt > {cwd}/")
+# NOTE: disable for non-Linux OS
+# os.system(f"pacman -Qe > {cwd}/packages.txt")
+# os.system(f"cp /desktopfs-pkgs.txt > {cwd}/")
 
 # Copy .ssh config file
 os.system(f"mkdir -p {cwd}/.ssh && cp ~/.ssh/config {cwd}/.ssh")
