@@ -1,5 +1,7 @@
 article_parse_command = {command = "article_md", options = []}
 
+url_open_command = "open"
+
 [keymap.global_keymap]
 quit = "M-q"
 goto_previous_view = "C-q"
