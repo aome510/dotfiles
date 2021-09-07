@@ -344,7 +344,9 @@
  :n "U"       #'undo-tree-redo
  :n "u"       #'undo-tree-undo
  :v ". s"     #'evil-snipe-s
- :v ". S"     #'evil-surround-region
+ (:map evil-surround-mode-map
+  :v "S" nil
+  :v ". S"     #'evil-surround-region)
  :v "|"       #'evil-shell-command-on-region
  :n "g w"  nil
  :gi "C-j" nil

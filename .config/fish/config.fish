@@ -30,7 +30,7 @@ end
 
 function history-fzf
     history merge
-    history | fzf $fzf_otps --tiebreak index -q (commandline) | read result
+    history -z | fzf $fzf_otps --read0 --print0 --tiebreak index -q (commandline) | read result -z
     commandline -r -- $result
     commandline -f repaint
 end
