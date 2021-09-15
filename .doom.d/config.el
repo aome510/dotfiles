@@ -94,11 +94,10 @@
    company-minimum-prefix-length 2)
   (map!
    (:map company-active-map
-    "RET" nil
-    [return] nil
+    "RET" #'company-complete-selection
+    [return] #'company-complete-selection
     "TAB" nil
-    [tab] nil
-    "C-f" #'company-complete-selection)))
+    [tab] nil)))
 
 ;;; ----------------------------------
 ;;; gcmh

@@ -1,3 +1,5 @@
+allow_unicode = true
+
 article_parse_command = {command = "article_md", options = []}
 
 url_open_command = "open"
