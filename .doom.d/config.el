@@ -155,12 +155,11 @@
   :when (featurep! :lang latex)
   :config
   (setq
-   +latex--company-backends '(:separate company-capf company-yasnippet company-dabbrev)
    +latex-viewers '(pdf-tools evince)
    TeX-electric-sub-and-superscript nil
    TeX-command-force "LatexMk")
   (remove-hook 'text-mode-hook #'turn-on-auto-fill)
-  (add-hook! 'TeX-mode-hook #'turn-off-smartparens-mode #'lsp!)
+  (add-hook! 'TeX-mode-hook #'turn-off-smartparens-mode)
   (map!
    :map LaTeX-mode-map
    :localleader
