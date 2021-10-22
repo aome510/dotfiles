@@ -269,18 +269,18 @@
 ;;; ----------------------------------
 ;;; vterm
 ;;; ----------------------------------
-(defun term-other-window (&optional side size)
-  (split-window (selected-window) size side)
-  (vterm "*terminal*"))
+;; (defun term-other-window (&optional side size)
+;;   (split-window (selected-window) size side)
+;;   (vterm "*terminal*"))
 
-(use-package! vterm
-  :when (featurep! :term vterm)
-  :config
-  (map!
-   :leader :prefix "o"
-   :desc "Open terminal in other window (right)" "T"
-   #'(lambda (&optional size) (interactive "P") (term-other-window 'left size))
-   :desc "Open small terminal (below)" "t" #'vterm))
+;; (use-package! vterm
+;;   :when (featurep! :term vterm)
+;;   :config
+;;   (map!
+;;    :leader :prefix "o"
+;;    :desc "Open terminal in other window (right)" "T"
+;;    #'(lambda (&optional size) (interactive "P") (term-other-window 'left size))
+;;    :desc "Open small terminal (below)" "t" #'vterm))
 
 ;;; ----------------------------------
 ;;; ssh-agency
@@ -374,3 +374,17 @@
 
 ;;; auto save recentf list every 30 minutes
 (run-at-time nil (* 30 60) 'recentf-save-list)
+
+;;; manually setup tree-sitter for emacs until M1 macos has a stable support
+(add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/core"))
+(add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/lisp"))
+(add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/langs"))
+(require 'tree-sitter)
+(require 'tree-sitter-hl)
+(require 'tree-sitter-langs)
+(require 'tree-sitter-debug)
+(require 'tree-sitter-query)
+
+;; enable tree-sitter globally
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)

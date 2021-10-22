@@ -2,6 +2,8 @@
 
 ;;; lsp packages
 
+(add-hook! 'LaTeX-mode-hook (setq-local +lsp-company-backends '(company-capf :with company-yasnippet company-dabbrev)))
+
 (use-package! lsp-mode
   :when (featurep! :tools lsp)
   :config
@@ -9,7 +11,6 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
   (setq
-   +lsp-company-backends '(:separate company-capf company-yasnippet company-dabbrev)
    lsp-idle-delay 0.5
    lsp-signature-doc-lines 10
    lsp-modeline-code-actions-enable nil
