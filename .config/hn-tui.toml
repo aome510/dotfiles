@@ -1,12 +1,7 @@
-allow_unicode = true
-
 article_parse_command = {command = "article_md", options = []}
-
-url_open_command = "open"
 
 [keymap.global_keymap]
 quit = "q"
-goto_previous_view = "backspace"
 
 [[keymap.custom_keymap.custom_view_navigation]]
 key = "M-1"
