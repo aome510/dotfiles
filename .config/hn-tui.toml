@@ -1,26 +1,25 @@
-article_parse_command = {command = "article_md", options = []}
+# article_parse_command = {command = "_article_md", options = ["--format", "html"]}
+# article_parse_command = { command = "mercury-parser", options = [] }
+# use_pacman_loading = false
 
-[keymap.global_keymap]
-quit = "q"
-
-[[keymap.custom_keymap.custom_view_navigation]]
+[[keymap.custom_keymaps]]
 key = "M-1"
 tag = "story"
 by_date = true
-[keymap.custom_keymap.custom_view_navigation.numeric_filters]
+[keymap.custom_keymaps.numeric_filters]
 elapsed_days_interval = {start = 0, end = 1}
 points_interval = {start = 100}
 
-[[keymap.custom_keymap.custom_view_navigation]]
+[[keymap.custom_keymaps]]
 key = "M-2"
 tag = "story"
 by_date = false
-[keymap.custom_keymap.custom_view_navigation.numeric_filters]
+[keymap.custom_keymaps.numeric_filters]
 elapsed_days_interval = {start = 0, end = 3}
 
-[[keymap.custom_keymap.custom_view_navigation]]
+[[keymap.custom_keymaps]]
 key = "M-3"
 tag = "story"
 by_date = false
-[keymap.custom_keymap.custom_view_navigation.numeric_filters]
+[keymap.custom_keymaps.numeric_filters]
 elapsed_days_interval = {start = 0, end = 7}

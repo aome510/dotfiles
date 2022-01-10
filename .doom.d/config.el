@@ -21,7 +21,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'spacemacs-light)
+(setq doom-theme 'doom-dracula)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -50,6 +50,7 @@
 ;;
 
 (load! "vue")
+(load! "org")
 ;; (load! "lsp-eglot")
 (load! "lsp-mode")
 (load! "vertico")
@@ -324,6 +325,8 @@
 (setq evil-cross-lines t)
 (setq evil-snipe-scope 'visible)
 
+;;;; mappings
+
 (map!
  (:leader :desc "Expand Region" "=" #'er/expand-region)
 
@@ -345,6 +348,8 @@
  (:map evil-surround-mode-map
   :v "S" nil
   :v ". S"     #'evil-surround-region)
+ (:map markdown-mode-map
+  "DEL" nil)
  :v "|"       #'evil-shell-command-on-region
  :n "g w"  nil
  :gi "C-j" nil

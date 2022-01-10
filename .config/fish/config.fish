@@ -84,8 +84,12 @@ alias se="sudo -e"
 alias cl="emacsclient -nw"
 alias l="exa --color always"
 alias b="btm --basic --tree"
+
+# git-specific aliases
 alias gs="git status"
 alias gd="git diff"
+alias gc="git commit"
+alias gC="git checkout"
 
 # use vim key bindings for normal terminal,
 # use fish default key bindings for fish in emacs.

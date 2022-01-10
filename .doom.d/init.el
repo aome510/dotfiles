@@ -20,8 +20,8 @@
        ;;layout                 ; auie,ctsrnm is the superior home row
 
        :completion
-                                ; (company +childframe)  ; the ultimate code completion backend
-       (company)
+       (company +childframe)    ; the ultimate code completion backend
+       ;; (company)
        ;;helm                   ; the *other* search engine for love and life
        ;;ido                    ; the other *other* search engine...
        ;;(ivy)                  ; a search engine for love and life
@@ -47,7 +47,7 @@
        ;;tabs                   ; a tab bar for Emacs
        treemacs                 ; a project drawer, like neotree but cooler
        unicode                  ; extended unicode support for various languages
-       ;;vc-gutter              ; vcs diff in the fringe
+       vc-gutter                ; vcs diff in the fringe
        vi-tilde-fringe          ; fringe tildes to mark beyond EOB
        (window-select +numbers) ; visually switch windows
        workspaces               ; tab emulation, persistence & separate workspaces
@@ -78,7 +78,7 @@
        ;;eshell                 ; the elisp shell that works everywhere
        ;;shell                  ; simple shell REPL for Emacs
        ;;term                   ; basic terminal emulator for Emacs
-       ;;vterm                    ; the best terminal emulation in Emacs
+       ;;vterm                  ; the best terminal emulation in Emacs
 
        :checkers
        syntax                   ; tasing you for every semicolon you forget
@@ -97,7 +97,7 @@
        lookup                   ; navigate your code and its documentation
        (lsp +peek)
        ;                        ; (lsp +eglot)
-       (magit +forge)           ; a git porcelain for Emacs
+       magit                    ; a git porcelain for Emacs
        ;;make                   ; run make tasks from Emacs
        ;;pass                   ; password manager for nerds
        pdf                      ; pdf enhancements
@@ -149,7 +149,11 @@
        ;;nim                    ; python + lisp at the speed of c
        ;;nix                    ; I hereby declare "nix geht mehr!"
        ;;ocaml                  ; an objective camel
-       ;;org                    ; organize your plain life in plain text
+       (org                      ; organize your plain life in plain text
+        +pretty
+        +dragndrop
+        +pandoc
+        +roam2)
        ;;php                    ; perl's insecure younger brother
        ;;plantuml               ; diagrams for confusing people more
        ;;purescript             ; javascript, but functional
