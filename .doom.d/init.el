@@ -47,15 +47,15 @@
        ;;tabs                   ; a tab bar for Emacs
        treemacs                 ; a project drawer, like neotree but cooler
        unicode                  ; extended unicode support for various languages
-       vc-gutter                ; vcs diff in the fringe
-       vi-tilde-fringe          ; fringe tildes to mark beyond EOB
+       ;;vc-gutter              ; vcs diff in the fringe
+       ;;vi-tilde-fringe        ; fringe tildes to mark beyond EOB
        (window-select +numbers) ; visually switch windows
-       workspaces               ; tab emulation, persistence & separate workspaces
+       ;;workspaces             ; tab emulation, persistence & separate workspaces
        ;;zen                    ; distraction-free coding or writing
 
        :editor
        (evil +everywhere)       ; come to the dark side, we have cookies
-       file-templates           ; auto-snippets for empty files
+       ;;file-templates           ; auto-snippets for empty files
        fold                     ; (nigh) universal code folding
        (format +onsave)         ; automated prettiness
        ;;god                    ; run Emacs commands without modifier keys
@@ -68,7 +68,7 @@
        ;;word-wrap              ; soft wrapping with language-aware indent
 
        :emacs
-       dired                    ; making dired pretty [functional]
+       (dired +icons)           ; making dired pretty [functional]
        electric                 ; smarter, keyword-based electric-indent
        ;;ibuffer                ; interactive buffer management
        (undo +tree)             ; persistent, smarter undo for your inevitable mistakes
@@ -82,7 +82,7 @@
 
        :checkers
        syntax                   ; tasing you for every semicolon you forget
-       (spell +aspell)          ; tasing you for misspelling mispelling
+       ;;(spell +aspell)          ; tasing you for misspelling mispelling
        grammar                  ; tasing grammar mistake every you make
 
        :tools

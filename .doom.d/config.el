@@ -49,23 +49,11 @@
 ;; they are implemented.
 ;;
 
-(load! "vue")
 (load! "org")
-;; (load! "lsp-eglot")
-(load! "lsp-mode")
-(load! "vertico")
 
 ;; --------------------------------------------------------------------
 ;;                         Package configurations
 ;; --------------------------------------------------------------------
-
-;;; ----------------------------------
-;;; doom-theme
-;;; ----------------------------------
-(use-package! doom-themes
-  :config
-  (setq doom-themes-treemacs-theme "doom-colors")
-  (doom-themes-treemacs-config))
 
 ;;; ----------------------------------
 ;;; dired
@@ -81,17 +69,42 @@
 ;;; ----------------------------------
 ;;; company
 ;;; ----------------------------------
+(use-package! lsp-mode
+  :when (featurep! :tools lsp)
+  :defer-incrementally t
+  :config
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
+  (setq
+   lsp-idle-delay 0.5
+   lsp-signature-doc-lines 10
+   lsp-modeline-code-actions-enable nil
+   lsp-modeline-diagnostics-enable nil))
+
+;;; lsp-rust
+(use-package! lsp-rust
+  :when (featurep! :lang rust +lsp)
+  :defer-incrementally t
+  :config
+  (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
+        lsp-rust-analyzer-server-display-inlay-hints t
+        lsp-rust-analyzer-display-chaining-hints t
+        lsp-rust-analyzer-display-parameter-hints t
+        lsp-rust-analyzer-cargo-watch-command "clippy"))
+
+;;; ----------------------------------
+;;; company
+;;; ----------------------------------
 (use-package! company
   :when (featurep! :completion company)
+  :defer-incrementally t
   :config
-  (set-company-backend! 'prog-mode '(company-files company-capf company-yasnippet))
   (setq
-   +lsp-company-backends '(company-files company-capf company-yasnippet)
+   +lsp-company-backends '(company-files company-capf company-yasnippet company-dabbrev)
    company-idle-delay 0
    company-async-redisplay-delay 0.001
    company-selection-wrap-around t
-   ;; company-dabbrev-code-everywhere t
-   ;; company-dabbrev-char-regexp "[A-Za-z0-9]"
    company-minimum-prefix-length 2)
   (map!
    (:map company-active-map
@@ -99,26 +112,6 @@
     [return] #'company-complete-selection
     "TAB" nil
     [tab] nil)))
-
-;;; ----------------------------------
-;;; gcmh
-;;; ----------------------------------
-(use-package! gcmh
-  :config
-  (setq-default gcmh-idle-delay 5)
-  (setq-default gcmh-high-cons-threshold (* 50 1024 1024)))
-
-;;; ----------------------------------
-;;; flycheck
-;;; ----------------------------------
-(use-package! flycheck
-  :when (featurep! :checkers syntax)
-  :config
-  (setq flycheck-check-syntax-automatically '(save idle-buffer-switch mode-enabled))
-  (map!
-   :map flycheck-mode-map
-   :n "] e" #'flycheck-next-error
-   :n "[ e" #'flycheck-previous-error))
 
 ;;; ----------------------------------
 ;;; snippets
@@ -136,30 +129,17 @@
     [tab] #'yas-next-field-or-maybe-expand)))
 
 ;;; ----------------------------------
-;;; ivy
-;;; ----------------------------------
-(use-package! ivy
-  :when (featurep! :completion ivy)
-  :config
-  (map!
-   (:map ivy-minibuffer-map
-   "C-h" #'ivy-backward-delete-char
-   "C-f" #'ivy-alt-done
-   :map ivy-reverse-i-search-map
-   "C-k" #'previous-line
-   "C-d" #'ivy-reverse-i-search-kill)))
-
-;;; ----------------------------------
 ;;; latex
 ;;; ----------------------------------
 (use-package! latex
   :when (featurep! :lang latex)
+  :defer-incrementally t
   :config
   (setq
    +latex-viewers '(pdf-tools evince)
    TeX-electric-sub-and-superscript nil
    TeX-command-force "LatexMk")
-  (remove-hook 'text-mode-hook #'turn-on-auto-fill)
+  (remove-hook 'TeX-mode-hook #'turn-on-auto-fill)
   (add-hook! 'TeX-mode-hook #'turn-off-smartparens-mode)
   (map!
    :map LaTeX-mode-map
@@ -167,34 +147,6 @@
    :desc  "LaTeX View"    "v" #'TeX-view
    :desc  "LaTeX Build"   "b" #'TeX-command-master
    :desc  "LaTeX Run all" "r" #'TeX-command-run-all))
-
-;;; ----------------------------------
-;;; pdf-tools
-;;; ----------------------------------
-(use-package! pdf-tools
-  :when (featurep! :tools pdf)
-  :config
-  (setq-default pdf-view-display-size 'fit-width))
-
-;;; ----------------------------------
-;;; format
-;;; ----------------------------------
-(use-package! format
-  :when (featurep! :editor format)
-  :config
-  (setq +format-on-save-enabled-modes '(not sql-mode tex-mode latex-mode vue-mode)))
-
-;;; ----------------------------------
-;;; emacs-tree-sitter
-;;; ----------------------------------
-;; (use-package! tree-sitter
-;;   :config
-;;   (require 'tree-sitter-langs)
-;;   (global-tree-sitter-mode)
-;;   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-;;   (map!
-;;    (:leader :prefix "t"
-;;     :desc "Treesitter mode" "t" #'tree-sitter-mode)))
 
 ;;; ----------------------------------
 ;;; recentf
@@ -205,6 +157,7 @@
 (defvar recentf-keep-dot-folders
   `(,(concat home ".config") ,(concat home ".doom.d")))
 
+;;;###autoload
 (defun recentf-dot-file-ignore-p (file)
   (if (string-match-p (concat "^" home "\\.[-._[:alnum:]]+/") file)
       (not (seq-reduce
@@ -213,6 +166,7 @@
             nil))
     nil))
 
+;;;###autoload
 (defun recentf-file-ignore-p (file)
   (if (string-match-p (concat "^" home) file)
       (or
@@ -222,6 +176,8 @@
 
 (use-package! recentf
   :config
+  ;; auto save recentf list every 30 minutes
+  (run-at-time nil (* 30 60) 'recentf-save-list)
   (setq recentf-exclude '(recentf-file-ignore-p)
         recentf-max-saved-items 1024))
 
@@ -231,7 +187,7 @@
 (use-package! kak
   :config
   (map!
-   ;; Kakoune-like key bindings
+   ;; Kakoune-like key mappings
    :mvn "g h" #'evil-beginning-of-line
    :mvn "g i" #'evil-first-non-blank
    :mvn "g l" #'evil-end-of-line
@@ -248,11 +204,12 @@
    :v ". #" #'kak-insert-index
    :v ". r" (lambda () (interactive) (kak-exec-shell-command "xsel -ob"))))
 
-;;; ----------------------------------
-;;; magit
-;;; ----------------------------------
+;; ;;; ----------------------------------
+;; ;;; magit
+;; ;;; ----------------------------------
 (use-package! magit
   :when (featurep! :tools magit)
+  :defer-incrementally t
   :config
   (setq git-commit-summary-max-length 100))
 
@@ -268,32 +225,13 @@
    :nv "C-p" #'evil-mc-make-and-goto-prev-match))
 
 ;;; ----------------------------------
-;;; vterm
-;;; ----------------------------------
-;; (defun term-other-window (&optional side size)
-;;   (split-window (selected-window) size side)
-;;   (vterm "*terminal*"))
-
-;; (use-package! vterm
-;;   :when (featurep! :term vterm)
-;;   :config
-;;   (map!
-;;    :leader :prefix "o"
-;;    :desc "Open terminal in other window (right)" "T"
-;;    #'(lambda (&optional size) (interactive "P") (term-other-window 'left size))
-;;    :desc "Open small terminal (below)" "t" #'vterm))
-
-;;; ----------------------------------
 ;;; ssh-agency
 ;;; ----------------------------------
 (use-package! ssh-agency)
 
-;;; ----------------------------------
-;;; evil-related and other packages
-;;; ----------------------------------
+;;; custom functions
 
-;;;; custom functions
-
+;;;###autoload
 (defun ripgrep-search-project (search-term &rest args)
   (interactive
    (list (projectile--read-search-string-with-default
@@ -307,78 +245,44 @@
                         (projectile-acquire-root)
                         (append rg-args args)))))
 
-(defun replace-from-clipboard (beg end)
-  (interactive "r")
-  (delete-region beg end)
-  (goto-char beg)
-  (insert-for-yank (current-kill 0)))
-
-(defun save-buffer-without-hooks ()
-  (interactive)
-  (setq temp before-save-hook)
-  (setq before-save-hook nil)
-  (save-buffer)
-  (setq before-save-hook temp))
-
-;;;; variables
+;;; variables
 
 (setq evil-cross-lines t)
 (setq evil-snipe-scope 'visible)
 
-;;;; mappings
+;;; key mappings
 
 (map!
- (:leader :desc "Expand Region" "=" #'er/expand-region)
-
- (:leader :prefix "b"
-  :desc "Save buffer without hooks" "s" #'save-buffer-without-hooks)
-
  (:leader :prefix "s"
   :desc "Ripgrep Search Project" "g" #'ripgrep-search-project)
 
- (:leader :prefix "p"
-  :desc "Projectile Dired" "SPC" #'projectile-dired)
-
- "M-<escape>" #'normal-mode
- "M-="        #'text-scale-increase
- "M--"        #'text-scale-decrease
  :n "U"       #'undo-tree-redo
  :n "u"       #'undo-tree-undo
+
+ ;; `s' and `S' are binded to `kak.el' package's functions
  :v ". s"     #'evil-snipe-s
  (:map evil-surround-mode-map
   :v "S" nil
   :v ". S"     #'evil-surround-region)
+
+ ;; markdown-mode remaps `DEL' shortcuts which doesn't play nicely with evil-mc
  (:map markdown-mode-map
-  "DEL" nil)
- :v "|"       #'evil-shell-command-on-region
- :n "g w"  nil
- :gi "C-j" nil
- :gi "C-k" nil
- (:map evil-inner-text-objects-map "b" #'evil-textobj-anyblock-inner-block)
- (:map evil-outer-text-objects-map "b" #'evil-textobj-anyblock-a-block))
-
-
-;; --------------------------------------------------------------------
-;;                         Misc settings
-;; --------------------------------------------------------------------
+  "DEL" nil))
 
 ;;; increase history length
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
 
-;;; tab always indent
+;;; modify `TAB' key behavior
 (setq-default tab-always-indent nil)
 
-;;; treat underscore as word character
+;;; treat underscore as a word character
 (modify-syntax-entry ?_ "w")
 (modify-syntax-entry ?- "w")
 
-;;; auto scrolling
+;;; enable auto scrolling
 (setq scroll-conservatively 8
       scroll-step 8)
-
-;;; auto save recentf list every 30 minutes
-(run-at-time nil (* 30 60) 'recentf-save-list)
 
 ;;; manually setup tree-sitter for emacs until M1 macos has a stable support
 (add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/core"))
