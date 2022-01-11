@@ -45,6 +45,7 @@ dot_config_white_list = [
     "yapf",
     "systemd",
     ".projectile",
+    "spotify-player",
 ]
 
 cwd = os.path.dirname(__file__)
