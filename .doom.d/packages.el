@@ -60,6 +60,7 @@
 ;; (package! marginalia)
 ;; (package! selectrum)
 (package! spacemacs-theme)
+(package! org-fragtog)
 
 (package! kak
   :recipe (:host github :repo "aome510/kak.el"))

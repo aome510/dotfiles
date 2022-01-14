@@ -14,9 +14,9 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "IBM Plex Mono" :size 15)
-      doom-big-font (font-spec :family "IBM Plex Mono" :size 24)
-      doom-variable-pitch-font (font-spec :family "IBM Plex Serif" :size 15))
+(setq doom-font (font-spec :family "Monaco" :size 16)
+      doom-big-font (font-spec :family "Monaco" :size 24)
+      doom-variable-pitch-font (font-spec :family "Sans Serif" :size 15))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -131,28 +131,28 @@
 ;;; ----------------------------------
 ;;; latex
 ;;; ----------------------------------
-(use-package! latex
-  :when (featurep! :lang latex)
-  :defer-incrementally t
-  :config
-  (setq
-   +latex-viewers '(pdf-tools evince)
-   TeX-electric-sub-and-superscript nil
-   TeX-command-force "LatexMk")
-  (remove-hook 'TeX-mode-hook #'turn-on-auto-fill)
-  (add-hook! 'TeX-mode-hook #'turn-off-smartparens-mode)
-  (map!
-   :map LaTeX-mode-map
-   :localleader
-   :desc  "LaTeX View"    "v" #'TeX-view
-   :desc  "LaTeX Build"   "b" #'TeX-command-master
-   :desc  "LaTeX Run all" "r" #'TeX-command-run-all))
+; (use-package! latex
+;   :when (featurep! :lang latex)
+;   :defer-incrementally t
+;   :config
+;   (setq
+;    +latex-viewers '(pdf-tools evince)
+;    TeX-electric-sub-and-superscript nil
+;    TeX-command-force "LatexMk")
+;   (remove-hook 'TeX-mode-hook #'turn-on-auto-fill)
+;   (add-hook! 'TeX-mode-hook #'turn-off-smartparens-mode)
+;   (map!
+;    :map LaTeX-mode-map
+;    :localleader
+;    :desc  "LaTeX View"    "v" #'TeX-view
+;    :desc  "LaTeX Build"   "b" #'TeX-command-master
+;    :desc  "LaTeX Run all" "r" #'TeX-command-run-all))
 
 ;;; ----------------------------------
 ;;; recentf
 ;;; ----------------------------------
 
-(defvar home "/Users/aome510/")
+(defvar home "/Users/thangpham/")
 
 (defvar recentf-keep-dot-folders
   `(,(concat home ".config") ,(concat home ".doom.d")))
@@ -285,15 +285,15 @@
       scroll-step 8)
 
 ;;; manually setup tree-sitter for emacs until M1 macos has a stable support
-(add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/core"))
-(add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/lisp"))
-(add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/langs"))
-(require 'tree-sitter)
-(require 'tree-sitter-hl)
-(require 'tree-sitter-langs)
-(require 'tree-sitter-debug)
-(require 'tree-sitter-query)
+; (add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/core"))
+; (add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/lisp"))
+; (add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/langs"))
+; (require 'tree-sitter)
+; (require 'tree-sitter-hl)
+; (require 'tree-sitter-langs)
+; (require 'tree-sitter-debug)
+; (require 'tree-sitter-query)
 
-;; enable tree-sitter globally
-(global-tree-sitter-mode)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+; ;; enable tree-sitter globally
+; (global-tree-sitter-mode)
+; (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)

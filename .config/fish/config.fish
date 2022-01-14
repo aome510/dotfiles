@@ -8,7 +8,7 @@ end
 # source ~/.config/fish/conda.fish
 
 # zoxide init for fish
-source ~/.config/fish/zoxide.fish
+# source ~/.config/fish/zoxide.fish
 
 function disk_usage
     du -d1 -h $argv | sort -h
@@ -82,7 +82,7 @@ set fzf_otps --reverse --height 50%
 alias e="kak"
 alias se="sudo -e"
 alias cl="emacsclient -nw"
-alias l="exa --color always"
+# alias l="exa --color always"
 alias b="btm --basic --tree"
 
 # git-specific aliases
