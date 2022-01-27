@@ -105,22 +105,22 @@
 ;; ;;; ----------------------------------
 ;; ;;; company
 ;; ;;; ----------------------------------
-;; (use-package! company
-;;   :when (featurep! :completion company)
-;;   :defer-incrementally t
-;;   :config
-;;   (setq
-;;    +lsp-company-backends '(company-files company-capf company-yasnippet company-dabbrev)
-;;    company-idle-delay 0
-;;    company-async-redisplay-delay 0.001
-;;    company-selection-wrap-around t
-;;    company-minimum-prefix-length 2)
-;;   (map!
-;;    (:map company-active-map
-;;     "RET" #'company-complete-selection
-;;     [return] #'company-complete-selection
-;;     "TAB" nil
-;;     [tab] nil)))
+(use-package! company
+  :when (featurep! :completion company)
+  :defer-incrementally t
+  :config
+  (setq
+   +lsp-company-backends '(company-files company-capf company-yasnippet company-dabbrev)
+   company-idle-delay 0
+   company-async-redisplay-delay 0.001
+   company-selection-wrap-around t
+   company-minimum-prefix-length 2)
+  (map!
+   (:map company-active-map
+    "RET" #'company-complete-selection
+    [return] #'company-complete-selection
+    "TAB" nil
+    [tab] nil)))
 
 ;;; ----------------------------------
 ;;; snippets

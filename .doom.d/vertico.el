@@ -1,35 +1,35 @@
 ;;; vertico.el -*- lexical-binding: t; -*-
 
-(use-package! corfu
-  :config
-  (setq
-   corfu-cycle t
-   corfu-auto t
-   corfu-quit-no-match t
-   corfu-quit-at-boundary t
-   corfu-auto-delay 0
-   corfu-auto-prefix 2)
-  (map!
-   :i "C-n" #'corfu-next
-   :i "C-p" #'corfu-previous)
-  :init
-  (corfu-global-mode))
+;; (use-package! corfu
+;;   :config
+;;   (setq
+;;    corfu-cycle t
+;;    corfu-auto t
+;;    corfu-quit-no-match t
+;;    corfu-quit-at-boundary t
+;;    corfu-auto-delay 0
+;;    corfu-auto-prefix 2)
+;;   (map!
+;;    :i "C-n" #'corfu-next
+;;    :i "C-p" #'corfu-previous)
+;;   :init
+;;   (corfu-global-mode))
 
-(use-package! cape
-  :init
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-tex)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
-)
+;; (use-package! cape
+;;   :init
+;;   (add-to-list 'completion-at-point-functions #'cape-file)
+;;   (add-to-list 'completion-at-point-functions #'cape-tex)
+;;   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+;;   (add-to-list 'completion-at-point-functions #'cape-keyword)
+;; )
 
-(use-package! kind-icon
-  :ensure t
-  :after corfu
-  :custom
-  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+;; (use-package! kind-icon
+;;   :ensure t
+;;   :after corfu
+;;   :custom
+;;   (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+;;   :config
+;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (use-package! vertico
   :config
