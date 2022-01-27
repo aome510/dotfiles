@@ -50,10 +50,19 @@
 ;;
 
 (load! "org")
+(load! "vertico")
 
 ;; --------------------------------------------------------------------
 ;;                         Package configurations
 ;; --------------------------------------------------------------------
+
+;;; ----------------------------------
+;;; doom-theme
+;;; ----------------------------------
+(use-package! doom-themes
+  :config
+  (setq doom-themes-treemacs-theme "doom-colors")
+  (doom-themes-treemacs-config))
 
 ;;; ----------------------------------
 ;;; dired
@@ -66,52 +75,52 @@
    :n "h" #'dired-up-directory
    :n "l" #'dired-find-file))
 
-;;; ----------------------------------
-;;; company
-;;; ----------------------------------
-(use-package! lsp-mode
-  :when (featurep! :tools lsp)
-  :defer-incrementally t
-  :config
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
-  (setq
-   lsp-idle-delay 0.5
-   lsp-signature-doc-lines 10
-   lsp-modeline-code-actions-enable nil
-   lsp-modeline-diagnostics-enable nil))
+;; ;;; ----------------------------------
+;; ;;; lsp-mode
+;; ;;; ----------------------------------
+;; (use-package! lsp-mode
+;;   :when (featurep! :tools lsp)
+;;   :defer-incrementally t
+;;   :config
+;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
+;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
+;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
+;;   (setq
+;;    lsp-idle-delay 0.5
+;;    lsp-signature-doc-lines 10
+;;    lsp-modeline-code-actions-enable nil
+;;    lsp-modeline-diagnostics-enable nil))
 
-;;; lsp-rust
-(use-package! lsp-rust
-  :when (featurep! :lang rust +lsp)
-  :defer-incrementally t
-  :config
-  (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
-        lsp-rust-analyzer-server-display-inlay-hints t
-        lsp-rust-analyzer-display-chaining-hints t
-        lsp-rust-analyzer-display-parameter-hints t
-        lsp-rust-analyzer-cargo-watch-command "clippy"))
+;; ;;; lsp-rust
+;; (use-package! lsp-rust
+;;   :when (featurep! :lang rust +lsp)
+;;   :defer-incrementally t
+;;   :config
+;;   (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
+;;         lsp-rust-analyzer-server-display-inlay-hints t
+;;         lsp-rust-analyzer-display-chaining-hints t
+;;         lsp-rust-analyzer-display-parameter-hints t
+;;         lsp-rust-analyzer-cargo-watch-command "clippy"))
 
-;;; ----------------------------------
-;;; company
-;;; ----------------------------------
-(use-package! company
-  :when (featurep! :completion company)
-  :defer-incrementally t
-  :config
-  (setq
-   +lsp-company-backends '(company-files company-capf company-yasnippet company-dabbrev)
-   company-idle-delay 0
-   company-async-redisplay-delay 0.001
-   company-selection-wrap-around t
-   company-minimum-prefix-length 2)
-  (map!
-   (:map company-active-map
-    "RET" #'company-complete-selection
-    [return] #'company-complete-selection
-    "TAB" nil
-    [tab] nil)))
+;; ;;; ----------------------------------
+;; ;;; company
+;; ;;; ----------------------------------
+;; (use-package! company
+;;   :when (featurep! :completion company)
+;;   :defer-incrementally t
+;;   :config
+;;   (setq
+;;    +lsp-company-backends '(company-files company-capf company-yasnippet company-dabbrev)
+;;    company-idle-delay 0
+;;    company-async-redisplay-delay 0.001
+;;    company-selection-wrap-around t
+;;    company-minimum-prefix-length 2)
+;;   (map!
+;;    (:map company-active-map
+;;     "RET" #'company-complete-selection
+;;     [return] #'company-complete-selection
+;;     "TAB" nil
+;;     [tab] nil)))
 
 ;;; ----------------------------------
 ;;; snippets
@@ -258,6 +267,9 @@
 
  :n "U"       #'undo-tree-redo
  :n "u"       #'undo-tree-undo
+
+ :n "] e" #'flycheck-next-error
+ :n "[ e" #'flycheck-previous-error
 
  ;; `s' and `S' are binded to `kak.el' package's functions
  :v ". s"     #'evil-snipe-s
