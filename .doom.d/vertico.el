@@ -15,13 +15,13 @@
 ;;   :init
 ;;   (corfu-global-mode))
 
-;; (use-package! cape
-;;   :init
-;;   (add-to-list 'completion-at-point-functions #'cape-file)
-;;   (add-to-list 'completion-at-point-functions #'cape-tex)
-;;   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-;;   (add-to-list 'completion-at-point-functions #'cape-keyword)
-;; )
+(use-package! cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-tex)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+)
 
 ;; (use-package! kind-icon
 ;;   :ensure t

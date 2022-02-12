@@ -21,7 +21,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'nano-light)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -57,6 +57,13 @@
 ;; --------------------------------------------------------------------
 
 ;;; ----------------------------------
+;;; nano-emacs
+;;; ----------------------------------
+(use-package! nano-modeline
+  :init
+  (nano-modeline-mode))
+
+;;; ----------------------------------
 ;;; doom-theme
 ;;; ----------------------------------
 (use-package! doom-themes
@@ -74,6 +81,13 @@
    :map dired-mode-map
    :n "h" #'dired-up-directory
    :n "l" #'dired-find-file))
+
+;;; ----------------------------------
+;;; eglot (lsp)
+;;; ----------------------------------
+(use-package! eglot
+  :config
+  (set-popup-rule! "^\\*eglot-help" :size 0.25 :quit t :select t))
 
 ;; ;;; ----------------------------------
 ;; ;;; lsp-mode
@@ -237,6 +251,10 @@
 ;;; ssh-agency
 ;;; ----------------------------------
 (use-package! ssh-agency)
+
+(use-package! vterm
+  :config
+  (setq vterm-shell "/Users/aome510/.nix-profile/bin/fish"))
 
 ;;; custom functions
 
