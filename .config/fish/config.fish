@@ -104,7 +104,6 @@ else
 end
 
 # other custom bindings
-bind --user -M default -M insert \ce kak-fzf
 bind --user -M default -M insert \cr history-fzf
 bind --user -M default -M insert \ef file-fzf
 bind --user -M default -M insert \cf forward-char

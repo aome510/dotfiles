@@ -21,7 +21,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'nano-light)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -50,10 +50,38 @@
 ;;
 
 (load! "org")
+(load! "vertico")
 
 ;; --------------------------------------------------------------------
 ;;                         Package configurations
 ;; --------------------------------------------------------------------
+
+;;; ----------------------------------
+;;; nano-emacs
+;;; ----------------------------------
+(use-package! nano-modeline
+  :init
+  (nano-modeline-mode))
+
+(use-package! nano-theme
+  :init
+  ;; Doom default faces can be found in https://github.com/doomemacs/themes/blob/master/doom-themes-base.el for references.
+  (custom-theme-set-faces! '(nano-light nano-dark)
+    ;; evil-ex search and replace faces don't play nicely with the nano-theme's subtle face
+    ;; The subtle face is used for text selection background so it's impossible to distinguish
+    ;; between the match face and the selection face during the search-and-replace operation.
+    '(evil-ex-search                 :background "highlight" :foreground "base0" :weight bold)
+    '(evil-ex-substitute-matches     :background "base0"     :foreground "red"   :weight bold :strike-through t)
+    '(evil-ex-substitute-replacement :background "base0"     :foreground "green" :weight bold)
+    '(lazy-highlight                 :inherit nano-popout-i)))
+
+;;; ----------------------------------
+;;; doom-theme
+;;; ----------------------------------
+(use-package! doom-themes
+  :config
+  (setq doom-themes-treemacs-theme "doom-colors")
+  (doom-themes-treemacs-config))
 
 ;;; ----------------------------------
 ;;; dired
@@ -67,35 +95,42 @@
    :n "l" #'dired-find-file))
 
 ;;; ----------------------------------
-;;; company
+;;; eglot (lsp)
 ;;; ----------------------------------
-(use-package! lsp-mode
-  :when (featurep! :tools lsp)
-  :defer-incrementally t
+(use-package! eglot
   :config
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
-  (setq
-   lsp-idle-delay 0.5
-   lsp-signature-doc-lines 10
-   lsp-modeline-code-actions-enable nil
-   lsp-modeline-diagnostics-enable nil))
+  (set-popup-rule! "^\\*eglot-help" :size 0.25 :quit t :select t))
 
-;;; lsp-rust
-(use-package! lsp-rust
-  :when (featurep! :lang rust +lsp)
-  :defer-incrementally t
-  :config
-  (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
-        lsp-rust-analyzer-server-display-inlay-hints t
-        lsp-rust-analyzer-display-chaining-hints t
-        lsp-rust-analyzer-display-parameter-hints t
-        lsp-rust-analyzer-cargo-watch-command "clippy"))
+;; ;;; ----------------------------------
+;; ;;; lsp-mode
+;; ;;; ----------------------------------
+;; (use-package! lsp-mode
+;;   :when (featurep! :tools lsp)
+;;   :defer-incrementally t
+;;   :config
+;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
+;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
+;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
+;;   (setq
+;;    lsp-idle-delay 0.5
+;;    lsp-signature-doc-lines 10
+;;    lsp-modeline-code-actions-enable nil
+;;    lsp-modeline-diagnostics-enable nil))
 
-;;; ----------------------------------
-;;; company
-;;; ----------------------------------
+;; ;;; lsp-rust
+;; (use-package! lsp-rust
+;;   :when (featurep! :lang rust +lsp)
+;;   :defer-incrementally t
+;;   :config
+;;   (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
+;;         lsp-rust-analyzer-server-display-inlay-hints t
+;;         lsp-rust-analyzer-display-chaining-hints t
+;;         lsp-rust-analyzer-display-parameter-hints t
+;;         lsp-rust-analyzer-cargo-watch-command "clippy"))
+
+;; ;;; ----------------------------------
+;; ;;; company
+;; ;;; ----------------------------------
 (use-package! company
   :when (featurep! :completion company)
   :defer-incrementally t
@@ -202,7 +237,7 @@
    :v "M-k" (lambda () (interactive) (kak-filter t))
    :v "M-K" (lambda () (interactive) (kak-filter nil))
    :v ". #" #'kak-insert-index
-   :v ". r" (lambda () (interactive) (kak-exec-shell-command "xsel -ob"))))
+   :v ". r" (lambda () (interactive) (kak-exec-shell-command "pbpaste"))))
 
 ;; ;;; ----------------------------------
 ;; ;;; magit
@@ -221,6 +256,7 @@
   :config
   (global-evil-mc-mode 1)
   (map!
+   :map evil-mc-key-map
    :nv "C-n" #'evil-mc-make-and-goto-next-match
    :nv "C-p" #'evil-mc-make-and-goto-prev-match))
 
@@ -228,6 +264,10 @@
 ;;; ssh-agency
 ;;; ----------------------------------
 (use-package! ssh-agency)
+
+(use-package! vterm
+  :config
+  (setq vterm-shell "/Users/aome510/.nix-profile/bin/fish"))
 
 ;;; custom functions
 
@@ -258,6 +298,9 @@
 
  :n "U"       #'undo-tree-redo
  :n "u"       #'undo-tree-undo
+
+ :n "] e" #'flycheck-next-error
+ :n "[ e" #'flycheck-previous-error
 
  ;; `s' and `S' are binded to `kak.el' package's functions
  :v ". s"     #'evil-snipe-s

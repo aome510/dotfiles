@@ -49,11 +49,13 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
                                         ;(unpin! t)
 (package! ripgrep)
-(package! dap-mode)
+;; (package! dap-mode)
 ;; (package! tree-sitter)
 ;; (package! tree-sitter-langs)
 (package! ssh-agency)
-;;(package! corfu)
+;; (package! corfu)
+;; (package! cape)
+;; (package! kind-icon)
 ;; (package! vertico)
 ;; (package! consult)
 ;; (package! orderless)
@@ -61,6 +63,9 @@
 ;; (package! selectrum)
 (package! spacemacs-theme)
 (package! org-fragtog)
+;; nano themes
+(package! nano-theme)
+(package! nano-modeline)
 
 (package! kak
   :recipe (:host github :repo "aome510/kak.el"))
