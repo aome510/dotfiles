@@ -63,6 +63,18 @@
   :init
   (nano-modeline-mode))
 
+(use-package! nano-theme
+  :init
+  ;; Doom default faces can be found in https://github.com/doomemacs/themes/blob/master/doom-themes-base.el for references.
+  (custom-theme-set-faces! '(nano-light nano-dark)
+    ;; evil-ex search and replace faces don't play nicely with the nano-theme's subtle face
+    ;; The subtle face is used for text selection background so it's impossible to distinguish
+    ;; between the match face and the selection face during the search-and-replace operation.
+    '(evil-ex-search                 :background "highlight" :foreground "base0" :weight bold)
+    '(evil-ex-substitute-matches     :background "base0"     :foreground "red"   :weight bold :strike-through t)
+    '(evil-ex-substitute-replacement :background "base0"     :foreground "green" :weight bold)
+    '(lazy-highlight                 :inherit nano-popout-i)))
+
 ;;; ----------------------------------
 ;;; doom-theme
 ;;; ----------------------------------
@@ -225,7 +237,7 @@
    :v "M-k" (lambda () (interactive) (kak-filter t))
    :v "M-K" (lambda () (interactive) (kak-filter nil))
    :v ". #" #'kak-insert-index
-   :v ". r" (lambda () (interactive) (kak-exec-shell-command "xsel -ob"))))
+   :v ". r" (lambda () (interactive) (kak-exec-shell-command "pbpaste"))))
 
 ;; ;;; ----------------------------------
 ;; ;;; magit
@@ -244,6 +256,7 @@
   :config
   (global-evil-mc-mode 1)
   (map!
+   :map evil-mc-key-map
    :nv "C-n" #'evil-mc-make-and-goto-next-match
    :nv "C-p" #'evil-mc-make-and-goto-prev-match))
 

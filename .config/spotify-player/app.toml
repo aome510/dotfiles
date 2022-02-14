@@ -1,5 +1,6 @@
 client_id = "b28a574d8ad44fc7b5a89994431a8f88"
 # client_id = "**********"
+theme="ayu_light"
 
 [device]
 volume = 75

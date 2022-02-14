@@ -54,7 +54,7 @@
 ;; (package! tree-sitter-langs)
 (package! ssh-agency)
 ;; (package! corfu)
-(package! cape)
+;; (package! cape)
 ;; (package! kind-icon)
 ;; (package! vertico)
 ;; (package! consult)
