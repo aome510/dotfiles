@@ -3,6 +3,11 @@
 import os
 from pathlib import Path
 from datetime import date
+import argparse
+
+parser = argparse.ArgumentParser(description="Backup config files")
+parser.add_argument("-u", "--update_upstream", action='store_true')
+args = parser.parse_args()
 
 home = str(Path.home())
 
@@ -46,6 +51,7 @@ dot_config_white_list = [
     "systemd",
     ".projectile",
     "spotify-player",
+    "iterm2",
 ]
 
 cwd = os.path.dirname(__file__)
@@ -116,9 +122,10 @@ os.system(f"cp ~/.config/yarn/global/package.json {cwd}/package.json")
 os.system(f"mkdir -p {cwd}/.ssh && cp ~/.ssh/config {cwd}/.ssh")
 
 # commit/push new changes using git
-os.system(
-    f'cd {cwd} && \
-  git add . && \
-  git commit -m "backup configs {date.today().strftime("%Y-%m-%d")}"'
-)
-os.system(f"cd {cwd} && git push")
+if args.update_upstream:
+  os.system(
+      f'cd {cwd} && \
+    git add . && \
+    git commit -m "backup configs {date.today().strftime("%Y-%m-%d")}"'
+  )
+  os.system(f"cd {cwd} && git push")
