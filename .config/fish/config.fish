@@ -8,7 +8,7 @@ end
 # source ~/.config/fish/conda.fish
 
 # zoxide init for fish
-# source ~/.config/fish/zoxide.fish
+source ~/.config/fish/zoxide.fish
 
 function disk_usage
     du -d1 -h $argv | sort -h
@@ -40,6 +40,9 @@ function build_pdf_from_md
     end
 end
 
+# set up fzf.fish variables
+set fzf_history_opts --preview-window="bottom:5:wrap"
+
 # aliases
 alias e="kak"
 alias se="sudo -e"
@@ -52,20 +55,3 @@ alias gs="git status"
 alias gd="git diff"
 alias gc="git commit"
 alias gC="git checkout"
-
-# use vim key bindings for normal terminal,
-# use fish default key bindings for fish in emacs.
-if not test -n "$INSIDE_EMACS"
-    fish_vi_key_bindings
-
-    # user-defined keybindings
-    bind --user -M default 'gh' beginning-of-line
-    bind --user -M default 'gl' end-of-line   
-else
-    fish_default_key_bindings
-end
-
-# other custom bindings
-bind --user -M default -M insert \cf forward-char
-bind --user -M default -M insert \cn down-or-search
-bind --user -M default -M insert \cp up-or-search

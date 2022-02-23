@@ -70,7 +70,7 @@
     ;; evil-ex search and replace faces don't play nicely with the nano-theme's subtle face
     ;; The subtle face is used for text selection background so it's impossible to distinguish
     ;; between the match face and the selection face during the search-and-replace operation.
-    '(evil-ex-search                 :background "highlight" :foreground "base0" :weight bold)
+    '(evil-ex-search                 :inherit nano-popout-i)
     '(evil-ex-substitute-matches     :background "base0"     :foreground "red"   :weight bold :strike-through t)
     '(evil-ex-substitute-replacement :background "base0"     :foreground "green" :weight bold)
     '(lazy-highlight                 :inherit nano-popout-i)))
@@ -256,7 +256,6 @@
   :config
   (global-evil-mc-mode 1)
   (map!
-   :map evil-mc-key-map
    :nv "C-n" #'evil-mc-make-and-goto-next-match
    :nv "C-p" #'evil-mc-make-and-goto-prev-match))
 
@@ -266,6 +265,7 @@
 (use-package! ssh-agency)
 
 (use-package! vterm
+  :when (featurep! :term +vterm)
   :config
   (setq vterm-shell "/Users/aome510/.nix-profile/bin/fish"))
 

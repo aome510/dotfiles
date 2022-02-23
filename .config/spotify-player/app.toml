@@ -1,6 +1,7 @@
 client_id = "b28a574d8ad44fc7b5a89994431a8f88"
 # client_id = "**********"
 theme="ayu_light"
+# playback_refresh_duration_in_ms=1000
 
 [device]
 volume = 75
