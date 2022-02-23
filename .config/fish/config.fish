@@ -4,9 +4,6 @@ function fish_title
   true
 end
 
-# conda init for fish
-# source ~/.config/fish/conda.fish
-
 # zoxide init for fish
 source ~/.config/fish/zoxide.fish
 
