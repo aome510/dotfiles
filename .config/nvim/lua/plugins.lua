@@ -15,6 +15,26 @@ vim.cmd([[
 require("packer").startup(function(use)
 	use("wbthomason/packer.nvim") -- Package manager
 
+	-- NVIM Tree
+	use({
+		"kyazdani42/nvim-tree.lua",
+		requires = {
+			"kyazdani42/nvim-web-devicons", -- optional, for file icon
+		},
+		config = function()
+			require("nvim-tree").setup({})
+		end,
+	})
+
+	-- Lualine
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "kyazdani42/nvim-web-devicons", opt = true },
+		config = function()
+			require("lualine").setup()
+		end,
+	})
+
 	-- Code Comment
 	use({
 		"numToStr/Comment.nvim",
@@ -29,6 +49,9 @@ require("packer").startup(function(use)
 		requires = { { "nvim-lua/plenary.nvim" }, { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
 	})
 
+	-- NVIM qbf
+	use({ "kevinhwang91/nvim-bqf", ft = "qf" })
+
 	-- Treesitter
 	use("nvim-treesitter/nvim-treesitter")
 
@@ -40,6 +63,14 @@ require("packer").startup(function(use)
 
 	-- LSP installer
 	use("williamboman/nvim-lsp-installer")
+
+	-- LSP signature help
+	use({
+		"ray-x/lsp_signature.nvim",
+		config = function()
+			require("lsp_signature").setup({})
+		end,
+	})
 
 	-- Null-LS
 	use("jose-elias-alvarez/null-ls.nvim")

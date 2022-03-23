@@ -12,8 +12,6 @@ keymap("n", "<ESC>", ":nohlsearch<Bar>:echo<CR>", keymap_opts)
 -- Redo to U
 keymap("n", "U", "<cmd>redo<CR>", keymap_opts)
 
--- LSP-related mappings
-
 local wk = require("which-key")
 
 wk.register({
@@ -45,7 +43,7 @@ wk.register({
 			R = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
 			f = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format buffer" },
 			l = { [[<cmd>lua vim.cmd('e'..vim.lsp.get_log_path())<CR>]], "LSP log buffer" },
-			e = { "<cmd>lua vim.diagnostic.open_float()<CR>", "Diagnostic popup" },
+			e = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Diagnostic popup" },
 		},
 		s = {
 			name = "search",
@@ -73,6 +71,7 @@ wk.register({
 			t = { [[<cmd>lua require('telescope.builtin').colorscheme()<CR>]], "Themes" },
 			h = { [[<cmd>lua require('telescope.builtin').highlights()<CR>]], "Highlights" },
 		},
+		T = { "<cmd>NvimTreeOpen<CR>", "NVim Tree" },
 	},
 	["<M-x>"] = { [[<cmd>lua require('telescope.builtin').commands()<CR>]], "Commands" },
 	["]"] = {
