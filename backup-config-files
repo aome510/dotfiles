@@ -52,6 +52,7 @@ dot_config_white_list = [
     ".projectile",
     "spotify-player",
     "iterm2",
+    "nvim",
 ]
 
 cwd = os.path.dirname(__file__)
