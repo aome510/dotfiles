@@ -48,6 +48,7 @@ alias l="exa --color always"
 alias b="btm --basic --tree"
 
 # git-specific aliases
+alias ga="git add"
 alias gs="git status"
 alias gd="git diff"
 alias gc="git commit"

@@ -94,39 +94,34 @@
    :n "h" #'dired-up-directory
    :n "l" #'dired-find-file))
 
+;; ;;; ----------------------------------
+;; ;;; eglot (lsp)
+;; ;;; ----------------------------------
+;; (use-package! eglot
+;;   :config
+;;   (set-popup-rule! "^\\*eglot-help" :size 0.25 :quit t :select t))
+
 ;;; ----------------------------------
-;;; eglot (lsp)
+;;; lsp-mode
 ;;; ----------------------------------
-(use-package! eglot
+(use-package! lsp-mode
+  :when (featurep! :tools lsp)
+  :defer-incrementally t
   :config
-  (set-popup-rule! "^\\*eglot-help" :size 0.25 :quit t :select t))
+  (setq
+   lsp-modeline-code-actions-enable nil
+   lsp-modeline-diagnostics-enable nil))
 
-;; ;;; ----------------------------------
-;; ;;; lsp-mode
-;; ;;; ----------------------------------
-;; (use-package! lsp-mode
-;;   :when (featurep! :tools lsp)
-;;   :defer-incrementally t
-;;   :config
-;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
-;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]target\\'")
-;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]screenshots\\'")
-;;   (setq
-;;    lsp-idle-delay 0.5
-;;    lsp-signature-doc-lines 10
-;;    lsp-modeline-code-actions-enable nil
-;;    lsp-modeline-diagnostics-enable nil))
-
-;; ;;; lsp-rust
-;; (use-package! lsp-rust
-;;   :when (featurep! :lang rust +lsp)
-;;   :defer-incrementally t
-;;   :config
-;;   (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
-;;         lsp-rust-analyzer-server-display-inlay-hints t
-;;         lsp-rust-analyzer-display-chaining-hints t
-;;         lsp-rust-analyzer-display-parameter-hints t
-;;         lsp-rust-analyzer-cargo-watch-command "clippy"))
+;;; lsp-rust
+(use-package! lsp-rust
+  :when (featurep! :lang rust +lsp)
+  :defer-incrementally t
+  :config
+  (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
+        lsp-rust-analyzer-server-display-inlay-hints t
+        lsp-rust-analyzer-display-chaining-hints t
+        lsp-rust-analyzer-display-parameter-hints t
+        lsp-rust-analyzer-cargo-watch-command "clippy"))
 
 ;; ;;; ----------------------------------
 ;; ;;; company
@@ -256,6 +251,9 @@
   :config
   (global-evil-mc-mode 1)
   (map!
+   :nv "C-n" #'evil-mc-make-and-goto-next-match
+   :nv "C-p" #'evil-mc-make-and-goto-prev-match
+   :map evil-mc-key-map
    :nv "C-n" #'evil-mc-make-and-goto-next-match
    :nv "C-p" #'evil-mc-make-and-goto-prev-match))
 

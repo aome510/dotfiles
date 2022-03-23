@@ -4,5 +4,5 @@ theme="ayu_light"
 # playback_refresh_duration_in_ms=1000
 
 [device]
-volume = 75
+volume = 70
 bitrate = 320
