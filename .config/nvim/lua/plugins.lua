@@ -53,10 +53,60 @@ require("packer").startup(function(use)
 	use({ "kevinhwang91/nvim-bqf", ft = "qf" })
 
 	-- Treesitter
-	use("nvim-treesitter/nvim-treesitter")
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+		config = function()
+			require("nvim-treesitter.configs").setup({
+				highlight = {
+					enable = true,
+				},
+			})
+		end,
+	})
 
 	-- Additional textobjects for treesitter
-	use("nvim-treesitter/nvim-treesitter-textobjects")
+	require("nvim-treesitter.configs").setup({
+		highlight = {
+			enable = true, -- false will disable the whole extension
+		},
+		indent = {
+			enable = true,
+		},
+		textobjects = {
+			select = {
+				enable = true,
+				lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+				keymaps = {
+					-- You can use the capture groups defined in textobjects.scm
+					["af"] = "@function.outer",
+					["if"] = "@function.inner",
+					["ac"] = "@class.outer",
+					["ic"] = "@class.inner",
+				},
+			},
+			move = {
+				enable = true,
+				set_jumps = true, -- whether to set jumps in the jumplist
+				goto_next_start = {
+					["]m"] = "@function.outer",
+					["]]"] = "@class.outer",
+				},
+				goto_next_end = {
+					["]M"] = "@function.outer",
+					["]["] = "@class.outer",
+				},
+				goto_previous_start = {
+					["[m"] = "@function.outer",
+					["[["] = "@class.outer",
+				},
+				goto_previous_end = {
+					["[M"] = "@function.outer",
+					["[]"] = "@class.outer",
+				},
+			},
+		},
+	})
 
 	-- LSP
 	use("neovim/nvim-lspconfig") -- Collection of configurations for built-in LSP client
@@ -74,6 +124,15 @@ require("packer").startup(function(use)
 
 	-- Null-LS
 	use("jose-elias-alvarez/null-ls.nvim")
+
+	-- Lua
+	use({
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("trouble").setup()
+		end,
+	})
 
 	-- Autocompletion using nvim-cmp
 	use("hrsh7th/nvim-cmp")
@@ -106,6 +165,25 @@ require("packer").startup(function(use)
 
 	-- Replacer to edit qflist buffer
 	use("gabrielpoca/replacer.nvim")
+
+	use({
+		"AckslD/nvim-neoclip.lua",
+		requires = {
+			{ "nvim-telescope/telescope.nvim" },
+		},
+		config = function()
+			require("neoclip").setup({
+				default_register = { '"', "+", "*" },
+				keys = {
+					telescope = {
+						i = {
+							paste = "<M-p>",
+						},
+					},
+				},
+			})
+		end,
+	})
 
 	-- Github theme
 	use({

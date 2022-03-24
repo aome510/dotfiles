@@ -1,9 +1,9 @@
+require("plugins")
 require("settings")
 require("keymap")
 require("completion")
 require("lsp")
 require("ui")
-require("plugins")
 
 -- Highlight on yank
 vim.cmd([[

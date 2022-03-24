@@ -37,13 +37,15 @@ wk.register({
 			r = { "<cmd>lua require('telescope.builtin').lsp_references()<CR>", "References" },
 			i = { "<cmd>lua require('telescope.builtin').lsp_implementation()<CR>", "Implementation" },
 			t = { "<cmd>lua require('telescope.builtin').lsp_type_definition()<CR>", "Type definition" },
-			a = { "<cmd>lua require('telescope.builtin').lsp_code_actions<CR>", "Code action" },
+			a = { "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>", "Code action" },
 			s = { [[<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>]], "LSP document symbol" },
 			S = { [[<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<CR>]], "LSP workspace symbol" },
 			R = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
 			f = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format buffer" },
 			l = { [[<cmd>lua vim.cmd('e'..vim.lsp.get_log_path())<CR>]], "LSP log buffer" },
-			e = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Diagnostic popup" },
+
+			-- trouble-related keymappings
+			e = { "<cmd>Trouble workspace_diagnostics<CR>", "Trouble workspace diagnostic" },
 		},
 		s = {
 			name = "search",
@@ -72,6 +74,10 @@ wk.register({
 			h = { [[<cmd>lua require('telescope.builtin').highlights()<CR>]], "Highlights" },
 		},
 		T = { "<cmd>NvimTreeOpen<CR>", "NVim Tree" },
+		i = {
+			name = "insert",
+			y = { "<cmd>lua require('telescope').extensions.neoclip.default()<CR>", "Neoclip" },
+		},
 	},
 	["<M-x>"] = { [[<cmd>lua require('telescope.builtin').commands()<CR>]], "Commands" },
 	["]"] = {
