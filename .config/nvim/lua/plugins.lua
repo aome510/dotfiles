@@ -8,7 +8,7 @@ end
 vim.cmd([[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
   augroup end
 ]])
 
@@ -31,7 +31,9 @@ require("packer").startup(function(use)
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 		config = function()
-			require("lualine").setup()
+			require("lualine").setup({
+				sections = { lualine_c = { "filename", "require'lsp-status'.status()" } },
+			})
 		end,
 	})
 
@@ -59,54 +61,50 @@ require("packer").startup(function(use)
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				highlight = {
+					enable = true, -- false will disable the whole extension
+				},
+				indent = {
 					enable = true,
+				},
+				textobjects = {
+					select = {
+						enable = true,
+						lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+						keymaps = {
+							-- You can use the capture groups defined in textobjects.scm
+							["af"] = "@function.outer",
+							["if"] = "@function.inner",
+							["ac"] = "@class.outer",
+							["ic"] = "@class.inner",
+						},
+					},
+					move = {
+						enable = true,
+						set_jumps = true, -- whether to set jumps in the jumplist
+						goto_next_start = {
+							["]m"] = "@function.outer",
+							["]]"] = "@class.outer",
+						},
+						goto_next_end = {
+							["]M"] = "@function.outer",
+							["]["] = "@class.outer",
+						},
+						goto_previous_start = {
+							["[m"] = "@function.outer",
+							["[["] = "@class.outer",
+						},
+						goto_previous_end = {
+							["[M"] = "@function.outer",
+							["[]"] = "@class.outer",
+						},
+					},
 				},
 			})
 		end,
 	})
 
 	-- Additional textobjects for treesitter
-	require("nvim-treesitter.configs").setup({
-		highlight = {
-			enable = true, -- false will disable the whole extension
-		},
-		indent = {
-			enable = true,
-		},
-		textobjects = {
-			select = {
-				enable = true,
-				lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-				keymaps = {
-					-- You can use the capture groups defined in textobjects.scm
-					["af"] = "@function.outer",
-					["if"] = "@function.inner",
-					["ac"] = "@class.outer",
-					["ic"] = "@class.inner",
-				},
-			},
-			move = {
-				enable = true,
-				set_jumps = true, -- whether to set jumps in the jumplist
-				goto_next_start = {
-					["]m"] = "@function.outer",
-					["]]"] = "@class.outer",
-				},
-				goto_next_end = {
-					["]M"] = "@function.outer",
-					["]["] = "@class.outer",
-				},
-				goto_previous_start = {
-					["[m"] = "@function.outer",
-					["[["] = "@class.outer",
-				},
-				goto_previous_end = {
-					["[M"] = "@function.outer",
-					["[]"] = "@class.outer",
-				},
-			},
-		},
-	})
+	use("nvim-treesitter/nvim-treesitter-textobjects")
 
 	-- LSP
 	use("neovim/nvim-lspconfig") -- Collection of configurations for built-in LSP client
@@ -122,10 +120,21 @@ require("packer").startup(function(use)
 		end,
 	})
 
+	-- LSP status
+	use("nvim-lua/lsp-status.nvim")
+
 	-- Null-LS
 	use("jose-elias-alvarez/null-ls.nvim")
 
-	-- Lua
+	-- Rust tools for better Rust development
+	use({
+		"simrat39/rust-tools.nvim",
+		config = function()
+			require("rust-tools").setup({})
+		end,
+	})
+
+	-- Trouble
 	use({
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
@@ -166,6 +175,7 @@ require("packer").startup(function(use)
 	-- Replacer to edit qflist buffer
 	use("gabrielpoca/replacer.nvim")
 
+	-- Clipboard/register manager
 	use({
 		"AckslD/nvim-neoclip.lua",
 		requires = {
@@ -184,6 +194,9 @@ require("packer").startup(function(use)
 			})
 		end,
 	})
+
+	-- Markdown preview
+	use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install" })
 
 	-- Github theme
 	use({

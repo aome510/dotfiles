@@ -14,15 +14,11 @@ keymap("n", "U", "<cmd>redo<CR>", keymap_opts)
 
 local wk = require("which-key")
 
+-- normal mappings
 wk.register({
 	g = {
-		l = { "$", "Beginning of the line" },
-		h = { "^", "End of the line" },
-		i = { "0", "First character of the line" },
-		b = { "<cmd>lua require('Comment.api').call('toggle_blockwise_op')<CR>g@", "Toggle blockwise comment" },
-		c = { "<cmd>lua require('Comment.api').call('toggle_linewise_op')<CR>g@", "Toggle linewise comment" },
 		D = { "<cmd>lua require('telescope.builtin').lsp_references()<CR>", "Go to references" },
-		d = { "<cmd>lua require('telescope.builtin').lsp_definition()<CR>", "Go to definition" },
+		d = { "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>", "Go to definition" },
 		z = {
 			name = "multi-cursors",
 		},
@@ -33,7 +29,7 @@ wk.register({
 		c = {
 			name = "code",
 			D = { "<cmd>lua require('telescope.builtin').lsp_declaration()<CR>", "Declaration" },
-			d = { "<cmd>lua require('telescope.builtin').lsp_definition()<CR>", "Definition" },
+			d = { "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>", "Definition" },
 			r = { "<cmd>lua require('telescope.builtin').lsp_references()<CR>", "References" },
 			i = { "<cmd>lua require('telescope.builtin').lsp_implementation()<CR>", "Implementation" },
 			t = { "<cmd>lua require('telescope.builtin').lsp_type_definition()<CR>", "Type definition" },
@@ -86,4 +82,12 @@ wk.register({
 	["["] = {
 		e = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Previous diagnostic" },
 	},
-}, {})
+}, { mode = "n" })
+
+wk.register({
+	g = {
+		l = { "$", "Beginning of the line" },
+		h = { "^", "End of the line" },
+		i = { "0", "First character of the line" },
+	},
+}, { mode = "" })
