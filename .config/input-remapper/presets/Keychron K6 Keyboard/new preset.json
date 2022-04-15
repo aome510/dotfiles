@@ -1,0 +1,24 @@
+{
+    "mapping": {
+        "1,29,1": [
+            "Caps_Lock",
+            "keyboard"
+        ],
+        "1,41,1": [
+            "back",
+            "keyboard"
+        ],
+        "1,102,1": [
+            "grave",
+            "keyboard"
+        ],
+        "1,58,1": [
+            "Control_L",
+            "keyboard"
+        ],
+        "1,54,1": [
+            "backslash",
+            "keyboard"
+        ]
+    }
+}

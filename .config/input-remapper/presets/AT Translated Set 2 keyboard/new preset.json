@@ -1,0 +1,20 @@
+{
+    "mapping": {
+        "1,58,1": [
+            "Control_L",
+            "keyboard"
+        ],
+        "1,29,1": [
+            "Caps_Lock",
+            "keyboard"
+        ],
+        "1,125,1": [
+            "Alt_L",
+            "keyboard"
+        ],
+        "1,56,1": [
+            "Super_L",
+            "keyboard"
+        ]
+    }
+}
