@@ -53,7 +53,8 @@ dot_config_white_list = [
     "spotify-player",
     "iterm2",
     "nvim",
-    "input-remapper"
+    "input-remapper",
+    "alacritty"
 ]
 
 cwd = os.path.dirname(__file__)
