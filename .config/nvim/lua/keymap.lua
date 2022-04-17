@@ -41,8 +41,7 @@ wk.register({
 			l = { [[<cmd>lua vim.cmd('e'..vim.lsp.get_log_path())<CR>]], "LSP log buffer" },
 
 			-- trouble-related keymappings
-			e = { "<cmd>Trouble document_diagnostics<CR>", "Trouble document diagnostic" },
-			E = { "<cmd>Trouble workspace_diagnostics<CR>", "Trouble workspace diagnostic" },
+			e = { "<cmd>Trouble workspace_diagnostics<CR>", "Trouble workspace diagnostic" },
 		},
 		s = {
 			name = "search",
