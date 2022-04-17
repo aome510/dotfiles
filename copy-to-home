@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cp -r "$PWD/$1" "$HOME/$1"
