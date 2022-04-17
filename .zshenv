@@ -1,24 +1,33 @@
-export PYTHONPATH="$HOME/.local/lib/python/site-packages:$PYTHONPATH"
-
+#######################################################
+# Variables
+#######################################################
 # Kakoune as terminal editor
 export EDITOR=kak
 export VISUAL=kak
 
-# PATH exports
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.yarn/bin:$PATH"
-export PATH="$HOME/scripts:$PATH"
-export PATH=$HOME/.nix-profile/bin:$PATH
-export PATH="$HOME/Library/Python/3.8/bin:$PATH"
-
-export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/texlive/2021/bin/universal-darwin:$PATH
+# Iterm shell integration with tmux
+# export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 
 # Brew shellenv
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+#######################################################
+# PATH
+#######################################################
+# go
+export PATH="$HOME/go/bin:$PATH"
+
+# rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# yarn
+export PATH="$HOME/.yarn/bin:$PATH"
+
+# user-defined scripts
+export PATH="$HOME/scripts:$PATH"
+
+# tex/latex
+export PATH=/usr/local/texlive/2021/bin/universal-darwin:$PATH
 
 # Use gnu make
 export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
@@ -26,8 +35,11 @@ export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
 # Postgres12
 export PATH="/opt/homebrew/opt/postgresql@12/bin:$PATH"
 
-# Iterm shell integration with tmux
-export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
+# python
+export PATH="$HOME/Library/Python/3.8/bin:$PATH"
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
 
-# Add nix python to PYTHONPATH
-export PYTHONPATH="$HOME/.nix-profile/lib/python3.8/site-packages:$PYTHONPATH"
+# local exports
+export PATH=/usr/local/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.bin:$PATH"

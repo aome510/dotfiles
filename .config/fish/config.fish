@@ -38,8 +38,8 @@ function build_pdf_from_md
 end
 
 # setup pyenv
-status is-interactive; and pyenv init - | source
-status is-interactive; and pyenv virtualenv-init - | source
+# status is-interactive; and pyenv init - | source
+# status is-interactive; and pyenv virtualenv-init - | source
 
 # set up fzf.fish variables
 set fzf_history_opts --preview-window="bottom:5:wrap"
