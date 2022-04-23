@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "@postlight/mercury-parser": "^2.2.1",
     "article_md": "^0.2.1"
   }
 }

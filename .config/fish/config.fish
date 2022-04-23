@@ -40,6 +40,9 @@ function build_pdf_from_md
     end
 end
 
+# set up fzf.fish variables
+set fzf_history_opts --preview-window="bottom:7:wrap"
+
 # aliases
 alias e="kak"
 alias se="sudo -e"

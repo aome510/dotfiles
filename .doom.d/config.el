@@ -14,7 +14,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Monaco" :size 16)
+(setq doom-font (font-spec :family "Monaco" :size 15)
       doom-big-font (font-spec :family "Monaco" :size 24)
       doom-variable-pitch-font (font-spec :family "Sans Serif" :size 15))
 
@@ -73,7 +73,8 @@
     '(evil-ex-search                 :background "highlight" :foreground "base0" :weight bold)
     '(evil-ex-substitute-matches     :background "base0"     :foreground "red"   :weight bold :strike-through t)
     '(evil-ex-substitute-replacement :background "base0"     :foreground "green" :weight bold)
-    '(lazy-highlight                 :inherit nano-popout-i)))
+    '(lazy-highlight                 :inherit nano-popout-i)
+    '(org-code                       :inherit nano-subtle)))
 
 ;;; ----------------------------------
 ;;; doom-theme
@@ -266,6 +267,7 @@
 (use-package! ssh-agency)
 
 (use-package! vterm
+  :when (featurep! :tools term +vterm)
   :config
   (setq vterm-shell "/Users/aome510/.nix-profile/bin/fish"))
 

@@ -1,1 +1,6 @@
-
+# [[keymaps]]
+# command = "SelectNextOrScrollDown"
+# key_sequence = "C-n"
+# [[keymaps]]
+# command = "SelectPreviousOrScrollUp"
+# key_sequence = "C-p"
