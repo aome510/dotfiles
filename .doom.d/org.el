@@ -13,6 +13,3 @@
   :config
   (setq org-todo-keywords '((sequence "TODO(t)" "ONGOING(o)" "WATING(w)" "|" "DONE(d)" "DEFERRED(D)" "CANCELLED(c)"))
         org-download-image-html-width 750))
-
-;; (after! org
-;;   (set-company-backend! 'org-mode '(company-capf company-yasnippet company-dabbrev)))

@@ -109,6 +109,7 @@
   :defer-incrementally t
   :config
   (setq
+   lsp-ui-sideline-enable nil
    lsp-modeline-code-actions-enable nil
    lsp-modeline-diagnostics-enable nil))
 
@@ -118,24 +119,36 @@
   :defer-incrementally t
   :config
   (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
+        lsp-rust-analyzer-cargo-watch-command "clippy"
+
+        ;; enable rust-analyzer inlay hints
         lsp-rust-analyzer-server-display-inlay-hints t
         lsp-rust-analyzer-display-chaining-hints t
         lsp-rust-analyzer-display-parameter-hints t
-        lsp-rust-analyzer-cargo-watch-command "clippy"))
+        lsp-rust-analyzer-display-closure-return-type-hints t
+        lsp-rust-analyzer-display-lifetime-elision-hints-enable t
+        lsp-rust-analyzer-display-reborrow-hints t
+        lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names t))
 
-;; ;;; ----------------------------------
-;; ;;; company
-;; ;;; ----------------------------------
+;;; ----------------------------------
+;;; company
+;;; ----------------------------------
 (use-package! company
   :when (featurep! :completion company)
   :defer-incrementally t
   :config
+
   (setq
-   +lsp-company-backends '(company-files company-capf company-yasnippet company-dabbrev)
    company-idle-delay 0
    company-async-redisplay-delay 0.001
+   company-dabbrev-code-everywhere t
    company-selection-wrap-around t
    company-minimum-prefix-length 2)
+
+  (setq
+   +lsp-company-backends '(company-files company-capf company-yasnippet company-dabbrev))
+  (set-company-backend! 'prog-mode '(company-capf company-dabbrev-code company-yasnippet))
+
   (map!
    (:map company-active-map
     "RET" #'company-complete-selection
@@ -169,8 +182,10 @@
    +latex-viewers '(pdf-tools evince)
    TeX-electric-sub-and-superscript nil
    TeX-command-force "LatexMk")
+
   (remove-hook 'TeX-mode-hook #'turn-on-auto-fill)
   (add-hook! 'TeX-mode-hook #'turn-off-smartparens-mode)
+
   (map!
    :map LaTeX-mode-map
    :localleader
@@ -263,7 +278,7 @@
 (use-package! ssh-agency)
 
 (use-package! vterm
-  :when (featurep! :term +vterm)
+  :when (featurep! :term vterm)
   :config
   (setq vterm-shell "/Users/aome510/.nix-profile/bin/fish"))
 
@@ -324,16 +339,6 @@
 ;;; enable auto scrolling
 (setq scroll-conservatively 8
       scroll-step 8)
-
-;;; manually setup tree-sitter for emacs until M1 macos has a stable support
-(add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/core"))
-(add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/lisp"))
-(add-to-list 'load-path (concat home "Projects/Build/elisp-tree-sitter/langs"))
-(require 'tree-sitter)
-(require 'tree-sitter-hl)
-(require 'tree-sitter-langs)
-(require 'tree-sitter-debug)
-(require 'tree-sitter-query)
 
 ;; enable tree-sitter globally
 (global-tree-sitter-mode)
