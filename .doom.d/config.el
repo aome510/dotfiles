@@ -130,6 +130,13 @@
         lsp-rust-analyzer-display-reborrow-hints t
         lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names t))
 
+;;; lsp-pyright
+(use-package! lsp-pyright
+  :when (featurep! :lang python +lsp +pyright)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))  ; or lsp-deferred
+
 ;;; ----------------------------------
 ;;; company
 ;;; ----------------------------------

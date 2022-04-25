@@ -65,12 +65,23 @@ hook global WinSetOption filetype=(scheme|c|cpp|python|yaml) %{
 ###############################
 
 # System clipboard interactions
+
+# macOS
 hook global NormalKey y|d|c %{ nop %sh{
-  printf %s "$kak_main_reg_dquote" | xsel -ib
+  printf %s "$kak_main_reg_dquote" | pbcopy
 }}
-map global user P '!xsel -ob<ret>' -docstring 'paste before the beginning of a selection using clipboard'
-map global user p '<a-!>xsel -ob<ret>' -docstring 'paste after the end of a selection using clipboard'
-map global user r '<a-d>!xsel -ob<ret>' -docstring 'replace a selection with yanked text using clipboard'
+map global user P '!pbpaste<ret>' -docstring 'paste before the beginning of a selection using clipboard'
+map global user p '<a-!>pbpaste<ret>' -docstring 'paste after the end of a selection using clipboard'
+map global user r '<a-d>!pbpaste<ret>' -docstring 'replace a selection with yanked text using clipboard'
+
+# linux
+# hook global NormalKey y|d|c %{ nop %sh{
+#   printf %s "$kak_main_reg_dquote" | xsel -ib
+# }}
+# map global user P '!xsel -ob<ret>' -docstring 'paste before the beginning of a selection using clipboard'
+# map global user p '<a-!>xsel -ob<ret>' -docstring 'paste after the end of a selection using clipboard'
+# map global user r '<a-d>!xsel -ob<ret>' -docstring 'replace a selection with yanked text using clipboard'
+
 
 # save file
 map global normal '<c-s>' :write<ret> -docstring 'save file'
