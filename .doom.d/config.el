@@ -132,7 +132,7 @@
 
 ;;; lsp-pyright
 (use-package! lsp-pyright
-  :when (featurep! :lang python +lsp +pyright)
+  :when (featurep! :lang (python +lsp +pyright))
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred

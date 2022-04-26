@@ -54,7 +54,9 @@ dot_config_white_list = [
     "iterm2",
     "nvim",
     "input-remapper",
-    "alacritty"
+    "alacritty",
+    "skhd",
+    "yabai",
 ]
 
 cwd = os.path.dirname(__file__)
