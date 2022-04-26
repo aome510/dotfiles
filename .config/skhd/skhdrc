@@ -7,6 +7,7 @@ ctrl + cmd - h : yabai -m window --focus west
 ctrl + cmd - l : yabai -m window --focus east
 ctrl + cmd - k : yabai -m window --focus north
 ctrl + cmd - j : yabai -m window --focus south
+ctrl + cmd - space : yabai -m window --focus mouse
 
 # window stack-focus commands
 ctrl + cmd - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first
@@ -17,6 +18,13 @@ ctrl + cmd + shift - h : yabai -m window --swap west
 ctrl + cmd + shift - l : yabai -m window --swap east
 ctrl + cmd + shift - k : yabai -m window --swap north
 ctrl + cmd + shift - j : yabai -m window --swap south
+
+# window move-to-space commands
+ctrl + cmd - 1 : yabai -m window --space 1
+ctrl + cmd - 2 : yabai -m window --space 2
+ctrl + cmd - 3 : yabai -m window --space 3
+ctrl + cmd - 4 : yabai -m window --space 4
+ctrl + cmd - 5 : yabai -m window --space 5
 
 # window resize commands
 ctrl + cmd - m : yabai -m window --toggle zoom-fullscreen
@@ -42,9 +50,14 @@ ctrl + alt - f : yabai -m config --space mouse layout float
 # rotate the space's layout by 90 degrees
 ctrl + alt - space : yabai -m space --rotate 90
 
+# space create/destroy commands
+ctrl + alt - c : yabai -m space --create
+ctrl + alt - d : yabai -m space --destroy
+
 ##########################
 # Display commands
 ##########################
 
+# display focus commands
 ctrl + alt - 1 : yabai -m display --focus 1
 ctrl + alt - 2 : yabai -m display --focus 2
