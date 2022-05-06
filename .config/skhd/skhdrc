@@ -13,11 +13,11 @@ ctrl + cmd - space : yabai -m window --focus mouse
 ctrl + cmd - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first
 ctrl + cmd - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
-# window swap commands
-ctrl + cmd + shift - h : yabai -m window --swap west
-ctrl + cmd + shift - l : yabai -m window --swap east
-ctrl + cmd + shift - k : yabai -m window --swap north
-ctrl + cmd + shift - j : yabai -m window --swap south
+# window warp commands
+ctrl + cmd + shift - h : yabai -m window --warp west
+ctrl + cmd + shift - l : yabai -m window --warp east
+ctrl + cmd + shift - k : yabai -m window --warp north
+ctrl + cmd + shift - j : yabai -m window --warp south
 
 # window move-to-space commands
 ctrl + cmd - 1 : yabai -m window --space 1
@@ -30,13 +30,16 @@ ctrl + cmd - 5 : yabai -m window --space 5
 ctrl + cmd - m : yabai -m window --toggle zoom-fullscreen
 ctrl + cmd - f : yabai -m window --toggle native-fullscreen
 
+# window other toggle commands
+ctrl + cmd + shift - s : yabai -m window --toggle split
+
 # shrink/grow the window's width by 100
-ctrl + cmd - a : yabai -m window --resize left:-100:0 || yabai -m window --resize right:-100:0
-ctrl + cmd - d : yabai -m window --resize left:100:0 || yabai -m window --resize right:100:0
+ctrl + cmd - a : yabai -m window --resize left:100:0 || yabai -m window --resize right:-100:0
+ctrl + cmd - d : yabai -m window --resize left:-100:0 || yabai -m window --resize right:100:0
 
 # shrink/grow the window's height by 100
-ctrl + cmd - w : yabai -m window --resize bottom:0:-100 || yabai -m window --resize top:0:-100
-ctrl + cmd - s : yabai -m window --resize bottom:0:100 || yabai -m window --resize top:0:100
+ctrl + cmd - s : yabai -m window --resize bottom:0:-100 || yabai -m window --resize top:0:100
+ctrl + cmd - w : yabai -m window --resize bottom:0:100 || yabai -m window --resize top:0:-100
 
 ##########################
 # Space commands

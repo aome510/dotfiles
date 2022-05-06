@@ -59,8 +59,28 @@
 ;;; ----------------------------------
 ;;; nano-emacs
 ;;; ----------------------------------
+
+(defun get-buffer-file-path-relative-to-project-root ()
+  (let ((project (projectile-project-root))
+        (buffer (buffer-file-name)))
+    (if (and project (string-prefix-p project buffer))
+        (string-remove-prefix project buffer)
+      buffer)))
+
 (use-package! nano-modeline
   :init
+  ;; modify the `nano-modeline-default-mode' function to display a custom modeline
+  ;; that uses the buffer's relative path to the project root as `buffer-name'
+  (defadvice!
+    nano-modeline-default-mode ()
+    (let ((buffer-name (get-buffer-file-path-relative-to-project-root))
+          (mode-name   (nano-modeline-mode-name))
+          (branch      (nano-modeline-vc-branch))
+          (position    (format-mode-line "%l:%c")))
+      (nano-modeline-render nil ;; (upcase  mode-name)
+                            buffer-name
+                            (if branch (concat "(" branch ")") "")
+                            position)))
   (nano-modeline-mode))
 
 (use-package! nano-theme
@@ -70,10 +90,11 @@
     ;; evil-ex search and replace faces don't play nicely with the nano-theme's subtle face
     ;; The subtle face is used for text selection background so it's impossible to distinguish
     ;; between the match face and the selection face during the search-and-replace operation.
-    '(evil-ex-search                 :inherit nano-popout-i)
+    '(evil-ex-search                 :background "highlight" :foreground "base0" :weight bold)
     '(evil-ex-substitute-matches     :background "base0"     :foreground "red"   :weight bold :strike-through t)
     '(evil-ex-substitute-replacement :background "base0"     :foreground "green" :weight bold)
-    '(lazy-highlight                 :inherit nano-popout-i)))
+    '(lazy-highlight                 :inherit nano-popout-i)
+    '(org-code                       :inherit nano-subtle)))
 
 ;;; ----------------------------------
 ;;; doom-theme

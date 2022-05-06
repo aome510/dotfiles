@@ -32,9 +32,6 @@ export PATH=/usr/local/texlive/2021/bin/universal-darwin:$PATH
 # Use gnu make
 export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
 
-# Postgres12
-export PATH="/opt/homebrew/opt/postgresql@12/bin:$PATH"
-
 # python
 export PATH="$HOME/Library/Python/3.8/bin:$PATH"
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
