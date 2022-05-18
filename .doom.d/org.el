@@ -11,5 +11,7 @@
                              (setq-local tab-width 2)))
   (add-hook 'org-mode-hook #'org-fragtog-mode)
   :config
+  (map! :map org-mode-map
+        "C-c C-p" #'org-cliplink)
   (setq org-todo-keywords '((sequence "TODO(t)" "ONGOING(o)" "WATING(w)" "|" "DONE(d)" "DEFERRED(D)" "CANCELLED(c)"))
-        org-download-image-html-width 750))
+        org-download-image-html-width 600))

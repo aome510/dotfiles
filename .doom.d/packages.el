@@ -63,10 +63,12 @@
 ;; (package! selectrum)
 (package! spacemacs-theme)
 (package! org-fragtog)
+;; (package! impatient-mode)
 
 ;; nano themes
 (package! nano-theme)
 (package! nano-modeline)
+(package! lsp-mode :pin "fd1a431b3d50ab1426681bce2d5c4ff8c9c6301e")
 
 (package! kak
   :recipe (:host github :repo "aome510/kak.el"))

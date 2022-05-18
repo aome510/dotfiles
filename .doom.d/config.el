@@ -71,17 +71,18 @@
   :init
   ;; modify the `nano-modeline-default-mode' function to display a custom modeline
   ;; that uses the buffer's relative path to the project root as `buffer-name'
+  (nano-modeline-mode)
   (defadvice!
-    nano-modeline-default-mode ()
-    (let ((buffer-name (get-buffer-file-path-relative-to-project-root))
+    nano-modeline-default-mode (&optional icon)
+    (let ((buffer-name (format! " %s "(get-buffer-file-path-relative-to-project-root)))
           (mode-name   (nano-modeline-mode-name))
           (branch      (nano-modeline-vc-branch))
           (position    (format-mode-line "%l:%c")))
       (nano-modeline-render nil ;; (upcase  mode-name)
                             buffer-name
                             (if branch (concat "(" branch ")") "")
-                            position)))
-  (nano-modeline-mode))
+                            position))))
+
 
 (use-package! nano-theme
   :init
@@ -130,6 +131,7 @@
   :defer-incrementally t
   :config
   (setq
+   lsp--show-message nil
    lsp-ui-sideline-enable nil
    lsp-modeline-code-actions-enable nil
    lsp-modeline-diagnostics-enable nil))
@@ -141,6 +143,8 @@
   :config
   (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
         lsp-rust-analyzer-cargo-watch-command "clippy"
+
+        rustic-default-clippy-arguments ""
 
         ;; enable rust-analyzer inlay hints
         lsp-rust-analyzer-server-display-inlay-hints t
@@ -158,6 +162,14 @@
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
 
+(use-package! tree-sitter
+  :init
+  ;; enable tree-sitter globally
+  (global-tree-sitter-mode)
+  :config
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+
 ;;; ----------------------------------
 ;;; company
 ;;; ----------------------------------
@@ -168,7 +180,6 @@
 
   (setq
    company-idle-delay 0
-   company-async-redisplay-delay 0.001
    company-dabbrev-code-everywhere t
    company-selection-wrap-around t
    company-minimum-prefix-length 2)
@@ -310,7 +321,23 @@
   :config
   (setq vterm-shell "/Users/aome510/.nix-profile/bin/fish"))
 
+
 ;;; custom functions
+
+(defun custom/markdown-preview-update ()
+  (setq output-buffer-name (markdown-standalone))
+  (setq output-file-name (format! "%s.html" (buffer-file-name)))
+  (message output-file-name)
+  (with-current-buffer output-buffer-name
+    (write-region (point-min) (point-max) output-file-name nil 'no-message))
+  output-file-name)
+
+(defun custom/markdown-preview ()
+  (interactive)
+  (setq output-file-name (custom/markdown-preview-update))
+  (browse-url-of-file output-file-name))
+
+(add-hook! markdown-mode (add-hook 'before-save-hook #'custom/markdown-preview-update nil t))
 
 ;;;###autoload
 (defun ripgrep-search-project (search-term &rest args)
@@ -337,6 +364,9 @@
  (:leader :prefix "s"
   :desc "Ripgrep Search Project" "g" #'ripgrep-search-project)
 
+ (:leader :prefix "b"
+  :desc "Format buffer" "f" #'+format/buffer)
+
  :n "U"       #'undo-tree-redo
  :n "u"       #'undo-tree-undo
 
@@ -351,7 +381,10 @@
 
  ;; markdown-mode remaps `DEL' shortcuts which doesn't play nicely with evil-mc
  (:map markdown-mode-map
-  "DEL" nil))
+  "DEL" nil
+  (:localleader "p" #'custom/markdown-preview)))
+
+;;; misc settings
 
 ;;; increase history length
 (setq-default history-length 1000)
@@ -365,9 +398,8 @@
 (modify-syntax-entry ?- "w")
 
 ;;; enable auto scrolling
-(setq scroll-conservatively 8
-      scroll-step 8)
+;; (setq scroll-conservatively 8
+;;       scroll-step 8)
 
-;; enable tree-sitter globally
-(global-tree-sitter-mode)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+;;; add "yapf" formatter for `python-mode'
+(set-formatter! 'yapf "yapf" :modes '(python-mode))
