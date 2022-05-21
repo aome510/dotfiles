@@ -49,26 +49,30 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
                                         ;(unpin! t)
 (package! ripgrep)
+
+(package! ssh-agency)
+
+(package! spacemacs-theme)
+
+(package! lsp-mode :pin "fd1a431b3d50ab1426681bce2d5c4ff8c9c6301e")
 ;; (package! dap-mode)
+
+;; org
+(package! org-fragtog)
+
+;; tree-sitter
 (package! tree-sitter)
 (package! tree-sitter-langs)
-(package! ssh-agency)
-;; (package! corfu)
-;; (package! cape)
-;; (package! kind-icon)
-;; (package! vertico)
-;; (package! consult)
-;; (package! orderless)
-;; (package! marginalia)
-;; (package! selectrum)
-(package! spacemacs-theme)
-(package! org-fragtog)
-;; (package! impatient-mode)
+
+;; corfu
+(package! corfu)
+(package! corfu-doc)
+(package! cape)
+(package! kind-icon)
 
 ;; nano themes
 (package! nano-theme)
 (package! nano-modeline)
-(package! lsp-mode :pin "fd1a431b3d50ab1426681bce2d5c4ff8c9c6301e")
 
 (package! kak
   :recipe (:host github :repo "aome510/kak.el"))
