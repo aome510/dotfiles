@@ -18,6 +18,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("f0eb51d80f73b247eb03ab216f94e9f86177863fb7e48b44aacaddbfe3357cf1" default))
  '(safe-local-variable-values
    '((eval setq-hook! 'python-mode-hook +format-with 'yapf)
      (eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]test_output\\'")

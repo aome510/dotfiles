@@ -51,7 +51,7 @@
     '(evil-ex-substitute-matches     :background "base0"     :foreground "red"   :weight bold :strike-through t)
     '(evil-ex-substitute-replacement :background "base0"     :foreground "green" :weight bold)
     '(lazy-highlight                 :inherit nano-popout-i)
-    '(org-code                       :inherit nano-subtle)))
+    '(org-code                       :inherit nano-popout)))
 
 
 ;;; --------------------------------------------------------------------

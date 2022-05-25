@@ -113,6 +113,14 @@
                         (projectile-acquire-root)
                         (append rg-args args)))))
 
+;;;###autoload
+(defun custom/save-buffer-without-hooks ()
+  (interactive)
+  (let ((tmp-before-save-hooks before-save-hook))
+    (setq before-save-hook nil)
+    (save-buffer)
+    (setq before-save-hook tmp-before-save-hooks)))
+
 ;;; --------------------------------------------------------------------
 ;;; Mappings
 ;;; --------------------------------------------------------------------
@@ -122,7 +130,8 @@
   :desc "Ripgrep Search Project" "g" #'custom/ripgrep-search-project)
 
  (:leader :prefix "b"
-  :desc "Format buffer" "f" #'+format/buffer)
+  :desc "Format buffer" "f" #'+format/buffer
+  :desc "Save buffer without hooks" "s" #'custom/save-buffer-without-hooks)
 
  :i "C-;" #'completion-at-point
 
@@ -164,7 +173,15 @@
   [tab] #'yas-next-field-or-maybe-expand)
 
  (:map org-mode-map
-  "C-c C-p" #'org-cliplink)
+  "C-c C-p" #'org-cliplink
+  ;; "RET" is originally mapped to `org-return' which doesn't play well with completion framework
+  "RET" nil
+  [return] nil)
+
+ (:map evil-org-mode-map
+  ;; "RET" is originally mapped to `org-return' which doesn't play well with completion framework
+  :i "RET" nil
+  :i [return] nil)
 
  (:map company-active-map
   "RET" #'company-complete-selection

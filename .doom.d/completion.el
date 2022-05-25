@@ -27,18 +27,19 @@
 ;;; corfu related configurations
 ;;; ----------------------------------
 
-;; necessary settings for `corfu' to work when `company' is installed
-;; (use-package lsp-mode
-;;   :custom
-;;   (lsp-completion-provider :none))
-;; (use-package! company
-;;   :init
-;;   (setq company-global-modes nil))
 
 (use-package! corfu
   :init
   (global-corfu-mode)
   :config
+  ;; use corfu for minibuffer completion
+  (defun corfu-enable-in-minibuffer ()
+    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+    (when (where-is-internal #'completion-at-point (list (current-local-map)))
+      ;; (setq-local corfu-auto nil) Enable/disable auto completion
+      (corfu-mode 1)))
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
+
   (add-hook! corfu-mode #'corfu-doc-mode)
   (setq
    corfu-cycle t
@@ -51,12 +52,24 @@
    corfu-auto-delay 0
    corfu-auto-prefix 2))
 
+(defun append-cape-capf-functions ()
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
+  (add-to-list 'completion-at-point-functions #'cape-file t)
+  (add-to-list 'completion-at-point-functions #'cape-tex t)
+  (add-to-list 'completion-at-point-functions #'cape-keyword t))
+
 (use-package! cape
   :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-tex)
-  (add-to-list 'completion-at-point-functions #'cape-keyword))
+  (append-cape-capf-functions))
+
+;; `corfu' integration with `lsp-mode'
+(use-package lsp-mode
+  :custom
+  (lsp-completion-provider :none) ;; we use Corfu!
+  :config
+  ;; use `cape-dabbrev'
+  (add-hook! 'lsp-completion-mode-hook #'append-cape-capf-functions))
+
 
 (use-package! kind-icon
   :ensure t
@@ -72,7 +85,7 @@
 (use-package! consult
   :init
   (define-key!
-      [remap recentf-open-files] #'consult-recent-file)
+    [remap recentf-open-files] #'consult-recent-file)
   :config
   (setq consult-project-root-function #'projectile-project-root)
   ;; upon spliting window (evil-window-split), open `project-find-file'
