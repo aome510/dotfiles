@@ -5,7 +5,6 @@
 ;;; ----------------------------------
 ;; (use-package! company
 ;;   :when (featurep! :completion company)
-;;   :defer-incrementally t
 ;;   :config
 ;;   (setq
 ;;    company-idle-delay 0
@@ -14,7 +13,14 @@
 ;;    company-minimum-prefix-length 2
 ;;    +lsp-company-backends '(company-files company-capf company-yasnippet company-dabbrev))
 
-;;   (set-company-backend! 'prog-mode '(company-capf company-dabbrev-code company-yasnippet)))
+;;   (set-company-backend! 'prog-mode '(company-capf company-dabbrev-code company-yasnippet))
+
+;;   (map!
+;;    (:map company-active-map
+;;     "RET" #'company-complete-selection
+;;     [return] #'company-complete-selection
+;;     "TAB" nil
+;;     [tab] nil)))
 
 ;;; ----------------------------------
 ;;; snippets
@@ -41,6 +47,7 @@
   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
 
   (add-hook! corfu-mode #'corfu-doc-mode)
+
   (setq
    corfu-cycle t
    corfu-auto t
@@ -50,7 +57,17 @@
    corfu-quit-no-match t
    corfu-quit-at-boundary t
    corfu-auto-delay 0
-   corfu-auto-prefix 2))
+   corfu-auto-prefix 2)
+
+  (map!
+   (:map corfu-map
+    "RET" #'corfu-insert
+    [return] #'corfu-insert
+    "TAB" nil
+    [tab] nil
+    :desc "Toggle corfu doc"      "M-d" #'corfu-doc-toogle
+    :desc "Scroll corfu doc up"   "M-n" #'corfu-doc-scroll-up
+    :desc "Scroll corfu doc down" "M-p" #'corfu-doc-scroll-down)))
 
 (defun append-cape-capf-functions ()
   (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
@@ -60,7 +77,10 @@
 
 (use-package! cape
   :init
-  (append-cape-capf-functions))
+  (append-cape-capf-functions)
+  :config
+  (setq
+   cape-dabbrev-min-length 3))
 
 ;; `corfu' integration with `lsp-mode'
 (use-package lsp-mode

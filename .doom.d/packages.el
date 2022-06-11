@@ -74,5 +74,8 @@
 (package! nano-theme)
 (package! nano-modeline)
 
+;; apheleia
+(package! apheleia)
+
 (package! kak
   :recipe (:host github :repo "aome510/kak.el"))

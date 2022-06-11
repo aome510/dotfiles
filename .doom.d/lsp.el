@@ -5,19 +5,16 @@
 ;;; --------------------------------------------------------------------
 
 (use-package! lsp-mode
-  :when (featurep! :tools lsp)
   :defer-incrementally t
+  :when (featurep! :tools lsp)
   :config
   (setq
-   lsp--show-message nil
-   lsp-ui-sideline-enable nil
-   lsp-modeline-code-actions-enable nil
-   lsp-modeline-diagnostics-enable nil))
+   lsp--show-message nil))
 
 ;;; lsp-rust
 (use-package! lsp-rust
-  :when (featurep! :lang rust +lsp)
   :defer-incrementally t
+  :when (featurep! :lang rust +lsp)
   :config
   (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
         lsp-rust-analyzer-cargo-watch-command "clippy"
@@ -35,6 +32,7 @@
 
 ;;; lsp-pyright
 (use-package! lsp-pyright
+  :defer-incrementally t
   :when (featurep! :lang (python +lsp +pyright))
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)

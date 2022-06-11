@@ -10,9 +10,17 @@
 ;;; General package configurations
 ;;; --------------------------------------------------------------------
 
+(use-package! apheleia
+  :init
+  (apheleia-global-mode +1)
+  :config
+  (push '(markdown-mode . prettier) apheleia-mode-alist)
+  (push '(yapf . ("yapf")) apheleia-formatters))
+
+
 (use-package! latex
-  :when (featurep! :lang latex)
   :defer-incrementally t
+  :when (featurep! :lang latex)
   :config
   (setq
    +latex-viewers '(pdf-tools evince)
@@ -20,7 +28,14 @@
    TeX-command-force "LatexMk")
 
   (remove-hook! 'TeX-mode-hook #'turn-on-auto-fill)
-  (add-hook! 'TeX-mode-hook #'turn-off-smartparens-mode))
+  (add-hook! 'TeX-mode-hook #'turn-off-smartparens-mode)
+
+  (map!
+   (:map LaTeX-mode-map
+    :localleader
+    :desc  "LaTeX View"    "v" #'TeX-view
+    :desc  "LaTeX Build"   "b" #'TeX-command-master
+    :desc  "LaTeX Run all" "r" #'TeX-command-run-all)))
 
 
 (use-package! recentf
@@ -66,8 +81,8 @@
 
 
 (use-package! magit
-  :when (featurep! :tools magit)
   :defer-incrementally t
+  :when (featurep! :tools magit)
   :config
   (setq git-commit-summary-max-length 100))
 
@@ -75,8 +90,19 @@
 (use-package! evil-mc
   :when (featurep! :editor multiple-cursors)
   :init
-  (global-evil-mc-mode 1))
+  (global-evil-mc-mode 1)
+  :config
+  (map!
+   (:nv "C-n" #'evil-mc-make-and-goto-next-match
+    :nv "C-p" #'evil-mc-make-and-goto-prev-match
+    :map evil-mc-key-map
+    :nv "C-n" #'evil-mc-make-and-goto-next-match
+    :nv "C-p" #'evil-mc-make-and-goto-prev-match)))
 
+
+(use-package! markdown-mode
+  :config
+  (add-hook! markdown-mode (add-hook 'before-save-hook #'custom/markdown-preview-update nil t)))
 
 ;;; --------------------------------------------------------------------
 ;;; Custom functions
@@ -97,8 +123,6 @@
   (setq output-file-name (custom/markdown-preview-update))
   (browse-url-of-file output-file-name))
 
-(add-hook! markdown-mode (add-hook 'before-save-hook #'custom/markdown-preview-update nil t))
-
 ;;;###autoload
 (defun custom/ripgrep-search-project (search-term &rest args)
   (interactive
@@ -116,10 +140,13 @@
 ;;;###autoload
 (defun custom/save-buffer-without-hooks ()
   (interactive)
-  (let ((tmp-before-save-hooks before-save-hook))
+  (let ((tmp-before-save-hooks before-save-hook)
+        (tmp-after-save-hooks after-save-hook))
     (setq before-save-hook nil)
+    (setq after-save-hook nil)
     (save-buffer)
-    (setq before-save-hook tmp-before-save-hooks)))
+    (setq before-save-hook tmp-before-save-hooks)
+    (setq after-save-hook tmp-after-save-hooks)))
 
 ;;; --------------------------------------------------------------------
 ;;; Mappings
@@ -130,7 +157,7 @@
   :desc "Ripgrep Search Project" "g" #'custom/ripgrep-search-project)
 
  (:leader :prefix "b"
-  :desc "Format buffer" "f" #'+format/buffer
+  ;; :desc "Format buffer" "f" #'+format/buffer
   :desc "Save buffer without hooks" "s" #'custom/save-buffer-without-hooks)
 
  :i "C-;" #'completion-at-point
@@ -151,43 +178,9 @@
  :n "] e" #'flycheck-next-error
  :n "[ e" #'flycheck-previous-error
 
- (:nv "C-n" #'evil-mc-make-and-goto-next-match
-  :nv "C-p" #'evil-mc-make-and-goto-prev-match
-  :map evil-mc-key-map
-  :nv "C-n" #'evil-mc-make-and-goto-next-match
-  :nv "C-p" #'evil-mc-make-and-goto-prev-match)
-
- (:map corfu-map
-  :desc "Toggle corfu doc"      "M-d" #'corfu-doc-toogle
-  :desc "Scroll corfu doc up"   "M-n" #'corfu-doc-scroll-up
-  :desc "Scroll corfu doc down" "M-p" #'corfu-doc-scroll-down)
-
- (:map LaTeX-mode-map
-  :localleader
-  :desc  "LaTeX View"    "v" #'TeX-view
-  :desc  "LaTeX Build"   "b" #'TeX-command-master
-  :desc  "LaTeX Run all" "r" #'TeX-command-run-all)
-
  (:map yas-keymap
   "TAB" #'yas-next-field-or-maybe-expand
   [tab] #'yas-next-field-or-maybe-expand)
-
- (:map org-mode-map
-  "C-c C-p" #'org-cliplink
-  ;; "RET" is originally mapped to `org-return' which doesn't play well with completion framework
-  "RET" nil
-  [return] nil)
-
- (:map evil-org-mode-map
-  ;; "RET" is originally mapped to `org-return' which doesn't play well with completion framework
-  :i "RET" nil
-  :i [return] nil)
-
- (:map company-active-map
-  "RET" #'company-complete-selection
-  [return] #'company-complete-selection
-  "TAB" nil
-  [tab] nil)
 
  (:map dired-mode-map
   :n "h" #'dired-up-directory
@@ -211,6 +204,10 @@
 (setq evil-cross-lines t)
 (setq evil-snipe-scope 'visible)
 
+;; treat underscore/dash as a word character
+(modify-syntax-entry ?_ "w")
+(modify-syntax-entry ?- "w")
+
 ;; increase history length
 (setq-default history-length 1000)
 
@@ -218,4 +215,4 @@
 (setq-default tab-always-indent nil)
 
 ;;; add "yapf" formatter for `python-mode'
-(set-formatter! 'yapf "yapf" :modes '(python-mode))
+;; (set-formatter! 'yapf "yapf" :modes '(python-mode))

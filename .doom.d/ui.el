@@ -25,6 +25,10 @@
 
 (use-package! nano-modeline
   :init
+  ;; modify some faces to make them compatible with nano-modelien
+  (custom-theme-set-faces! '(nano-light nano-dark)
+    '(mode-line :inhert nano-modeline-active)
+    '(mode-line-inactive :inhertit nano-modeline-inactive))
   ;; modify the `nano-modeline-default-mode' function to display a custom modeline
   ;; that uses the buffer's relative path to the project root as `buffer-name'
   (nano-modeline-mode)
