@@ -46,14 +46,3 @@
 ;;   :when (featurep! :tools lsp +eglot)
 ;;   :config
 ;;   (set-popup-rule! "^\\*eglot-help" :size 0.25 :quit t :select t))
-
-;;; --------------------------------------------------------------------
-;;; tree-sitter configurations
-;;; --------------------------------------------------------------------
-
-(use-package! tree-sitter
-  :init
-  ;; enable tree-sitter globally
-  (global-tree-sitter-mode)
-  :config
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))

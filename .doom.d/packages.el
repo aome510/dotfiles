@@ -52,17 +52,10 @@
 
 (package! ssh-agency)
 
-(package! spacemacs-theme)
-
-(package! lsp-mode :pin "fd1a431b3d50ab1426681bce2d5c4ff8c9c6301e")
 ;; (package! dap-mode)
 
 ;; org
 (package! org-fragtog)
-
-;; tree-sitter
-(package! tree-sitter)
-(package! tree-sitter-langs)
 
 ;; corfu
 (package! corfu)

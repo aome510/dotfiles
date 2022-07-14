@@ -31,7 +31,7 @@
        doom                     ; what makes DOOM look the way it does
        doom-dashboard           ; a nifty splash screen for Emacs
        doom-quit                ; DOOM quit-message prompts when you quit Emacs
-       (emoji +unicode)         ; 🙂
+       ;; (emoji +unicode)         ; 🙂
        ;;fill-column            ; a `fill-column' indicator
        ;;hl-todo                ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
@@ -106,6 +106,7 @@
        ;;terraform              ; infrastructure as code
        ;;tmux                   ; an API for interacting with tmux
        ;;upload                 ; map local to remote projects via ssh/ftp
+       tree-sitter
 
        :os
        (:if IS-MAC macos)       ; improve compatibility with macOS

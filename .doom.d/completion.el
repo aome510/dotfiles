@@ -1,5 +1,4 @@
 ;;; completion.el -*- lexical-binding: t; -*-
-
 ;;; ----------------------------------
 ;;; company
 ;;; ----------------------------------
@@ -80,6 +79,8 @@
   (append-cape-capf-functions)
   :config
   (setq
+   dabbrev-ignored-buffer-regexps '("^\\*")
+   cape-dabbrev-check-other-buffers t
    cape-dabbrev-min-length 3))
 
 ;; `corfu' integration with `lsp-mode'
