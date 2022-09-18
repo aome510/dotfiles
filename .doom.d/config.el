@@ -213,7 +213,5 @@
 ;; modify `TAB' key behavior
 (setq-default tab-always-indent nil)
 
-;; add "yapf" formatter for `python-mode'
-(set-formatter! 'yapf "yapf" :modes '(python-mode))
-
+;; setup custom env file
 (doom-load-envvars-file "~/.doom.d/myenv")

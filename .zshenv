@@ -43,3 +43,6 @@ export PATH="$HOME/Library/Python/3.9/bin:$PATH"
 export PATH=/usr/local/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"
+
+# pyenv setup
+eval "$(pyenv init -)"
