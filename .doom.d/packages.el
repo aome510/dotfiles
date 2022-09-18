@@ -72,3 +72,6 @@
 
 (package! kak
   :recipe (:host github :repo "aome510/kak.el"))
+
+;; pin `rustic'
+(package! rustic :pin "a391fa6052239fca9e07afafb3227feb4b7d8429")

@@ -6,7 +6,7 @@
 
 (use-package! lsp-mode
   :defer-incrementally t
-  :when (featurep! :tools lsp)
+  :when (modulep! :tools lsp)
   :config
   (setq
    lsp--show-message nil))
@@ -14,7 +14,7 @@
 ;;; lsp-rust
 (use-package! lsp-rust
   :defer-incrementally t
-  :when (featurep! :lang rust +lsp)
+  :when (modulep! :lang rust +lsp)
   :config
   (setq lsp-rust-analyzer-diagnostics-disabled ["unresolved-proc-macro"]
         lsp-rust-analyzer-cargo-watch-command "clippy"
@@ -33,7 +33,7 @@
 ;;; lsp-pyright
 (use-package! lsp-pyright
   :defer-incrementally t
-  :when (featurep! :lang (python +lsp +pyright))
+  :when (modulep! :lang (python +lsp +pyright))
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
@@ -43,6 +43,6 @@
 ;;; --------------------------------------------------------------------
 
 ;; (use-package! eglot
-;;   :when (featurep! :tools lsp +eglot)
+;;   :when (modulep! :tools lsp +eglot)
 ;;   :config
 ;;   (set-popup-rule! "^\\*eglot-help" :size 0.25 :quit t :select t))

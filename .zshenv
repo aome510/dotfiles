@@ -35,6 +35,9 @@ export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
 # python
 export PATH="$HOME/Library/Python/3.8/bin:$PATH"
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+## python path
+# export PYTHONPATH="$HOME/Library/Python/3.8/lib/site-packages:$PYTHONPATH"
+# export PYTHONPATH="$HOME/Library/Python/3.9/lib/site-packages:$PYTHONPATH"
 
 # local exports
 export PATH=/usr/local/bin:$PATH

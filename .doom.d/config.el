@@ -1,14 +1,12 @@
-
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
+;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 (load! "ui")
 (load! "completion")
 (load! "lsp")
 (load! "org")
 
-;;; --------------------------------------------------------------------
-;;; General package configurations
-;;; --------------------------------------------------------------------
+;; ;;; --------------------------------------------------------------------
+;; ;;; General package configurations
+;; ;;; --------------------------------------------------------------------
 
 (use-package! apheleia
   :init
@@ -20,7 +18,7 @@
 
 (use-package! latex
   :defer-incrementally t
-  :when (featurep! :lang latex)
+  :when (modulep! :lang latex)
   :config
   (setq
    +latex-viewers '(pdf-tools evince)
@@ -68,6 +66,7 @@
 
 
 (use-package! kak
+  ;; :load-path "/Users/aome510/Projects/kak.el"
   :config
   (map!
    :v "|" #'kak-exec-shell-command
@@ -82,13 +81,13 @@
 
 (use-package! magit
   :defer-incrementally t
-  :when (featurep! :tools magit)
+  :when (modulep! :tools magit)
   :config
   (setq git-commit-summary-max-length 100))
 
 
 (use-package! evil-mc
-  :when (featurep! :editor multiple-cursors)
+  :when (modulep! :editor multiple-cursors)
   :init
   (global-evil-mc-mode 1)
   :config
@@ -148,9 +147,9 @@
     (setq before-save-hook tmp-before-save-hooks)
     (setq after-save-hook tmp-after-save-hooks)))
 
-;;; --------------------------------------------------------------------
-;;; Mappings
-;;; --------------------------------------------------------------------
+;; --------------------------------------------------------------------
+;; Mappings
+;; --------------------------------------------------------------------
 
 (map!
  (:leader :prefix "s"
@@ -197,9 +196,9 @@
   "DEL" nil
   (:localleader "p" #'custom/markdown-preview)))
 
-;;; --------------------------------------------------------------------
-;;; Misc settings
-;;; --------------------------------------------------------------------
+;; --------------------------------------------------------------------
+;; Misc settings
+;; --------------------------------------------------------------------
 
 (setq evil-cross-lines t)
 (setq evil-snipe-scope 'visible)
@@ -214,5 +213,7 @@
 ;; modify `TAB' key behavior
 (setq-default tab-always-indent nil)
 
-;;; add "yapf" formatter for `python-mode'
-;; (set-formatter! 'yapf "yapf" :modes '(python-mode))
+;; add "yapf" formatter for `python-mode'
+(set-formatter! 'yapf "yapf" :modes '(python-mode))
+
+(doom-load-envvars-file "~/.doom.d/myenv")
