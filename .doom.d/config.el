@@ -13,7 +13,8 @@
   (apheleia-global-mode +1)
   :config
   (push '(markdown-mode . prettier) apheleia-mode-alist)
-  (push '(yapf . ("yapf")) apheleia-formatters))
+  (push '(yapf . ("yapf")) apheleia-formatters)
+  (push '(latexindent . ("latexindent")) apheleia-formatters))
 
 
 (use-package! latex

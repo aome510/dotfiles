@@ -51,7 +51,7 @@
     ;; evil-ex search and replace faces don't play nicely with the nano-theme's subtle face
     ;; The subtle face is used for text selection background so it's impossible to distinguish
     ;; between the match face and the selection face during the search-and-replace operation.
-    '(evil-ex-search                 :background "highlight" :foreground "base0" :weight bold)
+    '(evil-ex-search                 :inherit lazy-highlight :foreground "base0" :weight bold)
     '(evil-ex-substitute-matches     :background "base0"     :foreground "red"   :weight bold :strike-through t)
     '(evil-ex-substitute-replacement :background "base0"     :foreground "green" :weight bold)
     '(lazy-highlight                 :inherit nano-popout-i)

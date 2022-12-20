@@ -9,7 +9,8 @@
   :when (modulep! :tools lsp)
   :config
   (setq
-   lsp--show-message nil))
+   lsp--show-message nil
+   lsp-modeline-diagnostics-enable nil))
 
 ;;; lsp-rust
 (use-package! lsp-rust

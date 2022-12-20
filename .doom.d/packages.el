@@ -59,7 +59,6 @@
 
 ;; corfu
 (package! corfu)
-(package! corfu-doc)
 (package! cape)
 (package! kind-icon)
 

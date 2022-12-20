@@ -7,7 +7,7 @@
 ;;   :config
 ;;   (setq
 ;;    company-idle-delay 0
-;;    company-dabbrev-code-everywhere t
+;;    company-dabbreev-code-everywhere t
 ;;    company-selection-wrap-around t
 ;;    company-minimum-prefix-length 2
 ;;    +lsp-company-backends '(company-files company-capf company-yasnippet company-dabbrev))
@@ -32,6 +32,9 @@
 ;;; corfu related configurations
 ;;; ----------------------------------
 
+(defun orderless-fast-dispatch (word index total)
+  (and (= index 0) (= total 1) (length< word 4)
+       `(orderless-regexp . ,(concat "^" (regexp-quote word)))))
 
 (use-package! corfu
   :init
@@ -42,19 +45,15 @@
     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
       ;; (setq-local corfu-auto nil) Enable/disable auto completion
+      (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+                  corfu-popupinfo-delay nil)
       (corfu-mode 1)))
   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
-
-  (add-hook! corfu-mode #'corfu-doc-mode)
 
   (setq
    corfu-cycle t
    corfu-auto t
-   corfu-separator ?\s
    corfu-preview-current t
-   corfu-echo-documentation t
-   corfu-quit-no-match t
-   corfu-quit-at-boundary t
    corfu-auto-delay 0
    corfu-auto-prefix 2)
 
@@ -63,15 +62,12 @@
     "RET" #'corfu-insert
     [return] #'corfu-insert
     "TAB" nil
-    [tab] nil
-    :desc "Toggle corfu doc"      "M-d" #'corfu-doc-toogle
-    :desc "Scroll corfu doc up"   "M-n" #'corfu-doc-scroll-up
-    :desc "Scroll corfu doc down" "M-p" #'corfu-doc-scroll-down)))
+    [tab] nil)))
 
 (defun append-cape-capf-functions ()
   (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
   (add-to-list 'completion-at-point-functions #'cape-file t)
-  (add-to-list 'completion-at-point-functions #'cape-tex t)
+  ;; (add-to-list 'completion-at-point-functions #'cape-tex t)
   (add-to-list 'completion-at-point-functions #'cape-keyword t))
 
 (use-package! cape
@@ -88,7 +84,6 @@
   :custom
   (lsp-completion-provider :none) ;; we use Corfu!
   :config
-  ;; use `cape-dabbrev'
   (add-hook! 'lsp-completion-mode-hook #'append-cape-capf-functions))
 
 
