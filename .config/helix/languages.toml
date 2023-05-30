@@ -1,0 +1,9 @@
+use-grammars = { except = [ "hare" ] }
+
+[[language]]
+name = "python"
+roots = ["pyproject.toml"]
+language-server = { command = "pyright-langserver", args = ["--stdio"] }
+config = {}
+formatter = { command = "black", args = ["-", "-q"] }
+auto-format = true

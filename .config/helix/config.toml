@@ -1,0 +1,20 @@
+theme = "dracula"
+
+[editor]
+idle-timeout = 0
+
+[keys.normal]
+# old keymaps picked up from DoomEmacs
+z = { x = ":buffer-close" }
+"]" = { b = ":buffer-next" }
+"[" = { b = ":buffer-previous" }
+
+# kakoune's X behaviour
+X = "extend_line_below"
+
+[keys.insert]
+# emacs-style bindings
+"C-f" = "move_char_right"
+"C-b" = "move_char_left"
+"C-a" = "goto_line_start"
+"C-e" = "goto_line_end_newline"
