@@ -57,6 +57,7 @@ dot_config_white_list = [
     "alacritty",
     "skhd",
     "yabai",
+    "helix"
 ]
 
 cwd = os.path.dirname(__file__)
