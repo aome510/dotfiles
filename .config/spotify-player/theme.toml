@@ -1,0 +1,33 @@
+[[themes]]
+name = "ayu_light"
+[themes.palette]
+background = "#fafafa"
+foreground = "#5c6773"
+black = "#000000"
+red = "#ff3333"
+green = "#86b300"
+yellow = "#f29718"
+blue = "#41a6d9"
+magenta = "#f07178"
+cyan = "#4dbf99"
+white = "#ffffff"
+bright_black = "#323232"
+bright_red = "#ff6565"
+bright_green = "#b8e532"
+bright_yellow = "#ffc94a"
+bright_blue = "#73d8ff"
+bright_magenta = "#ffa3aa"
+bright_cyan = "#7ff1cb"
+bright_white = "#ffffff"
+[themes.component_style]
+# block_title = { fg = "Magenta"  }
+# border = {}
+# playback_track = { fg = "Cyan", modifiers = ["Bold"] }
+# playback_album = { fg = "Yellow" }
+# playback_metadata = { fg = "BrightBlack" }
+# playback_progress_bar = { bg = "BrightBlack", fg = "Green" }
+# current_playing = { fg = "Green", modifiers = ["Bold"] }
+# page_desc = { fg = "Cyan", modifiers = ["Bold"] }
+# table_header = { fg = "Blue" }
+# selection = { modifiers = ["Bold", "Reversed"] }
+    

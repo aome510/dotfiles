@@ -9,8 +9,9 @@ z = { x = ":buffer-close" }
 "]" = { b = ":buffer-next" }
 "[" = { b = ":buffer-previous" }
 
-# kakoune's X behaviour
+# kakoune bindings
 X = "extend_line_below"
+"#" = "toggle_comments"
 
 [keys.insert]
 # emacs-style bindings

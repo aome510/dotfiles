@@ -18,12 +18,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(safe-local-variable-values
-   '((eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\tmp_check\\'")
-     (eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]test_output\\'")
-     (eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.pytest_cache\\'")
-     (eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.mypy_cache\\'")
-     (eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'"))))
+ '(connection-local-criteria-alist
+   '(((:application eshell)
+      eshell-connection-default-profile)))
+ '(connection-local-profile-alist
+   '((eshell-connection-default-profile
+      (eshell-path-env-list))))
+ '(safe-local-variable-values '((lsp-rust-features . ["lyric-finder" "image" "notify"]))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

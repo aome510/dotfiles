@@ -58,7 +58,10 @@
 (package! org-fragtog)
 
 ;; corfu
-(package! corfu)
+(package! corfu
+  ;; pin corfu as the newer version is not compatible with emacs28
+  :pin "3a218ce41d02bc22f8f0634b8eb3e9d94e044382"
+  :recipe (:files (:defaults "extensions/*.el")))
 (package! cape)
 (package! kind-icon)
 
@@ -73,4 +76,4 @@
   :recipe (:host github :repo "aome510/kak.el"))
 
 ;; pin `rustic'
-(package! rustic :pin "a391fa6052239fca9e07afafb3227feb4b7d8429")
+;; (package! rustic :pin "a391fa6052239fca9e07afafb3227feb4b7d8429")

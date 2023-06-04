@@ -186,6 +186,9 @@
   :n "h" #'dired-up-directory
   :n "l" #'dired-find-file)
 
+ (:map wdired-mode-map
+      [remap self-insert-command] nil)
+
  ;; `s' and `S' are binded to `kak.el' package's functions
  (:v ". s"     #'evil-snipe-s
   :map evil-surround-mode-map

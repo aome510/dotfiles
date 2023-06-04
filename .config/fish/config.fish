@@ -45,7 +45,7 @@ end
 set fzf_history_opts --preview-window="bottom:5:wrap"
 
 # aliases
-alias e="kak"
+alias e="hx"
 alias se="sudo -e"
 alias cl="emacsclient -nw"
 alias l="exa --color always"

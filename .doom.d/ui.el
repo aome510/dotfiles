@@ -25,23 +25,12 @@
 
 (use-package! nano-modeline
   :init
-  ;; modify some faces to make them compatible with nano-modelien
+  ;; modify some faces to make them compatible with nano-modeline
   (custom-theme-set-faces! '(nano-light nano-dark)
     '(mode-line :inhert nano-modeline-active)
     '(mode-line-inactive :inhertit nano-modeline-inactive))
-  ;; modify the `nano-modeline-default-mode' function to display a custom modeline
-  ;; that uses the buffer's relative path to the project root as `buffer-name'
-  (nano-modeline-mode)
-  (defadvice!
-    nano-modeline-default-mode (&optional icon)
-    (let ((buffer-name (format! " %s "(get-buffer-file-path-relative-to-project-root)))
-          (mode-name   (nano-modeline-mode-name))
-          (branch      (nano-modeline-vc-branch))
-          (position    (format-mode-line "%l:%c")))
-      (nano-modeline-render nil ;; (upcase  mode-name)
-                            buffer-name
-                            (if branch (concat "(" branch ")") "")
-                            position))))
+  (add-hook 'prog-mode-hook            #'nano-modeline-prog-mode)
+  (nano-modeline-text-mode t))
 
 (use-package! nano-theme
   :init

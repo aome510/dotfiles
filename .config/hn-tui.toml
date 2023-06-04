@@ -1,6 +1,10 @@
 # article_parse_command = {command = "_article_md", options = ["--format", "html"]}
 # article_parse_command = { command = "mercury-parser", options = [] }
 # use_pacman_loading = false
+# use_page_scrolling = false
+
+# [keymap.comment_view_keymap]
+# next_comment = ["J", "j"]
 
 [[keymap.custom_keymaps]]
 key = "M-1"

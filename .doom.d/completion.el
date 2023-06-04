@@ -39,6 +39,7 @@
 (use-package! corfu
   :init
   (global-corfu-mode)
+  (corfu-popupinfo-mode)
   :config
   ;; use corfu for minibuffer completion
   (defun corfu-enable-in-minibuffer ()

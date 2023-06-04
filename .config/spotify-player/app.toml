@@ -1,8 +1,25 @@
 client_id = "b28a574d8ad44fc7b5a89994431a8f88"
+# playback_format = "{track}\n{artists} - {album}\n{metadata}"
 # client_id = "**********"
 theme="ayu_light"
 # playback_refresh_duration_in_ms=1000
+enable_media_control = true
+# enable_cover_image_cache = false
+# enable_streaming = false
+# app_refresh_duration_in_ms = 10
+default_device=""
+# playback_window_width = 10
+# cover_img_width = 20
+# cover_img_length = 40
+# cover_img_scale = 2.0
+# playback_window_position="Bottom"
+# border_type = "Thick"
+# progress_bar_type = "Line"
+ap_port = 443
+
+copy_command = { command = "/usr/bin/pbcopy", args = [] }
 
 [device]
+# name = "aome"
 volume = 70
 bitrate = 320
