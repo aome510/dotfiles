@@ -24,7 +24,7 @@
       buffer)))
 
 (use-package! nano-modeline
-  :init
+  :config
   ;; modify some faces to make them compatible with nano-modeline
   (custom-theme-set-faces! '(nano-light nano-dark)
     '(mode-line :inhert nano-modeline-active)
