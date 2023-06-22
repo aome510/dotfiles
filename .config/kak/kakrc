@@ -67,20 +67,20 @@ hook global WinSetOption filetype=(scheme|c|cpp|python|yaml) %{
 # System clipboard interactions
 
 # macOS
-hook global NormalKey y|d|c %{ nop %sh{
-  printf %s "$kak_main_reg_dquote" | pbcopy
-}}
-map global user P '!pbpaste<ret>' -docstring 'paste before the beginning of a selection using clipboard'
-map global user p '<a-!>pbpaste<ret>' -docstring 'paste after the end of a selection using clipboard'
-map global user r '<a-d>!pbpaste<ret>' -docstring 'replace a selection with yanked text using clipboard'
+# hook global NormalKey y|d|c %{ nop %sh{
+#   printf %s "$kak_main_reg_dquote" | pbcopy
+# }}
+# map global user P '!pbpaste<ret>' -docstring 'paste before the beginning of a selection using clipboard'
+# map global user p '<a-!>pbpaste<ret>' -docstring 'paste after the end of a selection using clipboard'
+# map global user r '<a-d>!pbpaste<ret>' -docstring 'replace a selection with yanked text using clipboard'
 
 # linux
-# hook global NormalKey y|d|c %{ nop %sh{
-#   printf %s "$kak_main_reg_dquote" | xsel -ib
-# }}
-# map global user P '!xsel -ob<ret>' -docstring 'paste before the beginning of a selection using clipboard'
-# map global user p '<a-!>xsel -ob<ret>' -docstring 'paste after the end of a selection using clipboard'
-# map global user r '<a-d>!xsel -ob<ret>' -docstring 'replace a selection with yanked text using clipboard'
+hook global NormalKey y|d|c %{ nop %sh{
+  printf %s "$kak_main_reg_dquote" | xsel -ib
+}}
+map global user P '!xsel -ob<ret>' -docstring 'paste before the beginning of a selection using clipboard'
+map global user p '<a-!>xsel -ob<ret>' -docstring 'paste after the end of a selection using clipboard'
+map global user r '<a-d>!xsel -ob<ret>' -docstring 'replace a selection with yanked text using clipboard'
 
 
 # save file
@@ -101,49 +101,3 @@ map global user e ':edit ~/.config/kak/kakrc<ret>' -docstring 'edit kakrc'
 map global normal -docstring 'Select all occurrences of the current selection' '<a-%>' '*%s<ret>'
 map global normal -docstring 'Select next occurrence of the current selection' '<c-n>' '*N'
 map global normal -docstring 'Select previous occurrence of the current selection' '<c-p>' '*<a-N>'
-
-###############################
-# Kakoune plugins
-###############################
-
-# # # plug.kak
-# source "%val{config}/plugins/plug.kak/rc/plug.kak"
-
-# # kak-lsp
-# eval %sh{kak-lsp --kakoune -s $kak_session}
-# hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp) %{
-#     lsp-enable-window
-
-#     map global normal <c-l> ": enter-user-mode lsp<ret>"
-#     lsp-auto-hover-enable
-#     lsp-auto-hover-insert-mode-enable
-#     set global lsp_hover_anchor true
-#     # Format the document if possible
-#     hook window BufWritePre .* %{ lsp-formatting }
-# }
-
-# hook global WinSetOption filetype=(python) %{
-#     # for python language server
-#     set-option global lsp_server_configuration pyls.configurationSources=["flake8"]
-# }
-
-# # fzf for KAK
-# plug "andreyorst/fzf.kak" defer "fzf" %{
-#     set-option global fzf_window_map "ctrl-n"
-#     set-option global fzf_vertical_map "ctrl-s"
-#     set-option global fzf_horizontal_map "ctrl-v"
-# } defer "fzf-file" %{
-#     set-option global fzf_file_command "fd --hidden --hidden -E .git -E node_modules -E .cache -E build -E .ccls-cache"
-# } config %{
-#     map -docstring 'fzf mode' global user 'f' ': fzf-mode<ret>'
-# }
-
-# # surround
-# plug "h-youhei/kakoune-surround" config %{
-#     declare-user-mode surround
-#     map global surround s ':surround<ret>' -docstring 'surround'
-#     map global surround c ':change-surround<ret>' -docstring 'change'
-#     map global surround d ':delete-surround<ret>' -docstring 'delete'
-#     map global surround t ':select-surrounding-tag<ret>' -docstring 'select tag'
-#     map global user s ':enter-user-mode surround<ret>' -docstring 'enter surround mode'
-# }
