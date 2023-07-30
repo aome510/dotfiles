@@ -9,6 +9,7 @@
   :when (modulep! :tools lsp)
   :config
   (setq
+   lsp-inlay-hint-enable t
    lsp--show-message nil
    lsp-modeline-diagnostics-enable nil))
 
@@ -22,22 +23,12 @@
 
         rustic-default-clippy-arguments ""
 
-        ;; enable rust-analyzer inlay hints
-        lsp-rust-analyzer-server-display-inlay-hints t
         lsp-rust-analyzer-display-chaining-hints t
         lsp-rust-analyzer-display-parameter-hints t
         lsp-rust-analyzer-display-closure-return-type-hints t
         lsp-rust-analyzer-display-lifetime-elision-hints-enable t
         lsp-rust-analyzer-display-reborrow-hints t
         lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names t))
-
-;;; lsp-pyright
-(use-package! lsp-pyright
-  :defer-incrementally t
-  :when (modulep! :lang (python +lsp +pyright))
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp))))  ; or lsp-deferred
 
 ;;; --------------------------------------------------------------------
 ;;; eglot (lsp) configurations
