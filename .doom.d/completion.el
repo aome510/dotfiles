@@ -42,14 +42,14 @@
   (corfu-popupinfo-mode)
   :config
   ;; use corfu for minibuffer completion
-  (defun corfu-enable-in-minibuffer ()
-    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
-    (when (where-is-internal #'completion-at-point (list (current-local-map)))
-      ;; (setq-local corfu-auto nil) Enable/disable auto completion
-      (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-                  corfu-popupinfo-delay nil)
-      (corfu-mode 1)))
-  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
+  ;; (defun corfu-enable-in-minibuffer ()
+  ;;   "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+  ;;   (when (where-is-internal #'completion-at-point (list (current-local-map)))
+  ;;     ;; (setq-local corfu-auto nil) Enable/disable auto completion
+  ;;     (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+  ;;                 corfu-popupinfo-delay nil)
+  ;;     (corfu-mode 1)))
+  ;; (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
 
   (setq
    corfu-cycle t
@@ -88,13 +88,13 @@
   (add-hook! 'lsp-completion-mode-hook #'append-cape-capf-functions))
 
 
-(use-package! kind-icon
-  :ensure t
-  :after corfu
-  :custom
-  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+;; (use-package! kind-icon
+;;   :ensure t
+;;   :after corfu
+;;   :custom
+;;   (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+;;   :config
+;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 ;;; ----------------------------------
 ;;; consult

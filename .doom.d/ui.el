@@ -16,12 +16,12 @@
 ;;; nano-theme related configurations
 ;;; --------------------------------------------------------------------
 
-(defun get-buffer-file-path-relative-to-project-root ()
-  (let ((project (projectile-project-root))
-        (buffer (buffer-file-name)))
-    (if (and project (string-prefix-p project buffer))
-        (string-remove-prefix project buffer)
-      buffer)))
+;; (defun get-buffer-file-path-relative-to-project-root ()
+;;   (let ((project (projectile-project-root))
+;;         (buffer (buffer-file-name)))
+;;     (if (and project (string-prefix-p project buffer))
+;;         (string-remove-prefix project buffer)
+;;       buffer)))
 
 (use-package! nano-modeline
   :config
