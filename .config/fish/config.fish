@@ -4,8 +4,10 @@ function fish_title
   true
 end
 
-# zoxide init for fish
-source ~/.config/fish/zoxide.fish
+if type -fq zoxide
+    # zoxide init for fish
+    source ~/.config/fish/zoxide.fish
+end
 
 function disk_usage
     du -d1 -h $argv | sort -h
@@ -45,7 +47,7 @@ end
 set fzf_history_opts --preview-window="bottom:5:wrap"
 
 # aliases
-alias e="hx"
+alias e="kak"
 alias se="sudo -e"
 alias cl="emacsclient -nw"
 alias l="exa --color always"
