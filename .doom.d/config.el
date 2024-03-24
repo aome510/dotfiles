@@ -102,6 +102,8 @@
 
 (use-package! markdown-mode
   :config
+  ;; disable font-lock-mode for markdown-mode
+  (add-hook! markdown-mode #'font-lock-change-mode)
   (add-hook! markdown-mode (add-hook 'before-save-hook #'custom/markdown-preview-update nil t)))
 
 ;;; --------------------------------------------------------------------
@@ -179,15 +181,15 @@
  :n "[ e" #'flycheck-previous-error
 
  (:map yas-keymap
-  "TAB" #'yas-next-field-or-maybe-expand
-  [tab] #'yas-next-field-or-maybe-expand)
+       "TAB" #'yas-next-field-or-maybe-expand
+       [tab] #'yas-next-field-or-maybe-expand)
 
  (:map dired-mode-map
   :n "h" #'dired-up-directory
   :n "l" #'dired-find-file)
 
  (:map wdired-mode-map
-      [remap self-insert-command] nil)
+       [remap self-insert-command] nil)
 
  ;; `s' and `S' are binded to `kak.el' package's functions
  (:v ". s"     #'evil-snipe-s
@@ -196,9 +198,9 @@
   :v ". S"     #'evil-surround-region)
 
  (:map markdown-mode-map
-  ;; `markdown-mode' remaps `DEL' shortcuts which doesn't play nicely with `evil-mc'
-  "DEL" nil
-  (:localleader "p" #'custom/markdown-preview)))
+       ;; `markdown-mode' remaps `DEL' shortcuts which doesn't play nicely with `evil-mc'
+       "DEL" nil
+       (:localleader "p" #'custom/markdown-preview)))
 
 ;; --------------------------------------------------------------------
 ;; Misc settings

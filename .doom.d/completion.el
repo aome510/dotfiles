@@ -24,34 +24,35 @@
 ;;; ----------------------------------
 ;;; snippets
 ;;; ----------------------------------
-(use-package! doom-snippets
-  :load-path "~/.doom.d/snippets"
-  :after yasnippet)
+;; (use-package! doom-snippets
+;;   :load-path "~/.doom.d/snippets"
+;;   :after yasnippet)
 
 ;;; ----------------------------------
 ;;; corfu related configurations
 ;;; ----------------------------------
 
-(defun orderless-fast-dispatch (word index total)
-  (and (= index 0) (= total 1) (length< word 4)
-       `(orderless-regexp . ,(concat "^" (regexp-quote word)))))
+;; (defun orderless-fast-dispatch (word index total)
+;;   (and (= index 0) (= total 1) (length< word 4)
+;;        `(orderless-regexp . ,(concat "^" (regexp-quote word)))))
 
 (use-package! corfu
-  :init
-  (global-corfu-mode)
-  (corfu-popupinfo-mode)
+  ;;   :init
+  ;;   (global-corfu-mode)
+  ;;   (corfu-popupinfo-mode)
   :config
-  ;; use corfu for minibuffer completion
-  ;; (defun corfu-enable-in-minibuffer ()
-  ;;   "Enable Corfu in the minibuffer if `completion-at-point' is bound."
-  ;;   (when (where-is-internal #'completion-at-point (list (current-local-map)))
-  ;;     ;; (setq-local corfu-auto nil) Enable/disable auto completion
-  ;;     (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-  ;;                 corfu-popupinfo-delay nil)
-  ;;     (corfu-mode 1)))
-  ;; (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
+  ;;   ;; use corfu for minibuffer completion
+  ;;   ;; (defun corfu-enable-in-minibuffer ()
+  ;;   ;;   "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+  ;;   ;;   (when (where-is-internal #'completion-at-point (list (current-local-map)))
+  ;;   ;;     ;; (setq-local corfu-auto nil) Enable/disable auto completion
+  ;;   ;;     (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+  ;;   ;;                 corfu-popupinfo-delay nil)
+  ;;   ;;     (corfu-mode 1)))
+  ;;   ;; (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
 
   (setq
+   corfu-preselect 'first
    corfu-cycle t
    corfu-auto t
    corfu-preview-current t
@@ -60,32 +61,30 @@
 
   (map!
    (:map corfu-map
-    "RET" #'corfu-insert
-    [return] #'corfu-insert
-    "TAB" nil
-    [tab] nil)))
+         "TAB" nil
+         [tab] nil)))
 
-(defun append-cape-capf-functions ()
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
-  (add-to-list 'completion-at-point-functions #'cape-file t)
-  ;; (add-to-list 'completion-at-point-functions #'cape-tex t)
-  (add-to-list 'completion-at-point-functions #'cape-keyword t))
+;; (defun append-cape-capf-functions ()
+;;   (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
+;;   (add-to-list 'completion-at-point-functions #'cape-file t)
+;;   ;; (add-to-list 'completion-at-point-functions #'cape-tex t)
+;;   (add-to-list 'completion-at-point-functions #'cape-keyword t))
 
-(use-package! cape
-  :init
-  (append-cape-capf-functions)
-  :config
-  (setq
-   dabbrev-ignored-buffer-regexps '("^\\*")
-   cape-dabbrev-check-other-buffers t
-   cape-dabbrev-min-length 3))
+;; (use-package! cape
+;;   :init
+;;   (append-cape-capf-functions)
+;;   :config
+;;   (setq
+;;    dabbrev-ignored-buffer-regexps '("^\\*")
+;;    cape-dabbrev-check-other-buffers t
+;;    cape-dabbrev-min-length 3))
 
-;; `corfu' integration with `lsp-mode'
-(use-package lsp-mode
-  :custom
-  (lsp-completion-provider :none) ;; we use Corfu!
-  :config
-  (add-hook! 'lsp-completion-mode-hook #'append-cape-capf-functions))
+;; ;; `corfu' integration with `lsp-mode'
+;; (use-package lsp-mode
+;;   :custom
+;;   (lsp-completion-provider :none) ;; we use Corfu!
+;;   :config
+;;   (add-hook! 'lsp-completion-mode-hook #'append-cape-capf-functions))
 
 
 ;; (use-package! kind-icon
